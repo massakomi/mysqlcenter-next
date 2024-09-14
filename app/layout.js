@@ -1,6 +1,5 @@
-import localFont from "next/font/local";
-import "./globals.css";
-import { NavLinks } from '@/app/ui/nav-links'
+import "./css/page.css";
+import "./css/color.white.css";
 import Link from 'next/link'
 import {GlobalMenu} from "@/app/ui/GlobalMenu";
 import {msDisplaySql, queryPopupBlock} from "@/app/ui/functions";
@@ -9,17 +8,6 @@ import {SearchInTable} from "@/app/ui/SearchInTable";
 import {Messages} from "@/app/ui/Messages";
 import {PopupQueryForm} from "@/app/ui/PopupQueryForm";
 import {FooterMenu} from "@/app/ui/FooterMenu";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata = {
   title: "Create Next App",
@@ -31,8 +19,8 @@ export default function RootLayout({ children }) {
     queries: []
   }
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="ru">
+      <body>
         <div className="App">
           <div className="pageBlock">
             <b id="appNameId"><Link href="/db_list">MySQL React</Link></b>
@@ -95,7 +83,7 @@ export default function RootLayout({ children }) {
             inc {props.includeSize}
             limit {props.memory_limit} &nbsp;&nbsp;
 
-            <strong><a href="?s=logout">Выход</a></strong>
+            <strong><a href="/logout">Выход</a></strong>
           </div>
 
         </div>

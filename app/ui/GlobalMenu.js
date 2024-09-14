@@ -13,7 +13,7 @@ export function GlobalMenu() {
     ['операции', 'actions', '']
   ]
   let type = 'table';
-  if (pathname === '/db_list' || props.page === 'db_list' || props.page === 'users' || pathname.startsWith('server_')) {
+  if (pathname === '/db_list' || props.page === 'db_list' || props.page === 'users' || pathname.startsWith('/server_')) {
     type = 'server';
     dbMenuGlobal = [
       ['базы данных', 'db_list', ''],
@@ -46,7 +46,6 @@ export function GlobalMenu() {
     ])
   }
 
-  const activeChecker = ( {isActive} ) => {return isActive ? 'cur' : ''}
   let menu = []
   for (let item of dbMenuGlobal) {
     let title = item[0]
@@ -66,7 +65,11 @@ export function GlobalMenu() {
     } elseif (stristr($action, 'truncate')) {
       $extra = ' class="truncate" onClick="check(this, \'очистка\'); return false"';
     }*/
-    menu.push(<Link key={menu.length} className='cur' href={curl}>{title}</Link>)
+    let className = ''
+    if (`/${page}` === pathname) {
+      className = 'cur'
+    }
+    menu.push(<Link key={menu.length} className={className} href={curl}>{title}</Link>)
   }
   return <div className="globalMenu" id="globalMenu">{menu}</div>
 }

@@ -104,7 +104,7 @@ export async function apiQuery (query, options={}, form='') {
     }
   }
 
-  let url = 'https://msc/?'+query+'&ajax=1'
+  let url = 'http://msc/?'+query+'&ajax=1'
   options.method = 'POST'
   //options.credentials = 'include';
   //options.mode = 'no-cors'

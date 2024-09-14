@@ -1,19 +1,21 @@
+import Link from "next/link";
+
 export function ChainMenu() {
   let chain = []
-  chain.push(<a key="c0" href="?s=db_list">DB</a>)
-  let db = 'any'
+  chain.push(<Link key="c0" href="/db_list">DB</Link>)
+  let db = 'Any'
   if (db) {
-    chain.push(<a key="c1" href={`?s=tbl_list&db=${db}&action=structure`}>&#8250;</a>)
-    chain.push(<a key="c2" href={`?s=tbl_list&db=${db}`}>{db}</a>)
+    chain.push(<span key="c1">&#8250;</span>)
+    chain.push(<Link key="c2" href={`/tbl_list/${db}`}>{db}</Link>)
   }
-  let table = 'table'
-  let page = 'tbl_list'
+  let table = 'Table'
+  let page = 'Tbl_list'
   if (table) {
     chain.push(<span key="c3">&#8250;</span>)
-    chain.push(<a key="c4" href={`?s=tbl_data&db=${db}&table=${table}`}>{table}</a>)
+    chain.push(<Link key="c4" href={`/tbl_data/${db}/${table}`}>{table}</Link>)
     if (page !== 'tbl_data') {
       chain.push(<span key="c5">&#8250;</span>)
-      chain.push(<a key="c6" href={`?s=${page}&db=${db}&table=${table}`}>{page}</a>)
+      chain.push(<Link key="c6" href={`/${page}/${db}/${table}`}>{page}</Link>)
     }
   }
   return chain

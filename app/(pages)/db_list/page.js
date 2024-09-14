@@ -1,6 +1,11 @@
-import {useEffect, useState} from "react";
+'use client'
 
-export function Page() {
+import {useEffect, useState} from "react";
+import {apiQuery} from "@/app/ui/functions";
+import ColumnLeft from "./ColumnLeft";
+import ColumnRight from "./ColumnRight";
+
+export default function Page() {
 
   const [data, setData] = useState({main: {page: ''}, page: {hiddens: [], databases: []}});
 

@@ -11,6 +11,10 @@ export default function Table(props) {
     msQuery('dbHide', `db=${db}&id=db${db}&action=${action}`)
   }
 
+  if (!props.databases?.length) {
+    return;
+  }
+
   let mscExists = props.databases.includes('mysqlcenter')
   let trs = []
   for (let i = 0; i < props.databases.length; i++) {

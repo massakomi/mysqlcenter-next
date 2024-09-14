@@ -12,7 +12,7 @@ export function SearchInTable() {
     e.target.action = e.target.action + '&query='+e.target.query.value
   }
 
-  var table = router.table;
+  let table = router.table;
   let forms = []
   let db = ''
   if (table !== '') {

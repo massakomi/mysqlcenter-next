@@ -1,7 +1,4 @@
-export function Messages() {
-  const props = {
-    messages: []
-  }
+export function Messages(props) {
   let config = {
     showmessages: 1
   }

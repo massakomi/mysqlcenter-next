@@ -1,10 +1,15 @@
-export function Page() {
+'use client'
+export default function Page(props) {
+  function doLogin() {
+
+  }
+
   return (
     <div className="page-login">
       <div className="message">
-        {this.props.message}
+        {props.message}
       </div>
-      <form method="post" onSubmit={this.doLogin}>
+      <form method="post" onSubmit={doLogin}>
         <b>логин</b>
         <p><input type="text" name="user" defaultValue="root" /></p>
         <b>пароль</b>

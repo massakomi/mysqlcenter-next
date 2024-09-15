@@ -1,3 +1,4 @@
+'use client'
 import {DbCreateForm} from "./DbCreateForm";
 
 export default function ColumnRight(props) {

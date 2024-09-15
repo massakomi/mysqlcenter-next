@@ -1,4 +1,4 @@
-
+'use client'
 import Table from "./Table";
 import TableFull from "@/app/(pages)/db_list/TableFull";
 

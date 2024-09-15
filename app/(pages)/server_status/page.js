@@ -1,8 +1,19 @@
-import {useEffect, useState} from "react";
 
-export function Page() {
+import {serverStatus} from "@/app/ui/actions";
+import {KillProcess} from "@/app/(pages)/server_status/KillProcess";
+import {Buttons} from "@/app/(pages)/server_status/Buttons";
+import {SetPageTitle} from "@/app/(pages)/server_status/SetPageTitle";
 
-  const [data, setData] = useState({main: {page: ''}, page: {hiddens: [], databases: []}});
+export const  metadata = {
+  title: 'Список процессов'
+}
+
+export default async function Page() {
+
+  let data = await serverStatus();
+  console.log(data)
+
+  /*const [data, setData] = useState({main: {page: ''}, page: {hiddens: [], databases: []}});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -10,23 +21,22 @@ export function Page() {
       setData(json);
     };
     fetchData();
-  }, []);
+  }, []);*/
 
   if (data.getPageTitle) {
-    document.title = data.getPageTitle
-    document.querySelector('h1').innerHTML = data.getPageTitle
+    //document.title = data.getPageTitle
+    //document.querySelector('h1').innerHTML = data.getPageTitle
   }
 
-  const killProcess = (id) => {
-    apiQuery('s='+window.location.pathname.substr(1) + '&kill='+id)
-  }
 
+
+  //
   let listItems = []
   if (data.page.serverProcesses) {
     listItems = data.page.serverProcesses.map((item, key) => {
       return (
         <tr key={key}>
-          <td><span onClick={killProcess.bind(this, item.Id)}>Kill</span></td>
+          <td><KillProcess id={item.Id} /></td>
           <td>{item.Id}</td>
           <td>{item.User}</td>
           <td>{item.Host}</td>
@@ -39,6 +49,7 @@ export function Page() {
       )
     });
   }
+
 
   return  (
     <table width="100%" border="0" cellSpacing="0" cellPadding="3">
@@ -65,7 +76,8 @@ export function Page() {
           </table>
         </td>
         <td valign="top">
-          3
+          <Buttons />
+          <SetPageTitle title='Список процессов' />
         </td>
       </tr></tbody>
     </table>

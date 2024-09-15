@@ -1,13 +1,18 @@
-'use client'
-
-import {useEffect, useState} from "react";
-import {apiQuery} from "@/app/ui/functions";
 import ColumnLeft from "./ColumnLeft";
 import ColumnRight from "./ColumnRight";
+import {dbList} from "@/app/ui/actions";
+import {SetPageTitle} from "@/app/(pages)/server_status/SetPageTitle";
 
-export default function Page() {
+export const  metadata = {
+  title: 'Список баз данных'
+}
 
-  const [data, setData] = useState({main: {page: ''}, page: {hiddens: [], databases: []}});
+export default async function Page() {
+
+  let data = await dbList();
+  console.log(data)
+
+  /*const [data, setData] = useState({main: {page: ''}, page: {hiddens: [], databases: []}});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,13 +26,14 @@ export default function Page() {
   if (data.getPageTitle) {
     document.title = data.getPageTitle
     document.querySelector('h1').innerHTML = data.getPageTitle
-  }
+  }*/
 
   return  (
     <table width="100%" border="0" cellSpacing="0" cellPadding="3">
       <tbody>
       <tr>
         <td valign="top">
+          <SetPageTitle title='Список баз данных' />
           <ColumnLeft {...data.page} />
         </td>
         <td valign="top">

@@ -1,15 +1,15 @@
 import "../css/page.css";
 import "../css/color.white.css";
 import Link from 'next/link'
-import {GlobalMenu} from "@/app/ui/GlobalMenu";
-import {msDisplaySql, queryPopupBlock} from "@/app/ui/functions";
-import {ChainMenu} from "@/app/ui/ChainMenu";
+import {MenuTop} from "@/app/ui/MenuTop";
+import {MenuChain} from "@/app/ui/MenuChain";
 import {SearchInTable} from "@/app/ui/SearchInTable";
 import {Messages} from "@/app/ui/Messages";
-import {PopupQueryForm} from "@/app/ui/PopupQueryForm";
-import {FooterMenu} from "@/app/ui/FooterMenu";
+import {PopupSqlForm} from "@/app/ui/PopupSqlForm";
+import {MenuFooter} from "@/app/ui/MenuFooter";
 import {PageTitle} from "@/app/ui/PageTitle";
-import {TableMenu} from "@/app/ui/TableMenu";
+import {MenuTable} from "@/app/ui/MenuTable";
+import {PopupQueryList} from "@/app/ui/PopupQueryList";
 
 export const metadata = {
   title: "MySQLCenter"
@@ -34,19 +34,17 @@ export default async function PagesLayout({ children }) {
   return (
     <div className="App">
       <div className="pageBlock">
-        <b id="appNameId"><Link href="/db_list">MySQL React</Link></b>
-
-        &nbsp; &nbsp;
-        <GlobalMenu /> &nbsp; &nbsp;
-        <span className="hiddenText" onClick={msDisplaySql} title="Кликните, чтобы открыть форму быстрого запроса">{props.generate_time} с. &nbsp;&nbsp;  </span>
-        <span className="menuChain"><ChainMenu /></span>
+        <b id="appNameId" className="appName"><Link href="/db_list">MySQL React</Link></b>
+        <MenuTop />
+        <PopupSqlForm time={props.generate_time} />
+        <MenuChain />
       </div>
 
       <table width="100%" className="outerTable">
         <tbody>
         <tr>
           <td width="100" className="tableMenuTd">
-            <TableMenu />
+            <MenuTable />
           </td>
           <td>
 
@@ -58,9 +56,7 @@ export default async function PagesLayout({ children }) {
                   <PageTitle title={props.getPageTitle} />
                 </td>
                 <td style={{whiteSpace: 'nowrap'}}>
-                  <span className="hiddenText" onClick={queryPopupBlock}>запросы&nbsp;</span>
-                  {props.queries.length}
-                  &nbsp;&nbsp;
+                  <PopupQueryList queries={props.queries} />
                   <SearchInTable />
                 </td>
               </tr>
@@ -80,19 +76,13 @@ export default async function PagesLayout({ children }) {
         </tbody>
       </table>
 
-      <PopupQueryForm />
 
       <div id="dbHiddenMenu">
 
       </div>
-      <div id="queryPopupBlock">
-        {props.queries.map((q, key) =>
-          <span key={key}>{q}</span>
-        )}
-      </div>
 
       <div className="pageBlock">
-        <FooterMenu />
+        <MenuFooter />
 
         <strong>Хост:</strong> {props.DB_HOST}&nbsp;&nbsp;
         <strong>Пользователь:</strong> {props.DB_USERNAME_CUR}&nbsp;

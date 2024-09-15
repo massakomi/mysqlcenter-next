@@ -2,7 +2,7 @@
 import {serverStatus} from "@/app/ui/actions";
 import {KillProcess} from "@/app/(pages)/server_status/KillProcess";
 import {Buttons} from "@/app/(pages)/server_status/Buttons";
-import {SetPageTitle} from "@/app/(pages)/server_status/SetPageTitle";
+import {SetPageTitle} from "@/app/ui/SetPageTitle";
 
 export const  metadata = {
   title: 'Список процессов'
@@ -11,29 +11,10 @@ export const  metadata = {
 export default async function Page() {
 
   let data = await serverStatus();
-  console.log(data)
 
-  /*const [data, setData] = useState({main: {page: ''}, page: {hiddens: [], databases: []}});
-
-  useEffect(() => {
-    const fetchData = async () => {
-      let json = await apiQuery('s=server_status')
-      setData(json);
-    };
-    fetchData();
-  }, []);*/
-
-  if (data.getPageTitle) {
-    //document.title = data.getPageTitle
-    //document.querySelector('h1').innerHTML = data.getPageTitle
-  }
-
-
-
-  //
   let listItems = []
-  if (data.page.serverProcesses) {
-    listItems = data.page.serverProcesses.map((item, key) => {
+  if (data.serverProcesses) {
+    listItems = data.serverProcesses.map((item, key) => {
       return (
         <tr key={key}>
           <td><KillProcess id={item.Id} /></td>
@@ -49,7 +30,6 @@ export default async function Page() {
       )
     });
   }
-
 
   return  (
     <table width="100%" border="0" cellSpacing="0" cellPadding="3">

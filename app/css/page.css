@@ -31,7 +31,9 @@ div#dbHiddenMenu A { font-size:12px}
 div#dbHiddenMenu A:hover {color:black}
 
 /* Блок запросов */
-div#queryPopupBlock { display:none; padding:5px; position:absolute; left:500px; top:65px; background-color:#FFFFFF; border:1px solid black}
+.queryPopupBlock span {margin-right: 5px}
+.queryPopupBlock div { padding:5px; position:absolute; left:500px; top:65px; background-color:#FFFFFF; border:1px solid black}
+.queryPopupBlock div.hidden {display: none}
 
 /* Форма поиска в футере */
 form.formSearch { display:inline; margin:0; padding:0}
@@ -40,12 +42,15 @@ form.formSearch INPUT.img { margin:0; border:0; vertical-align:middle}
 
 /* Блок страницы */
 div.pageBlock { padding:5px; margin: 5px 0; }
+div.pageBlock B { margin-right: 20px }
 div.pageBlock B A { text-decoration:none; }
 
 /* Форма SQL запроса всплывающая */
-form.popupGeneralForm { display:none; padding:5px; position:absolute; left:20px; top:50px}
+form.popupGeneralForm { padding:5px; position:absolute; left:20px; top:50px}
+form.popupGeneralForm.hidden {display:none;}
 form.popupGeneralForm TEXTAREA { font-size:12px; width:800px; padding:5px; display:block;}
 form.popupGeneralForm INPUT { text-align:right; margin:5px 0 }
+.popupGeneralFormOpen {margin-right: 10px}
 
 /* Таблица сообщения */
 table.globalMessage { margin:5px 0; border-collapse:collapse; empty-cells:show}

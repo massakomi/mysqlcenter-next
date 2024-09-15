@@ -1,6 +1,6 @@
 'use client'
 import { useSelector } from 'react-redux'
-export function TableMenu(props) {
+export function MenuTable(props) {
   const count = useSelector((state) => state.counter.value)
   return <>
     getTableMenu

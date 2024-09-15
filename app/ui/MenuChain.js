@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export function ChainMenu() {
+export function MenuChain() {
   let chain = []
   chain.push(<Link key="c0" href="/db_list">DB</Link>)
   let db = 'Any'
@@ -18,5 +18,5 @@ export function ChainMenu() {
       chain.push(<Link key="c6" href={`/${page}/${db}/${table}`}>{page}</Link>)
     }
   }
-  return chain
+  return <span className="menuChain">{chain}</span>
 }

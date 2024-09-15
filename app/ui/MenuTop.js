@@ -2,7 +2,7 @@
 import {usePathname} from "next/navigation";
 import Link from "next/link";
 
-export function GlobalMenu() {
+export function MenuTop() {
   const props = {}
   const pathname = usePathname();
   let dbMenuGlobal = [
@@ -20,7 +20,7 @@ export function GlobalMenu() {
       ['статус', 'server_status', ''],
       ['переменные', 'server_variables', ''],
       //['кодировки', 'server_collations', ''],
-      ['инфо', 'server_users', ''],
+      ['инфо', 'server_info', ''],
     ].concat(dbMenuGlobal)
   } else if ((props.db !== '' && props.table === '') || props.page === 'tbl_list') {
     type = 'db'

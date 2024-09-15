@@ -1,72 +1,5 @@
 'use client'
 
-export const msDisplaySql = () => {
-  console.log('showhide #sqlPopupQueryForm')
-}
-
-export const queryPopupBlock = () => {
-  console.log('showhide #queryPopupBlock')
-}
-
-
-export function xajax(query)
-{
-  //let ajaxdebug = (typeof(debug) != 'undefined' && debug == '1');
-
-  let options = {
-    method: 'POST',
-    body: new URLSearchParams('?'+query),
-    headers: {'X-Requested-With': 'XMLHttpRequest'}
-  }
-
-  fetch('ajax.php', options)
-    .then(response => {
-      if (!response.ok) {
-        console.error(response.status +' ' + response.statusText)
-      } else {
-        return response.text();
-      }
-    })
-    .then(text => {
-      if (text.indexOf('Parse error') !== -1) {
-        console.error(text)
-      } else {
-        try {
-          eval(text);
-        } catch(e) {
-          /*if (ajaxdebug) {
-            console.error('JS код не выполнен: '+text);
-          }*/
-        }
-      }
-    })
-    .catch((error) => {
-      console.error(error)
-    });
-}
-
-/**
- * Общий ajax запрос к серверу. Ответ помещается в "msAjaxQueryDiv".
- *
- * @param  mode string  Режим запроса
- * @param  query string  Строка запроса urldecoded
- * @return boolean false
- */
-export function msQuery(mode, query='') {
-  if (mode !== 'tableRename' && mode !== 'dbCreate'  && mode !== 'dbHide' && window.confirm('Подтвердите...') === false) {
-    return false;
-  }
-  if (arguments.length === 0) {
-    return false;
-  }
-  query = query.replace(/^\?/, '')
-
-  // alert(query+'&'+'mode='+mode)
-  xajax(query+'&'+'mode='+mode)
-
-  return false;
-}
-
 /**
  * Групповые действия с чекбоксами
  */
@@ -143,9 +76,7 @@ export function getAllCookies() {
 }
 
 
-export function showhide(id) {
-  jQuery('#'+id).toggle()
-}
+
 
 
 /*

@@ -1,4 +1,4 @@
-import {msQuery} from "@/app/ui/functions";
+
 
 export default function TableFull(props) {
 

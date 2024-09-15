@@ -1,16 +1,6 @@
-import {msQuery} from "@/app/ui/functions";
+import {dbDelete, dbHide} from "@/app/ui/actions";
 
 export default function Table(props) {
-
-  const dbDelete = (db) => {
-    msQuery('dbDelete', `db=${db}&id=db${db}`)
-  }
-
-  const dbHide = (db, action) => {
-    alert('hide')
-    msQuery('dbHide', `db=${db}&id=db${db}&action=${action}`)
-  }
-
   if (!props.databases?.length) {
     return;
   }
@@ -33,7 +23,7 @@ export default function Table(props) {
         <td><input name="databases[]" type="checkbox" value={db} className="cb" /></td>
         <td><a href={href} title="Структура БД" id={idRow} style={styles}>{db}</a></td>
         <td>
-          <span className="a" onClick={dbDelete.bind(this, db)} title={'Удалить '+db}><img src={"/images/close.png"} alt="" border="0" /></span> &nbsp;
+          <span className="a" onClick={() => dbDelete(db)} title={'Удалить '+db}><img src={"/images/close.png"} alt="" border="0" /></span> &nbsp;
           <a href={'/?db=' + db + '&s=actions'} title="Изменить"><img src={"/images/edit.gif"} alt="" border="0" /></a> &nbsp;
           {mscExists ?
             <span className="a" onClick={dbHide.bind(this, db, action)} title={'Спрятать/показать ' + db}><img src={"/images/open-folder.png"} alt="" border="0" width="16" /></span> : null}

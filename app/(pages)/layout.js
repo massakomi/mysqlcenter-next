@@ -1,4 +1,4 @@
-import "../css/page.css";
+import "../css/page.scss";
 import "../css/color.white.css";
 import Link from 'next/link'
 import {MenuTop} from "@/app/ui/MenuTop";
@@ -10,6 +10,7 @@ import {MenuFooter} from "@/app/ui/MenuFooter";
 import {PageTitle} from "@/app/ui/PageTitle";
 import {MenuTable} from "@/app/ui/MenuTable";
 import {PopupQueryList} from "@/app/ui/PopupQueryList";
+import {PopupDbList} from "@/app/ui/PopupDbList";
 
 export const metadata = {
   title: "MySQLCenter"
@@ -24,19 +25,15 @@ export const metadata = {
 
 export default async function PagesLayout({ children }) {
 
-  //const pathname = usePathname();
-
   let data = await fetch('http://msc/?init=1&ajax=1')
   let props = await data.json()
-
-  //console.log(props)
 
   return (
     <div className="App">
       <div className="pageBlock">
-        <b id="appNameId" className="appName"><Link href="/db_list">MySQL React</Link></b>
+        <PopupDbList data={props.databases} />
         <MenuTop />
-        <PopupSqlForm time={props.generate_time} />
+        <PopupSqlForm />
         <MenuChain />
       </div>
 
@@ -67,7 +64,6 @@ export default async function PagesLayout({ children }) {
 
             {children}
 
-
           </td>
           <td>
             <div id="msAjaxQueryDiv">*</div>
@@ -75,11 +71,6 @@ export default async function PagesLayout({ children }) {
         </tr>
         </tbody>
       </table>
-
-
-      <div id="dbHiddenMenu">
-
-      </div>
 
       <div className="pageBlock">
         <MenuFooter />

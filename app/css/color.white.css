@@ -1,23 +1,18 @@
 
 
 /* Текст */
-                  
-DIV.menuTables .t1,     
-DIV.pageBlock B A,      
-SPAN.menuChain A:hover, 
+
+DIV.pageBlock B A,
+SPAN.menuChain A:hover,
 DIV#dbHiddenMenu       { color:#000000 }
 
 SPAN.hiddenText,
-A.hiddenSmallLink,
-DIV.globalMenu .delim  { color:#CCCCCC }
+A.hiddenSmallLink      { color:#CCCCCC }
 
-BODY,
-						{ color:#000000 }
 
 TABLE.contentTable TH,
 FORM.tableFormEdit TH,
-.dateString,
-DIV.menuTables A.cur   { color:#CC0000 }
+.dateString  { color:#CC0000 }
 
 TABLE.tableExport .hs,
 DIV.chbxAction,
@@ -25,10 +20,7 @@ SPAN.menuChain A       { color:#999999 }
 
 A,
 TABLE.contentTable A,
-DIV#dbHiddenMenu A,
-DIV.globalMenu A       { color:#0000FF }
-DIV.globalMenu A.cur,
-DIV.menuTables .t2     { color:green   }
+DIV#dbHiddenMenu A     { color:#0000FF }
 DIV.formSet H2         { color:#FFFFFF }
 
 TABLE.globalMessage .mysqlError { color:#FF0000 }

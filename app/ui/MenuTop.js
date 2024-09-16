@@ -71,5 +71,5 @@ export function MenuTop() {
     }
     menu.push(<Link key={menu.length} className={className} href={curl}>{title}</Link>)
   }
-  return <div className="globalMenu" id="globalMenu">{menu}</div>
+  return <span className="globalMenu">{menu}</span>
 }

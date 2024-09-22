@@ -13,15 +13,15 @@ export async function serverInfo() {
 }
 
 export async function dbList() {
-  return await query('db_list', { cache: 'no-store' });
+  return await query('db_list', false, { cache: 'no-store' });
 }
 
 export async function dbCreate(formData) {
   return await query('action=dbCreate', formData);
 }
 
-export async function dbDelete (db){
-  msQuery('dbDelete', `db=${db}&id=db${db}`)
+export async function dbDelete(db){
+  return await query('action=dbDelete', `db=${db}&id=db${db}`);
 }
 
 export async function dbHide (db, action) {
@@ -49,8 +49,8 @@ async function msQuery(mode, query='') {
   return await data.json();
 }
 
-async function query(query, post) {
-  let data = await fetch(url(query), options(post))
+async function query(query, post, opts = {}) {
+  let data = await fetch(url(query), options(post, opts))
   let json = await data.json()
   if (json.hasOwnProperty('page')) {
     return json.page;
@@ -65,14 +65,14 @@ function url(query) {
   return `http://msc/?ajax=1&${query}`;
 }
 
-function options(post) {
-  let options = {}
+function options(post, opts = {}) {
+  let options = opts
   if (post) {
-    options = {
+    Object.assign(options, {
       method: 'POST',
       headers: {'X-Requested-With': 'XMLHttpRequest'},
       body: queryPostData(post)
-    }
+    })
   }
   return options;
 }

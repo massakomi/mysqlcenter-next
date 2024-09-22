@@ -1,9 +1,8 @@
 'use client'
 import { useSelector } from 'react-redux'
 export function PageTitle(props) {
-  const count = useSelector((state) => state.counter.value)
-  const title = useSelector((state) => state.title.value)
+  const params = useSelector((state) => state.params.value)
   return <>
-    <h1>{props.title} / {title}</h1>
+    <h1>{params.title || props.title}</h1>
   </>;
 }

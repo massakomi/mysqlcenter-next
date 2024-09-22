@@ -11,17 +11,11 @@ import {PageTitle} from "@/app/ui/PageTitle";
 import {MenuTable} from "@/app/ui/MenuTable";
 import {PopupQueryList} from "@/app/ui/PopupQueryList";
 import {PopupDbList} from "@/app/ui/PopupDbList";
+import {setCookie} from "@/app/ui/functions";
 
 export const metadata = {
   title: "MySQLCenter"
 };
-
-/*export async function generateMetadata() {
-  const props = await fetch('http://msc/?init=1&ajax=1').then((res) => res.json())
-  return {
-    title: props.getWindowTitle
-  }
-}*/
 
 export default async function PagesLayout({ children }) {
 

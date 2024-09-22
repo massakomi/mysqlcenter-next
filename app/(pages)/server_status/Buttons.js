@@ -1,11 +1,10 @@
 'use client'
-import {decrement, increment} from "@/lib/features/counter/counterSlice";
-import {set} from "@/lib/features/titleReducer";
+import {decrement, increment, setValue} from "@/lib/features/paramsReducer";
 import { useSelector, useDispatch } from 'react-redux'
 
 export function Buttons(props) {
 
-  const count = useSelector((state) => state.counter.value)
+  const params = useSelector((state) => state.params.value)
   const dispatch = useDispatch()
 
   return <>
@@ -15,7 +14,7 @@ export function Buttons(props) {
     >
       Increment
     </button>
-    <span>{count}</span>
+    <span>{params.counter}</span>
     <button
       aria-label="Decrement value"
       onClick={() => dispatch(decrement())}
@@ -23,7 +22,7 @@ export function Buttons(props) {
       Decrement
     </button>
     <button
-      onClick={() => dispatch(set('***'))}
+      onClick={() => dispatch(setValue({database: 'mydb11'}))}
     >
       Set
     </button>

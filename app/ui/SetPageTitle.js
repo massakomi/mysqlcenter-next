@@ -1,13 +1,11 @@
 'use client'
 
-import {useDispatch, useSelector} from 'react-redux'
-import {set} from "@/lib/features/titleReducer";
-import {useEffect} from "react";
+import {useDispatch} from 'react-redux'
+import {setValue} from "@/lib/features/paramsReducer";
 
 export function SetPageTitle(props) {
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(set(props.title))
-  });
+  dispatch(setValue({title: props.title}))
+  dispatch(setValue({database: props.database}))
   return <></>;
 }

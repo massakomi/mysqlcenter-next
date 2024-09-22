@@ -1,27 +1,29 @@
 import {dbCreate} from "@/app/ui/actions";
-import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
-import {set} from "@/lib/features/titleReducer";
 import {setMessages} from "@/lib/features/messagesReducer";
-import {redirect} from "next/navigation";
+import {redirect, useRouter} from "next/navigation";
 
 export function DbCreateForm() {
 
   const dispatch = useDispatch()
+  const router = useRouter()
 
-  const onDbCreate = async (formData) => {
+  const onDbCreate = async (e) => {
+    e.preventDefault()
+    let formData = new FormData(e.target);
     let json = await dbCreate(formData)
     dispatch(setMessages(json.message))
     if (json.status === true) {
       // не смог очистить значение value и поэтому просто редирект
-      redirect('/db_list')
+      router.refresh()
+      console.log('refresh')
     }
   }
 
   return  (
     <fieldset className="msGeneralForm">
       <legend>Создание базы данных</legend>
-      <form action={onDbCreate}>
+      <form onSubmit={onDbCreate.bind(this)}>
         <input name="dbName" type="text" defaultValue="" />
         <button type="submit">Создать!</button>
       </form>

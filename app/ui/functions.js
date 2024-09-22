@@ -4,13 +4,12 @@
  * Групповые действия с чекбоксами
  */
 export function chbx_action(form_name, action, mask=false) {
-
-  var add = '';
+  let add = '';
   if (mask) {
     add = '[name="'+mask+'"]'
   }
-  var chbxs = document.querySelectorAll('form[name="'+form_name+'"] input[type="checkbox"]'+add);
-  for (var chx of chbxs) {
+  const chbxs = document.querySelectorAll('form[name="'+form_name+'"] input[type="checkbox"]'+add);
+  for (const chx of chbxs) {
     if (action === 'invert') {
       chx.checked = !chx.checked;
     } else if (action === 'check') {

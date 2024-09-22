@@ -18,14 +18,14 @@ export function SearchInTable() {
   if (table !== '') {
     let url = `?s=tbl_data&db=${db}&table=${table}`
     forms.push(
-      <form key="f1" action={url} method="post" style={{display:'inline'}} onSubmit={appendQuery.bind(this)}>
+      <form key="f1" action={url} method="post" className="d-inline me-1" onSubmit={appendQuery.bind(this)}>
         <input type="text" name="query" defaultValue="Поиск по таблице" onFocus={clearVal.bind(this)} />
       </form>
     )
   }
   let url = `?s=search&db=${db}`
   forms.push(
-    <form key="f2" action={url} method="post" style={{display:'inline'}} onSubmit={appendQuery.bind(this)}>
+    <form key="f2" action={url} method="post" className="d-inline me-1" onSubmit={appendQuery.bind(this)}>
       <input type="text" name="query" defaultValue="Поиск по базе" onFocus={clearVal.bind(this)} />
     </form>
   )

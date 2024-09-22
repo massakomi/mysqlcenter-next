@@ -1,6 +1,7 @@
 'use client'
 import Table from "./Table";
 import TableFull from "@/app/(pages)/db_list/TableFull";
+import {chbx_action} from "@/app/ui/functions";
 
 export default function ColumnLeft(props) {
 
@@ -33,8 +34,8 @@ export default function ColumnLeft(props) {
 
       <div className="chbxAction">
         <img src={"/images/arrow_ltr.png"} alt="" border="0" align="absmiddle" />
-        <span className="a" onClick={chbxAction.bind(this, 'check')}>выбрать все</span>  &nbsp;
-        <span className="a" onClick={chbxAction.bind(this, 'uncheck')}>очистить</span>
+        <span role="button" onClick={chbxAction.bind(this, 'check')}>выбрать все</span>  &nbsp;
+        <span role="button" onClick={chbxAction.bind(this, 'uncheck')}>очистить</span>
       </div>
 
       <div className="imageAction">

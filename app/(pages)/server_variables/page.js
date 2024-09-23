@@ -1,6 +1,5 @@
 
 import {serverVariables} from "@/app/ui/actions";
-import {SetPageTitle} from "@/app/ui/SetPageTitle";
 export const  metadata = {
   title: 'Переменные сервера'
 }
@@ -32,7 +31,7 @@ export default async function Page() {
 
   return (
     <>
-      <SetPageTitle title='Переменные сервера' />
+      <h1>{metadata.title}</h1>
       <table className="contentTable">
         <thead>
         <tr>

@@ -25,7 +25,7 @@ export function PopupDbList(props) {
 function DbHiddenMenu({data, opened}) {
   return <div id="dbHiddenMenu" className={opened ? '' : 'hidden'}>
           {data.map((item, key) =>
-            <a key={key} href={`?db=${item}`}>{item}</a>
+            <a key={key} href={`/tbl_list/${item}`}>{item}</a>
           )}
         </div>;
 }

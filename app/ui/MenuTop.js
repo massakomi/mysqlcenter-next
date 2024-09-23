@@ -1,10 +1,10 @@
 'use client'
-import {usePathname} from "next/navigation";
+import {useParams, usePathname} from "next/navigation";
 import Link from "next/link";
 
 export function MenuTop() {
-  const props = {}
   const pathname = usePathname();
+  const params = useParams();
   let dbMenuGlobal = [
     ['delim'],
     ['поиск', 'search', ''],
@@ -12,8 +12,12 @@ export function MenuTop() {
     ['sql', 'sql', ''],
     ['операции', 'actions', '']
   ]
+  let separator = pathname.indexOf('/', 1);
+  let page = pathname.substring(1, separator > 0 ? separator : pathname.length)
   let type = 'table';
-  if (pathname === '/db_list' || props.page === 'db_list' || props.page === 'users' || pathname.startsWith('/server_')) {
+  //console.log(params.db) console.log(params.table)
+
+  if (params.db === undefined && params.table === undefined) {
     type = 'server';
     dbMenuGlobal = [
       ['базы данных', 'db_list', ''],
@@ -22,27 +26,27 @@ export function MenuTop() {
       //['кодировки', 'server_collations', ''],
       ['инфо', 'server_info', ''],
     ].concat(dbMenuGlobal)
-  } else if ((props.db !== '' && props.table === '') || props.page === 'tbl_list') {
+  } else if (params.db !== '' && params.table === undefined) {
     type = 'db'
     dbMenuGlobal = [
-      ['базы таблицы', 'tbl_list', ''],
+      ['таблицы', 'tbl_list', ''],
       ['создать таблицу', 'tbl_add', ''],
     ].concat(dbMenuGlobal).concat([
       ['delim'],
-      ['очистить', props.page, 'dbTruncate'],
-      ['удалить', props.page, 'dbDelete'],
-      ['удалить таблицы', props.page, 'dbTablesDelete'],
+      ['очистить', page, 'dbTruncate'],
+      ['удалить', page, 'dbDelete'],
+      ['удалить таблицы', page, 'dbTablesDelete'],
     ])
   } else {
     dbMenuGlobal = [
       ['обзор', 'tbl_data', ''],
       ['структура', 'tbl_struct', ''],
       ['вставить', 'tbl_change', ''],
-      ['создать таблицу', 'tbl_add', '', '?db='+props.db],
+      ['создать таблицу', 'tbl_add', '', '?db='+params.db],
     ].concat(dbMenuGlobal).concat([
       ['delim'],
-      ['очистить', props.page, 'tableTruncate'],
-      ['удалить', props.page, 'tableDelete'],
+      ['очистить', page, 'tableTruncate'],
+      ['удалить', page, 'tableDelete'],
     ])
   }
 
@@ -55,7 +59,16 @@ export function MenuTop() {
     }
     let page = item[1]
     let action = item[2]
-    let curl = page;
+    let curl = `/${page}`;
+    if (type === 'db') {
+      curl += `/${params.db}`
+    }
+    if (type === 'table') {
+      curl += `/${params.db}`
+      if (page !== 'tbl_add') {
+        curl += `/${params.table}`
+      }
+    }
     if (action) {
       curl += '?action='+action;
     }
@@ -66,7 +79,7 @@ export function MenuTop() {
       $extra = ' class="truncate" onClick="check(this, \'очистка\'); return false"';
     }*/
     let className = ''
-    if (`/${page}` === pathname) {
+    if (pathname.startsWith(`/${page}`)) {
       className = 'cur'
     }
     menu.push(<Link key={menu.length} className={className} href={curl}>{title}</Link>)

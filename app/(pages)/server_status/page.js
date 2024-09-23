@@ -2,7 +2,6 @@
 import {serverStatus} from "@/app/ui/actions";
 import {KillProcess} from "@/app/(pages)/server_status/KillProcess";
 import {Buttons} from "@/app/(pages)/server_status/Buttons";
-import {SetPageTitle} from "@/app/ui/SetPageTitle";
 
 export const  metadata = {
   title: 'Список процессов'
@@ -32,6 +31,8 @@ export default async function Page() {
   }
 
   return  (
+    <>
+    <h1>{metadata.title}</h1>
     <table width="100%" border="0" cellSpacing="0" cellPadding="3">
       <tbody>
       <tr>
@@ -57,9 +58,9 @@ export default async function Page() {
         </td>
         <td valign="top">
           <Buttons />
-          <SetPageTitle title='Список процессов' />
         </td>
       </tr></tbody>
     </table>
+    </>
   )
 }

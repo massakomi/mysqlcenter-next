@@ -2,6 +2,7 @@ import {dbDelete, dbHide} from "@/app/ui/actions";
 import {useState} from "react";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
+import Link from "next/link";
 
 export default function Table(props) {
 
@@ -35,7 +36,7 @@ export default function Table(props) {
     rows.push(
       <tr key={i}>
         <td><input name="databases[]" type="checkbox" value={db} className="cb" /></td>
-        <td><a href={href} title="Структура БД" id={idRow} style={styles}>{db}</a></td>
+        <td><Link href={href} title="Структура БД" id={idRow} style={styles}>{db}</Link></td>
         <td>
           <span role="button" onClick={() => dbDeleteConfirm(db, i)} title={'Удалить '+db}><img src={"/images/close.png"} alt="" border="0" /></span> &nbsp;
           <a href={`/actions/${db}/`} title="Изменить"><img src={"/images/edit.gif"} alt="" border="0" /></a> &nbsp;

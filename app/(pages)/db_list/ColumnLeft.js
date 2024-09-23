@@ -1,36 +1,31 @@
 'use client'
 import Table from "./Table";
 import TableFull from "@/app/(pages)/db_list/TableFull";
-import {chbx_action} from "@/app/ui/functions";
+import {chbx_action, prepareAction} from "@/app/ui/functions";
+import {customAction} from "@/app/ui/actions";
+import {setMessages} from "@/lib/features/messagesReducer";
+import {useDispatch} from "react-redux";
+import {useParams} from "next/navigation";
 
 export default function ColumnLeft(props) {
 
-  const msImageAction = (param, actionReplace) => {
-    //e.preventDefault()
-    //console.log('act = '+param)
-    //console.log(this)
-    if (typeof actionReplace == 'string') {
-      actionReplace = props.url + '?s=' + actionReplace
-    } else {
-      actionReplace = ''
-    }
-    console.log(actionReplace)
-    //msImageAction('formDatabases', param, actionReplace)
+  const dispatch = useDispatch()
+
+  const msImageAction = async (act, url, e) => {
+    let {action, formData} = prepareAction(act, url, e, 'databases[]')
+    formData.set('dbMulty', 1)
+    let json = await customAction(action, formData);
+    dispatch(setMessages(json.message))
   }
 
   const chbxAction = (opt) => {
-    chbx_action('formDatabases', opt, 'databases[]')
+    chbx_action(opt, 'databases[]')
   }
 
   return (
-    <div>
-      <form action="?s=db_list" method="post" name="formDatabases" id="formDatabases">
-        <input type="hidden" name="dbMulty" value="1" />
-        <input type="hidden" name="action" value="" />
-        {!props.showFullInfo ?
-          <Table hiddens={props.hiddens} databases={props.databases} /> :  <TableFull />}
-
-      </form>
+    <>
+      {!props.showFullInfo ?
+        <Table hiddens={props.hiddens} databases={props.databases} /> :  <TableFull />}
 
       <div className="chbxAction">
         <img src={"/images/arrow_ltr.png"} alt="" border="0" align="absmiddle" />
@@ -45,6 +40,6 @@ export default function ColumnLeft(props) {
         <input type="image" alt="" src={"/images/b_tblexport.png"} onClick={msImageAction.bind(this, 'exportDatabases', 'export')} title="Перейти к экспорту баз данных" />
         <input type="image" alt="" src={"/images/fixed.gif"} onClick={msImageAction.bind(this, 'db_compare', 'db_compare')} title="Сравнить выбранные базы данных" />
       </div>
-    </div>
+    </>
   );
 }

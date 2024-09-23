@@ -3,6 +3,9 @@ import {useState} from "react";
 
 export function PopupQueryList(props) {
   const [opened, setOpened] = useState(false);
+  if (!props.queries) {
+    return <></>;
+  }
   return (
     <span className="queryPopupBlock">
       <span className="hiddenText" onClick={() => setOpened(!opened)}>запросы</span>

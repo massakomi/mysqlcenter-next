@@ -1,10 +1,18 @@
 @use "sass:map";
 
 body {font-size:12px; font-family: Arial, serif; color:#000000}
+h1 { margin:0; font-size:18px; padding:0; line-height:100%}
 
-/* Каркасная таблица */
-table.outerTable TD { vertical-align:top;}
-table.outerTable H1 { margin:0; font-size:18px; padding:0; line-height:100%}
+.cols {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  &.main {
+    margin: 8px 3px;
+    > div:nth-child(1) {width: 150px}
+    > div:nth-child(2) {width: 100%}
+  }
+}
 
 /* Меню главное */
 .globalMenu {
@@ -20,7 +28,7 @@ table.outerTable H1 { margin:0; font-size:18px; padding:0; line-height:100%}
 /* Меню цепочка */
 span.menuChain {
   a {text-decoration: none}
-  a, span {margin-right: 3px}
+  a, span {margin-right: 10px}
 }
 
 /* Меню таблиц */
@@ -62,11 +70,13 @@ form.popupGeneralForm INPUT { text-align:right; margin:5px 0 }
 .popupGeneralFormOpen {margin-right: 10px}
 
 /* Таблица сообщения */
-table.globalMessage { margin:5px 0; border-collapse:collapse; empty-cells:show}
-table.globalMessage td, .globalMessage th { padding: 5px; font-size:12px;}
-table.globalMessage th {text-align:left; }
-table.globalMessage .sqlQuery { font-size:10px; font-weight:bold; margin:2px 10px; white-space:pre}
-table.globalMessage .mysqlError { font-size:10px; font-weight:bold; }
+table.globalMessage {
+  margin:5px 0; border-collapse:collapse; empty-cells:show;
+  td, th { padding: 5px; font-size:12px;}
+  th {text-align:left; }
+  .sqlQuery { font-size:10px; font-weight:bold; margin:2px 10px; white-space:pre}
+  .mysqlError { font-size:10px; font-weight:bold; }
+}
 
 /* Отображения времени выполнения */
 span.hiddenText { }
@@ -76,10 +86,9 @@ A.hiddenSmallLink { text-decoration:none; font-size:10px}
 
 /* Прочие стили */
 
-
 /* Таблица основная */
 table.contentTable { border-collapse:collapse; empty-cells:show; margin:10px 0 0}
-table.contentTable td { padding: 3px; font-size:12px}
+table.contentTable td { padding: 3px 3px 1px; font-size:12px; vertical-align: top}
 table.contentTable th { padding: 3px; font-size:12px; text-align:left; white-space:nowrap}
 table.contentTable .cb { margin:0; width:18px; height:18px}
 table.contentTable .sort { text-decoration:none; font-size:10px}
@@ -87,7 +96,19 @@ table.contentTable .sort:hover { text-decoration:underline}
 table.contentTable .tbl { width:200px; font-size:14px}
 table.contentTable .num { width:80px; text-align:right;}
 table.contentTable .rig { text-align:right;}
-table.contenttable a { text-decoration:none}
+table.contentTable a { text-decoration:none}
+table.contentTable.interlaced tr:nth-child(odd) { background-color: #eee}
+table.contentTable img { margin: 0}
+table.optionstable {empty-cells:show; border-collapse:collapse;}
+table.optionstable th {background-color: #eee}
+table.optionstable th, table.optionstable td {border:1px solid #ccc; padding: 2px 4px; vertical-align: top;}
+/* db_compare tbl_compare */
+.contentTable .r {text-align:right}
+.contentTable .b { font-size:14px;}
+.contentTable .diff TD{ background-color:#FF3333; color:#FFFFFF}
+.contentTable.anone A { text-decoration:none}
+.contentTable .e { background-color: #afa}
+.contentTable .n { background-color: #faa}
 
 /* Таблица с формой */
 form.tableFormEdit { margin:10px 0}
@@ -110,6 +131,11 @@ table.tableExport .sel { font-size:14px; height:150px}
 table.tableExport .hs { font-size:12px; text-decoration:none; margin:0 5px}
 table.tableExport .l2 { margin:0 0 0 24px}
 table.tableExport .ta { font-size:10px}
+[name="formExport"] label { display:block}
+[name="formExport"] label .l2 { margin-left:24px}
+[name="formExport"] TABLE.tableExport .l2 {margin-right: 5px}
+[name="formExport"] [name="fields[]"] {height:120px; width:150px;}
+#search_table select {margin-right: 10px}
 
 /* Общая форма внтури FIELDSET actionsdb actions */
 fieldset.msGeneralForm {
@@ -134,6 +160,24 @@ img.helpimg {cursor:pointer}
 .page-login p { margin:3px}
 .page-login .message {color:#FF0000; padding:10px}
 
+/* tbl_list */
+.links-block {
+  padding: 10px 0;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+.links-block a + a {
+  margin-left: 10px;
+}
+.links-block a.active {
+  color: green;
+  text-decoration: none;
+}
+.dateSelector select {margin-right: 5px}
+.dateSelector span {margin-right: 5px}
+h4 {font-size:16px; margin:10px 0 10px; background-color:#eee; padding:10px; width:800px}
+
+
 /* Bootstrap style */
 
 $spacer: 1rem;
@@ -154,3 +198,6 @@ $spacers: (
 .hidden {display: none!important;}
 .d-inline {display: inline}
 [role="button"] {cursor: pointer}
+.grey {
+  color: #aaa;
+}

@@ -21,7 +21,15 @@ function List({messages}) {
   return (
     <div className="messages">
       {messages.map((item, key) =>
-        <div key={key} style={{color: item.color}}>{item.text}</div>
+        <Message item={item} key={key} />
       )}
     </div>)
+}
+
+function Message({item}) {
+  if (item.text) {
+    return <div style={{color: item.color}}>{item.text}</div>;
+  } else {
+    return <div>{item}</div>;
+  }
 }

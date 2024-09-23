@@ -1,6 +1,5 @@
 
 import {serverInfo} from "@/app/ui/actions";
-import {SetPageTitle} from "@/app/ui/SetPageTitle";
 import Table from "@/app/ui/Table";
 export const  metadata = {
   title: 'Различная информация'
@@ -10,7 +9,7 @@ export default async function Page() {
   let props = await serverInfo();
   return (
     <>
-      <SetPageTitle title='Различная информация' />
+      <h1>{metadata.title}</h1>
 
       <h2>Пользователи</h2>
       <Table data={props.users} />

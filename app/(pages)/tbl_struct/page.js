@@ -1,5 +1,9 @@
+export const  metadata = {
+  title: 'Структура таблицы ?'
+}
+
 export default function Page() {
   return (
-    <h1>tbl struct page</h1>
+    <h1>{metadata.title}</h1>
   );
 }

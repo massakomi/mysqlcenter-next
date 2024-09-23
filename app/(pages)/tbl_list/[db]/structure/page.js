@@ -1,30 +1,23 @@
 import TableList from "@/app/(pages)/tbl_list/[db]/TableList";
-import Actions from "./Actions";
 import {tblList} from "@/app/ui/actions";
 import {SubMenu} from "@/app/(pages)/tbl_list/[db]/SubMenu";
+import {TableStructure} from "@/app/(pages)/tbl_list/[db]/structure/TableStructure";
 
 export async function generateMetadata({ params, searchParams }, parent) {
   return {
-    title: params.db
+    title: `${params.db} исследование структуры`
   }
 }
 
 export default async function Page({params}) {
 
-  let props = await tblList(params.db);
-
-  let state = {
-    tables: props.tables
-  }
+  let props = await tblList(params.db, '&mode=structure');
 
   return (
     <>
-      <h1>{`Список таблиц базы данных "${params.db}"`}</h1>
-
-      <TableList tables={state.tables} dirImage={props.dirImage} db={params.db} />
-      <Actions />
+      <h1>{`${params.db} исследование структуры`}</h1>
       <SubMenu />
-
+      <TableStructure {...props} />
     </>
   );
 }

@@ -1,14 +1,18 @@
 'use client'
 
+import {customAction} from "@/app/ui/actions";
+import {setMessages} from "@/lib/features/messagesReducer";
+import {useParams} from "next/navigation";
+
 /**
  * Групповые действия с чекбоксами
  */
-export function chbx_action(form_name, action, mask=false) {
+export function chbx_action(action, mask=false) {
   let add = '';
   if (mask) {
     add = '[name="'+mask+'"]'
   }
-  const chbxs = document.querySelectorAll('form[name="'+form_name+'"] input[type="checkbox"]'+add);
+  const chbxs = document.querySelectorAll('.contentTable input[type="checkbox"]'+add);
   for (const chx of chbxs) {
     if (action === 'invert') {
       chx.checked = !chx.checked;
@@ -75,40 +79,44 @@ export function getAllCookies() {
 }
 
 
-
-
-
-/*
-const login = (e) => {
-  e.preventDefault();
-  let form = e.target;
-
-  const data = new URLSearchParams();
-  for (const pair of new FormData(form)) {
-    data.append(pair[0], pair[1]);
+export function formatSize (bytes) {
+  if (bytes < Math.pow(1024, 1)) {
+    return bytes + " b";
+  } else if (bytes < Math.pow(1024, 2)) {
+    return (bytes / Math.pow(1024, 1)).toFixed(2) + ' Kb';
+  } else if (bytes < Math.pow(1024, 3)) {
+    return (bytes / Math.pow(1024, 2)).toFixed(2) + ' Mb';
+  } else if (bytes < Math.pow(1024, 4)) {
+    return (bytes / Math.pow(1024, 3)).toFixed(2) + ' Gb';
   }
-
-
-  //setCookie('ppkcookie','testcookie',7);
-
-  let url = 'http://msc/?ajax=1'
-  let options = {}
-  options.method = 'POST';
-  options.body = data;
-  options.credentials = 'include';
-  fetch(url, options)
-    .then(response => response.json())
-    .then(json => {
-      console.log(json)
-      if (json.cookies) {
-        for (let name in json.cookies) {
-          setCookie(name, json.cookies[name], 31)
-        }
-      }
-    })
-
-  // jQuery.post('http://msc/', jQuery(form).serialize(), function(data) {
-  //   console.log(data)
-  // });
 }
-*/
+
+export function image(src) {
+  return <img src={`/images/${src}`} alt="" />
+}
+
+/**
+ * Общий код для подготовки параметров множественных действий над таблицами и базами
+ */
+export function prepareAction (action, url, event, name) {
+  let items = []
+  document.querySelectorAll('.cb:checked').forEach(function(element) {
+    items.push(element.value)
+  });
+  if (!items.length) {
+    return [];
+  }
+  if (action.match(/delete/i) || action.match(/truncate/i)) {
+    if (!confirm('Подтвердите...')) {
+      return [];
+    }
+  }
+  if (action === 'auto') {
+    action = event.target.options[e.target.selectedIndex].value
+  }
+  let formData = new FormData();
+  for (let item of items) {
+    formData.append(name, item)
+  }
+  return {action, formData};
+}

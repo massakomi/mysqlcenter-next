@@ -1,14 +1,18 @@
 'use client'
 import {DbCreateForm} from "./DbCreateForm";
 import AddUser from "./AddUser";
+import Link from "next/link";
+import {usePathname} from "next/navigation";
 
 export default function ColumnRight(props) {
 
+  const pathname = usePathname()
+
   let tableLink;
-  if (!props.showFullInfo) {
-    tableLink = <a href={`?s=db_list&db=${props.dbname}&mode=full`} title="Сканирует все таблицы всех баз данных и выводит количество таблиц, размер, дату обновления и количество рядов">Показать полную таблицу</a>
+  if (pathname !== '/db_list/full') {
+    tableLink = <Link href="/db_list/full" title="Сканирует все таблицы всех баз данных и выводит количество таблиц, размер, дату обновления и количество рядов">Показать полную таблицу</Link>
   } else {
-    tableLink = <a href={`?s=db_list&db=${props.dbname}`}>Показать краткую таблицу</a>
+    tableLink = <Link href="/db_list">Показать краткую таблицу</Link>
   }
 
   return (
@@ -16,8 +20,7 @@ export default function ColumnRight(props) {
       <DbCreateForm />
 
       <div className="mt-10">
-        {tableLink} <br />
-        <a href={`?s=db_list&db=${props.dbname}&mode=speedtest`}>Тест скорости</a>
+        {tableLink}
       </div>
 
       <div className="mt-10">{props.appName}</div>
@@ -26,7 +29,6 @@ export default function ColumnRight(props) {
 
       <div className="mt-10">Версия сервера: {props.mysqlVersion}</div>
       <div>Версия PHP: {props.phpversion}</div>
-      <div>БД: {props.dbname}<br /></div>
 
       <AddUser />
     </>

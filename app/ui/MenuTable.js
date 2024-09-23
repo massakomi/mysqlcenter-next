@@ -1,12 +1,14 @@
 'use client'
 
 import {useEffect, useState} from "react";
-import {useParams} from "next/navigation";
+import {useParams, usePathname} from "next/navigation";
 import Link from "next/link";
+import {getPageFromPathname} from "@/app/ui/functions";
 
 export function MenuTable(props) {
 
   const urlParams = useParams()
+  const pathname = usePathname()
   const [tables, setTables] = useState(false);
   useEffect(() => {
     if (!urlParams.db) {
@@ -15,7 +17,7 @@ export function MenuTable(props) {
     fetch(`http://msc/?ajax=1&db=${urlParams.db}`)
       .then(response => response.json())
       .then((json) => {
-        setTables(json.page.tables)
+        setTables(json.page.tables || [])
       })
   }, []);
 
@@ -26,16 +28,21 @@ export function MenuTable(props) {
     return <>Нет таблиц в БД</>;
   }
 
-  return displayTables(tables, props, urlParams);
+  let page = getPageFromPathname(pathname)
+  if (!['tbl_data', 'tbl_struct'].includes(page)) {
+    page = 'tbl_data';
+  }
+
+  return displayTables(tables, props, urlParams, page);
 }
 
-function displayTables(tables, props, urlParams) {
+function displayTables(tables, props, urlParams, page) {
 
   let prefixes = prefixStat(tables)
 
   let menuTables = [];
   let selectorTables = [];
-  let currentTable = '';
+  let currentTable = urlParams.table;
   for (let table of tables) {
     if (!urlParams.db) {
       continue;
@@ -43,7 +50,6 @@ function displayTables(tables, props, urlParams) {
     const tableName = table.Name;
     let className = getClassName(tableName, prefixes)
 
-    let page = 'tbl_data';
     let link = `/${page}/${urlParams.db}/${tableName}`
     //console.log(table)
     let style = {};

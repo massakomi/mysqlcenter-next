@@ -23,10 +23,7 @@ TABLE.contentTable A,
 DIV#dbHiddenMenu A     { color:#0000FF }
 DIV.formSet H2         { color:#FFFFFF }
 
-TABLE.globalMessage .mysqlError { color:#FF0000 }
 
-A.truncate { color:#000000!important}
-A.delete { color:red!important}
 
 /* Фон */
 
@@ -35,10 +32,9 @@ FORM.popupGeneralForm  { background-color:#FFFFFF }
 
 DIV#dbHiddenMenu { background-color:#eee }
 
-TABLE.globalMessage th,
 TABLE.contentTable TH,
 FORM.tableFormEdit .editHeader TD,
-FORM.tableFormEdit TH  { background-color:#CCCCCC }
+FORM.tableFormEdit TH  {  background-color:#CCCCCC }
 
 .interlace   { background-color:#eee }
 .selectedRow { background-color:#eea}
@@ -46,8 +42,6 @@ FORM.tableFormEdit TH  { background-color:#CCCCCC }
 /* Рамка */
 
 FORM.popupGeneralForm,
-TABLE.globalMessage td,
-.globalMessage th,
 TABLE.contentTable TH,
 FORM.tableFormEdit TH  { border: 1px solid #000  }
 

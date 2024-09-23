@@ -12,6 +12,9 @@ import Link from "next/link";
 export default function TableList(props) {
 
   const dispatch = useDispatch()
+  if (props.messages) {
+    dispatch(setMessages(props.messages))
+  }
 
   const deleteTable = async (db, table)  => {
     if (!confirm('Подтвердите...')) {
@@ -92,8 +95,8 @@ export default function TableList(props) {
     return <Table data={props.tables} />;
   }
 
-  let sumSize = useRef(0);
-  let sumRows = useRef(0);
+  let sumSize = 0;
+  let sumRows = 0;
 
   let tables = Object.values(props.tables)
   let trs = tables.map((table, key) => renderRow(table, key))

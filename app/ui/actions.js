@@ -13,11 +13,32 @@ export async function serverVariables() {
 export async function serverInfo() {
   return await query('server_users');
 }
-export async function searchPage() {
-  return await query('search');
+export async function searchPage(db, table, post = {}) {
+  let queryString = 's=search';
+  if (db !== undefined) {
+    queryString += `&db=${db}`
+  }
+  if (table !== undefined) {
+    queryString += `&table=${table}`
+  }
+  return await query(queryString, post);
 }
-export async function dbList() {
-  return await query('db_list', false, { cache: 'no-store' });
+export async function actionPage(db, table, post = {}) {
+  let queryString = 's=actions';
+  if (db !== undefined) {
+    queryString += `&db=${db}`
+  }
+  if (table !== undefined) {
+    queryString += `&table=${table}`
+  }
+  return await query(queryString, post);
+}
+export async function dbList(mode = '') {
+  let queryString = 'db_list';
+  if (mode) {
+    queryString = `s=db_list&mode=${mode}`
+  }
+  return await query(queryString, false, { cache: 'no-store' });
 }
 
 // Действия в ActionProcessor
@@ -55,7 +76,7 @@ export async function customAction(action, formData){
 
 
 
-async function msQuery(mode, query='') {
+/*async function msQuery(mode, query='') {
   if (mode !== 'tableRename' && mode !== 'dbCreate'  && mode !== 'dbHide' && confirm('Подтвердите...') === false) {
     return false;
   }
@@ -73,14 +94,22 @@ async function msQuery(mode, query='') {
 
   let data = await fetch('http://msc/ajax.php?ajax=1', options)
   return await data.json();
-}
+}*/
 
 async function query(query, post, opts = {}) {
   let data = await fetch(url(query), options(post, opts))
-  let json = await data.json()
   console.log('fetch', url(query), post)
-  console.log('fetch return:', json)
+  let json = {};
+  try {
+    json = await data.json()
+    console.log('fetch return:', json)
+  } catch (e) {
+    console.error('fetch error: ' + e.name + ":" + e.message + "\n" + e.stack);
+  }
   if (json.hasOwnProperty('page')) {
+    if (json.messages) {
+      json.page.messages = json.messages;
+    }
     return json.page;
   }
   return json;

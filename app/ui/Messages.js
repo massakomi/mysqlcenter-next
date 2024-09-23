@@ -13,16 +13,20 @@ export function Messages(props) {
 }
 
 function List({messages}) {
-
   if (typeof messages.map === 'undefined') {
-    console.log(messages)
     return;
   }
+  if (!messages.length) {
+    return <></>;
+  }
   return (
-    <div className="messages">
-      {messages.map((item, key) =>
-        <Message item={item} key={key} />
-      )}
+    <div className="globalMessage">
+      <div className="th">Сообщение</div>
+      <div>
+        {messages.map((item, key) =>
+          <Message item={item} key={key} />
+        )}
+      </div>
     </div>)
 }
 

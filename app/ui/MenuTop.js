@@ -1,10 +1,15 @@
 'use client'
 import {useParams, usePathname} from "next/navigation";
 import Link from "next/link";
+import {getPageFromPathname} from "@/app/ui/functions";
+import {customAction, dbDelete, tblDelete, tblTruncate} from "@/app/ui/actions";
+import {setMessages} from "@/lib/features/messagesReducer";
+import {useDispatch} from "react-redux";
 
 export function MenuTop() {
   const pathname = usePathname();
   const params = useParams();
+  const dispatch = useDispatch()
   let dbMenuGlobal = [
     ['delim'],
     ['поиск', 'search', ''],
@@ -12,11 +17,8 @@ export function MenuTop() {
     ['sql', 'sql', ''],
     ['операции', 'actions', '']
   ]
-  let separator = pathname.indexOf('/', 1);
-  let page = pathname.substring(1, separator > 0 ? separator : pathname.length)
+  let page = getPageFromPathname(pathname)
   let type = 'table';
-  //console.log(params.db) console.log(params.table)
-
   if (params.db === undefined && params.table === undefined) {
     type = 'server';
     dbMenuGlobal = [
@@ -25,7 +27,7 @@ export function MenuTop() {
       ['переменные', 'server_variables', ''],
       //['кодировки', 'server_collations', ''],
       ['инфо', 'server_info', ''],
-    ].concat(dbMenuGlobal)
+    ]
   } else if (params.db !== '' && params.table === undefined) {
     type = 'db'
     dbMenuGlobal = [
@@ -59,30 +61,71 @@ export function MenuTop() {
     }
     let page = item[1]
     let action = item[2]
-    let curl = `/${page}`;
-    if (type === 'db') {
-      curl += `/${params.db}`
-    }
-    if (type === 'table') {
-      curl += `/${params.db}`
-      if (page !== 'tbl_add') {
-        curl += `/${params.table}`
-      }
-    }
+    let curl = getUrl(params, page, action, type)
+    let className = getClassName(pathname, page, action)
+
     if (action) {
-      curl += '?action='+action;
+      menu.push(<span role="button" onClick={multyAction.bind(this, action, params, dispatch)} key={menu.length} className={className}>{title}</span>)
+    } else {
+      menu.push(<Link key={menu.length} className={className} href={curl}>{title}</Link>)
     }
-    /*$extra = null;
-    if (stristr($action, 'delete')) {
-      $extra = ' class="delete" onClick="check(this, \'удаление\'); return false"';
-    } elseif (stristr($action, 'truncate')) {
-      $extra = ' class="truncate" onClick="check(this, \'очистка\'); return false"';
-    }*/
-    let className = ''
-    if (pathname.startsWith(`/${page}`)) {
-      className = 'cur'
-    }
-    menu.push(<Link key={menu.length} className={className} href={curl}>{title}</Link>)
+
   }
   return <span className="globalMenu">{menu}</span>
 }
+
+async function multyAction(action, params, dispatch) {
+  if (!confirm('Подтвердите...')) {
+    return false;
+  }
+  let json;
+  if (action === 'dbTruncate') {
+    json = await customAction('dbTruncate', `db=${params.db}`)
+  }
+  if (action === 'dbDelete') {
+    json = await dbDelete(params.db)
+  }
+  if (action === 'dbTablesDelete') {
+    json = await customAction('dbTablesDelete', `db=${params.db}`)
+  }
+  if (action === 'tableTruncate') {
+    json = await tblTruncate(params.db, params.table)
+  }
+  if (action === 'tableDelete') {
+    json = await tblDelete(params.db, params.table)
+  }
+  dispatch(setMessages(json.message))
+}
+
+function getClassName(pathname, page, action) {
+  let className = ''
+  if (pathname.startsWith(`/${page}`)) {
+    className = 'cur'
+  }
+  if (action.match(/delete/i)) {
+    className = 'delete'
+  }
+  if (action.match(/truncate/i)) {
+    className = 'truncate'
+  }
+  return className;
+}
+
+
+function getUrl(params, page, action, type) {
+  let curl = `/${page}`;
+  if (type === 'db') {
+    curl += `/${params.db}`
+  }
+  if (type === 'table') {
+    curl += `/${params.db}`
+    if (page !== 'tbl_add') {
+      curl += `/${params.table}`
+    }
+  }
+  if (action) {
+    curl += '?action='+action;
+  }
+  return curl;
+}
+

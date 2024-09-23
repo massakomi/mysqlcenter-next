@@ -1,23 +1,15 @@
+'use client'
 
+import Link from "next/link";
 
 export default function TableFull(props) {
-
-  const dbDelete = (db) => {
-    msQuery('dbDelete', `db=${db}&id=db${db}`)
-  }
-
-  const dbHide = (db, action) => {
-    alert('hide')
-    msQuery('dbHide', `db=${db}&id=db${db}&action=${action}`)
-  }
-
 
   let nz = Intl.NumberFormat(undefined, {'maximumFractionDigits': 0});
   let nf = Intl.NumberFormat(undefined, {'minimumFractionDigits': 1, 'maximumFractionDigits': 1});
   let trs = [], countTotalTables = 0, countTotalSize = 0, countTotalRows = 0;
   for (let i = 0; i < props.databases.length; i++) {
     let db = props.databases[i]['name'];
-    let href = `/?db=${db}&s=tbl_list`
+    let href = `/tbl_list/${db}`
     let idRow = "db"+db;
 
     let extra = props.databases[i]['extra'];
@@ -45,19 +37,13 @@ export default function TableFull(props) {
     countTotalRows += countRows
 
     if (updateTime) {
-      /*$updateTime = date2rusString(MS_DATE_FORMAT, $updateTime);
-      if (strpos($updateTime, 'дня') !== false || strpos($updateTime, 'ера') !== false) {
-        $updateTime = "<b>$updateTime</b>";
-      }*/
       updateTime = new Date(updateTime * 1000)
       updateTime = updateTime.toLocaleString()
     }
 
     trs.push(
       <tr key={i}>
-        <td><input name="databases[]" type="checkbox" value={db} className="cb" /></td>
-        <td><a href={href} title="Структура БД" id={idRow}>{db}</a></td>
-        <td><a href="javascript:void()" onClick={dbDelete.bind(this, db)} title={'Удалить '+db}><img src={"/images/close.png"} alt="" border="0" /></a></td>
+        <td><Link href={href} title="Структура БД" id={idRow}>{db}</Link></td>
         <td>{countTables}</td>
         <td>{updateTime}</td>
         <td>{nz.format(countRows)}</td>
@@ -70,9 +56,7 @@ export default function TableFull(props) {
     <table className="contentTable" id="structureTableId">
       <thead>
       <tr>
-        <th></th>
         <th>Название</th>
-        <th></th>
         <th>Таблиц</th>
         <th>Обновлено</th>
         <th>Рядов</th>
@@ -84,8 +68,6 @@ export default function TableFull(props) {
       </tbody>
       <tfoot>
       <tr>
-        <td></td>
-        <td></td>
         <td></td>
         <td>{countTotalTables}</td>
         <td></td>

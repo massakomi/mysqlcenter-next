@@ -10,18 +10,12 @@ export async function generateMetadata({ params, searchParams }, parent) {
 }
 
 export default async function Page({params}) {
-
   let props = await tblList(params.db);
-
-  let state = {
-    tables: props.tables
-  }
-
   return (
     <>
       <h1>{`Список таблиц базы данных "${params.db}"`}</h1>
 
-      <TableList tables={state.tables} dirImage={props.dirImage} db={params.db} />
+      <TableList tables={props.tables} messages={props.messages} db={params.db} />
       <Actions />
       <SubMenu />
 

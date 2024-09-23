@@ -94,6 +94,13 @@ export function formatSize (bytes) {
 export function image(src) {
   return <img src={`/images/${src}`} alt="" />
 }
+export function getPageFromPathname(pathname) {
+  let separator = pathname.indexOf('/', 1);
+  let page = pathname.substring(1, separator > 0 ? separator : pathname.length)
+  return page;
+}
+
+
 
 /**
  * Общий код для подготовки параметров множественных действий над таблицами и базами

@@ -15,6 +15,10 @@ export async function serverVariables() {
 export async function serverInfo() {
   return await query('server_users');
 }
+export async function tblDataPage(db, table, order, go, post = false) {
+  const queryString = buildQueryString('tbl_data', {db, table, order, go});
+  return await query(queryString, post, { cache: 'no-store' });
+}
 export async function searchPage(db, table, post = false) {
   const queryString = buildQueryString('search', {db, table});
   return await query(queryString, post);

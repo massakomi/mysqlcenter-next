@@ -17,7 +17,6 @@ export default function Actions({setTables, tables}) {
   const dispatch = useDispatch()
   let params = useParams()
   const router = useRouter()
-  let props = {}
 
   const executeAction = async (act, url, e) => {
     let {action, formData} = prepareAction(act, url, e, 'table[]', params)

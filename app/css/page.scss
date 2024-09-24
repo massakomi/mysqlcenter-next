@@ -96,7 +96,7 @@ A.hiddenSmallLink { text-decoration:none; font-size:10px}
 /* Таблица основная */
 table.contentTable { border-collapse:collapse; empty-cells:show; margin:10px 0 0}
 table.contentTable td { padding: 3px 3px 1px; font-size:12px; vertical-align: top}
-table.contentTable th { padding: 3px; font-size:12px; text-align:left; white-space:nowrap}
+table.contentTable th { padding: 3px; font-size:12px; text-align:left; white-space:nowrap; line-height: 100%}
 table.contentTable .cb { margin:0; width:18px; height:18px}
 table.contentTable .sort { text-decoration:none; font-size:10px}
 table.contentTable .sort:hover { text-decoration:underline}
@@ -161,6 +161,14 @@ div.imageAction img {cursor:pointer}
 div.imageAction u { font-weight:bold; font-size:14px}
 div.chbxAction {font-size:12px; margin:5px;}
 img.helpimg {cursor:pointer}
+
+/* Страницы-ссылки для tbl_data */
+DIV.contentPageLinks { margin:5px 0 0;}
+DIV.contentPageLinks a { text-decoration:none; font-size:10px; margin: 0; padding: 2px 5px; border:1px solid #eee; margin-right: 2px}
+DIV.contentPageLinks a.cur { background-color: #0000FF; color:#FFFFFF}
+/* Селектор для tbl_data */
+SELECT.miniSelector { font-size:12px;}
+SELECT.miniSelector OPTION { font-size:12px;}
 
 #msAjaxQueryDiv {position: fixed; right: 0; bottom: 0; background: white; overflow: auto; max-height: 200px; padding-right:20px;}
 

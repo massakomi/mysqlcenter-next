@@ -22,6 +22,9 @@ export function Form(props) {
   if (searchParams.get('tables')) {
     props.optionsSelected = searchParams.get('tables').split(',')
   }
+  if (searchParams.get('where')) {
+    props.whereCondition = searchParams.get('where')
+  }
 
   const executeAction = async (action, event) => {
     event.preventDefault()

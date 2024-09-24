@@ -42,6 +42,9 @@ export async function dbList(mode = '') {
   const queryString = buildQueryString('db_list', {mode});
   return await query(queryString, false, { cache: 'no-store' });
 }
+export async function dbComparePage(dbs) {
+  return await query('db_compare', {dbs}, { cache: 'no-store' });
+}
 
 // Действия в ActionProcessor
 // чтобы попало в ActionProcessor, нужен $queryMode (GET['action'] или POST['action'])
@@ -51,7 +54,7 @@ export async function customAction(action, formData){
 
 async function query(query, post, opts = {}) {
   let data = await fetch(buildUrl(query), buildOptions(post, opts))
-  //console.log('fetch', url(query), post)
+  console.log('fetch', buildUrl(query), post)
   let json = {};
   try {
     json = await data.json()

@@ -1,7 +1,7 @@
 'use client'
 import ExportOptions from "@/app/(pages)/export/ExportOptions";
 import Link from "next/link";
-import {useParams} from "next/navigation";
+import {useParams, useSearchParams} from "next/navigation";
 import {useDispatch} from "react-redux";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {msMultiSelect} from "@/app/ui/functions";
@@ -14,6 +14,11 @@ export function Form(props) {
 
   const params = useParams();
   const dispatch = useDispatch();
+
+  const searchParams = useSearchParams()
+  if (searchParams.get('databases')) {
+    props.optionsSelected = searchParams.get('databases').split(',')
+  }
 
   const executeAction = async (action, event) => {
     event.preventDefault()

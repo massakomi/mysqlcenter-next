@@ -14,7 +14,7 @@ export default async function Page({params}) {
     <>
       <h1>{metadata.title}</h1>
       <div className="cols">
-        <div><ColumnLeft {...props} /></div>
+        <div className="me-3"><ColumnLeft {...props} /></div>
         <div><ColumnRight {...props} /></div>
       </div>
     </>

@@ -5,7 +5,7 @@ export function PopupSqlForm() {
   const [opened, setOpened] = useState(false);
   return (
     <>
-      <span className="popupGeneralFormOpen hiddenText"
+      <span className="me-3 hiddenText"
             onClick={() => setOpened(!opened)}
             title="Кликните, чтобы открыть форму быстрого запроса">quick-sql
       </span>

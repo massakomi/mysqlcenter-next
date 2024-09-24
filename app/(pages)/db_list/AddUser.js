@@ -29,7 +29,7 @@ export default function AddUser() {
     e.preventDefault()
     let formData = new FormData(e.target);
     let json = await userAdd(formData)
-    dispatch(setMessages(json.message))
+    dispatch(setMessages(json.messages))
   }
 
   return  (

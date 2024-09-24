@@ -12,6 +12,9 @@ export async function generateMetadata({ params, searchParams }, parent) {
 export default async function Page({params}) {
 
   let props = await searchPage(params.db);
+  if (!props.tables) {
+    return <>База не найдена</>;
+  }
 
   return (
     <>

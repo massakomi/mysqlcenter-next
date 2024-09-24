@@ -8,15 +8,16 @@ export default function FieldSet(props) {
 
   const dispatch = useDispatch();
   const params = useParams();
-  const router = useRouter()
 
   const executeAction = async (action, event) => {
     event.preventDefault()
     let formData = new FormData(event.target);
     let json = await customAction(action, formData);
-    dispatch(setMessages(json.message))
+    dispatch(setMessages(json.messages))
     if (action === 'dbRename' || action === 'dbCopy') {
-      router.push(`/actions/${formData.get('newName')}`)
+      setTimeout(function() {
+        location.href = `/actions/${formData.get('newName')}`;
+      }, 1000);
     }
   }
 

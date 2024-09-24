@@ -11,7 +11,9 @@ export async function generateMetadata({ params, searchParams }, parent) {
 export default async function Page({params}) {
 
   let props = await searchPage(params.db, params.table);
-  console.log(props)
+  if (props.status === false) {
+    return <>Таблица не найдена</>;
+  }
 
   return (
     <>

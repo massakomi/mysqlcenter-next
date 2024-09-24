@@ -12,11 +12,11 @@ export function DbCreateForm() {
     e.preventDefault()
     let formData = new FormData(e.target);
     let json = await dbCreate(formData)
-    dispatch(setMessages(json.message))
+    dispatch(setMessages(json.messages))
     if (json.status === true) {
-      // не смог очистить значение value и поэтому просто редирект
-      router.refresh()
-      console.log('refresh')
+      setTimeout(function() {
+        location.reload()
+      }, 1000);
     }
   }
 

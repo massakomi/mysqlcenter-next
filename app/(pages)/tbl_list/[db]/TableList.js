@@ -12,16 +12,18 @@ import Link from "next/link";
 export default function TableList(props) {
 
   const dispatch = useDispatch()
-  if (props.messages) {
+  // Возникает ошибка
+  // Cannot update a component (`Messages`) while rendering a different component (`TableList`).
+  /*if (props.messages) {
     dispatch(setMessages(props.messages))
-  }
+  }*/
 
   const deleteTable = async (db, table)  => {
     if (!confirm('Подтвердите...')) {
       return false;
     }
     let json = await tblDelete(db, table)
-    dispatch(setMessages(json.message))
+    dispatch(setMessages(json.messages))
   }
 
   const truncateTable = async(db, table) => {
@@ -29,14 +31,14 @@ export default function TableList(props) {
       return false;
     }
     let json = await tblTruncate(db, table)
-    dispatch(setMessages(json.message))
+    dispatch(setMessages(json.messages))
   }
 
   const renameTable = async (table, id, e) => {
     let newName = prompt('Новое имя', table)
     if (newName) {
       let json = await tblRename(props.db, table, newName)
-      dispatch(setMessages(json.message))
+      dispatch(setMessages(json.messages))
     }
   }
 

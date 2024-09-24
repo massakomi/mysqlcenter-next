@@ -30,10 +30,10 @@ export default class HtmlSelector extends Component {
 
     return (
       <select onChange={this.props.onChange ? this.props.onChange : this.onChange.bind(this)}
-              name={this.props.name}
-              multiple={this.props.multiple}
-              defaultValue={this.props.value}
-              className={this.props.className}>{opts}
+        name={this.props.name}
+        multiple={this.props.multiple}
+        defaultValue={this.props.value}
+        className={this.props.className}>{opts}
       </select>
     );
   }

@@ -19,7 +19,7 @@ export function FormTable(props) {
     e.preventDefault()
     let formData = new FormData(e.target);
     let json = await customAction('tableReplace', formData)
-    dispatch(setMessages(json.message))
+    dispatch(setMessages(json.messages))
   }
 
   let fields = props.fields || [];

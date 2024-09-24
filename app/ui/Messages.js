@@ -31,8 +31,25 @@ function List({messages}) {
 }
 
 function Message({item}) {
+  if (item === undefined) {
+    return <div>undefined message</div>;
+  }
   if (item.text) {
-    return <div style={{color: item.color}}>{item.text}</div>;
+    let text = item.text
+    if (item.rows) {
+      text += ` [${item.rows}]`
+    }
+    let sql = '';
+    if (item.sql) {
+      sql = <div className="sqlQuery">{item.sql}</div>
+    }
+    let mysqlError = '';
+    if (item.sql) {
+      mysqlError = <div className="mysqlError">{item.error}</div>
+    }
+    return <div style={{color: item.color}}>
+            {text} {sql} {mysqlError}
+          </div>;
   } else {
     return <div>{item}</div>;
   }

@@ -22,7 +22,7 @@ export default function Actions() {
     let {action, formData} = prepareAction(act, url, e, 'table[]', params)
     formData.set('db', params.db)
     let json = await customAction(action, formData);
-    dispatch(setMessages(json.message))
+    dispatch(setMessages(json.messages))
   }
 
   const chbxAction = (opt, e) => {
@@ -32,7 +32,7 @@ export default function Actions() {
 
   const makeInnodb = async () => {
     let json = await dbAllAction(params.db, 'makeInnodb');
-    dispatch(setMessages(json.message))
+    dispatch(setMessages(json.messages))
   }
 
   const filterByDate= () => {

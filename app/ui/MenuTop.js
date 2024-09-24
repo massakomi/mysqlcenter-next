@@ -94,7 +94,7 @@ async function multyAction(action, params, dispatch) {
   if (action === 'tableDelete') {
     json = await tblDelete(params.db, params.table)
   }
-  dispatch(setMessages(json.message))
+  dispatch(setMessages(json.messages))
 }
 
 function getClassName(pathname, page, action) {

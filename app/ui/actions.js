@@ -1,6 +1,8 @@
 'use server'
 
 // Запросы на страницы
+import {Exception} from "sass";
+
 export async function tblList(db, add='') {
   return await query(`s=tbl_list&db=${db}${add}`);
 }
@@ -14,30 +16,19 @@ export async function serverInfo() {
   return await query('server_users');
 }
 export async function searchPage(db, table, post = {}) {
-  let queryString = 's=search';
-  if (db !== undefined) {
-    queryString += `&db=${db}`
-  }
-  if (table !== undefined) {
-    queryString += `&table=${table}`
-  }
+  const queryString = buildQueryString('search', {db, table});
   return await query(queryString, post);
 }
 export async function actionPage(db, table, post = {}) {
-  let queryString = 's=actions';
-  if (db !== undefined) {
-    queryString += `&db=${db}`
-  }
-  if (table !== undefined) {
-    queryString += `&table=${table}`
-  }
-  return await query(queryString, post);
+  const queryString = buildQueryString('actions', {db, table});
+  return await query(queryString, post, { cache: 'no-store' });
+}
+export async function configPage(mode = '', post = {}) {
+  const queryString = buildQueryString('msc_configuration', {mode});
+  return await query(queryString, post, { cache: 'no-store' });
 }
 export async function dbList(mode = '') {
-  let queryString = 'db_list';
-  if (mode) {
-    queryString = `s=db_list&mode=${mode}`
-  }
+  const queryString = buildQueryString('db_list', {mode});
   return await query(queryString, false, { cache: 'no-store' });
 }
 
@@ -98,20 +89,26 @@ export async function customAction(action, formData){
 
 async function query(query, post, opts = {}) {
   let data = await fetch(url(query), options(post, opts))
-  console.log('fetch', url(query), post)
+  //console.log('fetch', url(query), post)
   let json = {};
   try {
     json = await data.json()
-    console.log('fetch return:', json)
+    //console.log('fetch return:', json)
   } catch (e) {
     console.error('fetch error: ' + e.name + ":" + e.message + "\n" + e.stack);
   }
   if (json.hasOwnProperty('page')) {
+    if (json.page instanceof Array) {
+      throw new Exception('В json.page вернулся массив, а не объект!');
+    }
+    //console.error('RETURN ONLY PAGE')
     if (json.messages) {
+      //console.error(' + MESSAGES')
       json.page.messages = json.messages;
     }
     return json.page;
   }
+  //console.error('RETURN ALL')
   return json;
 }
 
@@ -143,4 +140,15 @@ function queryPostData(data) {
     data = new URLSearchParams(data);
   }
   return data;
+}
+
+function buildQueryString(s, params = {}) {
+  let url = new URLSearchParams();
+  url.set('s', s)
+  for (const [key, value] of Object.entries(params)) {
+    if (typeof value !== 'undefined') {
+      url.set(key, value)
+    }
+  }
+  return url.toString();
 }

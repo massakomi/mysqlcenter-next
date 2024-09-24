@@ -106,10 +106,7 @@ export function getPageFromPathname(pathname) {
  * Общий код для подготовки параметров множественных действий над таблицами и базами
  */
 export function prepareAction (action, url, event, name) {
-  let items = []
-  document.querySelectorAll('.cb:checked').forEach(function(element) {
-    items.push(element.value)
-  });
+  let items = checkedCheckboxes()
   if (!items.length) {
     return [];
   }
@@ -127,3 +124,18 @@ export function prepareAction (action, url, event, name) {
   }
   return {action, formData};
 }
+
+export function checkedCheckboxes() {
+  let items = []
+  document.querySelectorAll('.cb:checked').forEach(function(element) {
+    items.push(element.value)
+  });
+  return items;
+}
+
+export function clearChecked() {
+  document.querySelectorAll(':checked').forEach(function(element) {
+    element.setAttribute('checked', false)
+  });
+}
+

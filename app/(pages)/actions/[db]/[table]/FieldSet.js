@@ -8,16 +8,13 @@ export default function FieldSet(props) {
 
   const dispatch = useDispatch();
   const params = useParams();
-  const router = useRouter()
 
   const executeAction = async (action, event) => {
     event.preventDefault()
     let formData = new FormData(event.target);
     let json = await customAction(action, formData);
-    dispatch(setMessages(json.message))
-    /*if (action === 'dbRename' || action === 'dbCopy') {
-      router.push(`/actions/${formData.get('newName')}`)
-    }*/
+    dispatch(setMessages(json.messages))
+    redirect(action, formData, params)
   }
 
   return (
@@ -31,4 +28,19 @@ export default function FieldSet(props) {
       </form>
     </fieldset>
   )
+}
+
+function redirect(action, formData, params) {
+  let redirect;
+  if (action === 'tableRename') {
+    redirect = `/actions/${params.db}/${formData.get('newName')}`
+  }
+  if (action === 'tableMove' || action === 'tableCopyTo') {
+    redirect = `/actions/${formData.get('newDB')}/${formData.get('newName')}`
+  }
+  setTimeout(function() {
+    if (redirect) {
+      location.href = redirect;
+    }
+  }, 1000);
 }

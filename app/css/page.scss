@@ -54,20 +54,27 @@ div#dbHiddenMenu {
 .queryPopupBlock div { padding:5px; position:absolute; left:500px; top:65px; background-color:#FFFFFF; border:1px solid black}
 
 /* Форма поиска в футере */
-form.formSearch { display:inline; margin:0; padding:0}
-form.formSearch input { font-size:12px; padding:2px}
-form.formSearch input.img { margin:0; border:0; vertical-align:middle}
+form.formSearch {
+  display:inline; margin:0; padding:0;
+  input {
+    font-size:12px; padding:2px;
+    &.img { margin:0; border:0; vertical-align:middle}
+  }
+}
 
 /* Блок страницы */
-div.pageBlock { padding:5px; margin: 5px 0; }
-div.pageBlock > b { margin-right: 20px }
-div.pageblock > b a { text-decoration:none; }
+div.pageBlock {
+  padding:5px; margin: 5px 0;
+  > b { margin-right: 20px }
+  > b a { text-decoration:none; }
+}
 
 /* Форма SQL запроса всплывающая */
-form.popupGeneralForm { padding:5px; position:absolute; left:20px; top:50px}
-form.popupGeneralForm textarea { font-size:12px; width:800px; padding:5px; display:block;}
-form.popupGeneralForm input { text-align:right; margin:5px 0 }
-.popupGeneralFormOpen {margin-right: 10px}
+form.popupGeneralForm {
+  padding:5px; position:absolute; left:20px; top:50px;
+  textarea { font-size:12px; width:800px; padding:5px; display:block;}
+  input { text-align:right; margin:5px 0 }
+}
 
 /* Таблица сообщения */
 .globalMessage {
@@ -155,10 +162,6 @@ div.chbxAction {font-size:12px; margin:5px;}
 img.helpimg {cursor:pointer}
 
 #msAjaxQueryDiv {position: fixed; right: 0; bottom: 0; background: white; overflow: auto; max-height: 200px; padding-right:20px;}
-
-.page-login { text-align: center}
-.page-login p { margin:3px}
-.page-login .message {color:#FF0000; padding:10px}
 
 /* tbl_list */
 .links-block {

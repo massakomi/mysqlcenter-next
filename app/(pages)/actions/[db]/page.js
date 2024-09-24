@@ -15,6 +15,9 @@ export const  metadata = {
 export default async function Page({params}) {
 
   let props = await actionPage(params.db);
+  if (!props.dbInfo) {
+    return <>База не найдена</>;
+  }
 
   //<input name="auto" type="checkbox" value="1" checked> Добавить значение AUTO_INCREMENT<br>
   //<input name="limit" type="checkbox" value="1"> Добавить ограничения<br>

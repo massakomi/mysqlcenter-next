@@ -24,7 +24,7 @@ export default async function PagesLayout({ children }) {
     return <pre>{'Ошибка ' + e.name + ":" + e.message + "\n" + e.stack}</pre>;
   }
   if (props.status === false) {
-    return <>{props.message}</>;
+    return <>{props.messages}</>;
   }
 
   return (

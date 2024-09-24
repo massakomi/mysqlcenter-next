@@ -11,6 +11,9 @@ export const  metadata = {
 export default async function Page({params}) {
 
   let props = await actionPage(params.db, params.table);
+  if (!props.dbs) {
+    return <>Таблица не найдена</>;
+  }
 
   return (
     <>
@@ -23,13 +26,13 @@ export default async function Page({params}) {
             </FieldSet>
 
             <FieldSet title="Переместить таблицы в (база данных.таблица):" action="tableMove" {...props}>
-              <HtmlSelector data={props.dbs} name="newDB" auto="false" value={params.db} />
+              <HtmlSelector data={props.dbs} name="newDB" value={params.db} />
               .
               <input name="newName" required type="text" defaultValue={params.table} />
             </FieldSet>
 
             <FieldSet title="Скопировать таблицу в (база данных.таблица):" action="tableCopyTo" {...props}>
-              <HtmlSelector data={props.dbs} value={params.db} name="newDB" auto="false" />
+              <HtmlSelector data={props.dbs} value={params.db} name="newDB" />
               .
               <input name="newName" type="text" required defaultValue={params.table} />
             </FieldSet>
@@ -39,7 +42,7 @@ export default async function Page({params}) {
             </FieldSet>
 
             <FieldSet title="Комментарий к таблице:" action="tableComment" {...props}>
-              <input name="comment" type="text" size="60" value={props.comment} />
+              <input name="comment" type="text" size="60" defaultValue={props.comment} />
             </FieldSet>
 
             <FieldSet title="Изменить порядок:" action="tableOrder" {...props}>

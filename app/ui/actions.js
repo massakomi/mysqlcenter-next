@@ -15,20 +15,28 @@ export async function serverVariables() {
 export async function serverInfo() {
   return await query('server_users');
 }
-export async function searchPage(db, table, post = {}) {
+export async function searchPage(db, table, post = false) {
   const queryString = buildQueryString('search', {db, table});
   return await query(queryString, post);
 }
-export async function actionPage(db, table, post = {}) {
+export async function actionPage(db, table, post = false) {
   const queryString = buildQueryString('actions', {db, table});
   return await query(queryString, post, { cache: 'no-store' });
 }
-export async function configPage(mode = '', post = {}) {
+export async function configPage(mode = '', post = false) {
   const queryString = buildQueryString('msc_configuration', {mode});
   return await query(queryString, post, { cache: 'no-store' });
 }
-export async function sqlPage(post = {}) {
+export async function sqlPage(post = false) {
   return await query('sql', post, { cache: 'no-store' });
+}
+export async function exportPage(db, table, post = false) {
+  const queryString = buildQueryString('export', {db, table});
+  return await query(queryString, post, { cache: 'no-store' });
+}
+export async function exportSpPage(db, post = false) {
+  const queryString = buildQueryString('exportSp', {db});
+  return await query(queryString, post, { cache: 'no-store' });
 }
 export async function dbList(mode = '') {
   const queryString = buildQueryString('db_list', {mode});
@@ -63,58 +71,46 @@ export async function customAction(action, formData){
   return await data.json();
 }*/
 
-async function query(query, post, opts = {}) {
 
-  let data = await fetch(url(query), options(post, opts))
-  console.log('fetch', url(query), post)
+async function query(query, post, opts = {}) {
+  let data = await fetch(buildUrl(query), buildOptions(post, opts))
+  //console.log('fetch', url(query), post)
   let json = {};
   try {
     json = await data.json()
-    console.log('fetch return:', json)
+    //console.log('fetch return:', json)
   } catch (e) {
-    console.error('fetch error: ' + e.name + ":" + e.message);
+    //console.error('fetch error: ' + e.name + ":" + e.message);
     //console.error('fetch error: ' + e.name + ":" + e.message + "\n" + e.stack);
-    let data = await fetch(url(query), options(post, opts))
+    let data = await fetch(buildUrl(query), buildOptions(post, opts))
     let text = await data.text();
-    console.log('fetch return text:', text)
+    //console.log('fetch return text:', text)
   }
   if (json.hasOwnProperty('page')) {
-    if (json.page instanceof Array) {
-      if (json.page.length > 0) {
-        throw new Exception('В json.page вернулся массив, а не объект!');
-      } else {
-        json.page = {}
-      }
-    }
-    //console.error('RETURN ONLY PAGE')
-    if (json.messages) {
-      //console.error(' + MESSAGES')
-      json.page.messages = json.messages;
-    }
-    return json.page;
+    return onlyPage(json);
   }
   //console.error('RETURN ALL')
   return json;
 }
 
-function url(query) {
-  if (query.indexOf('=') < 0) {
-    query = `s=${query}`
+function onlyPage(json) {
+  if (json.page instanceof Array) {
+    if (json.page.length > 0) {
+      throw new Exception('В json.page вернулся массив, а не объект!');
+    } else {
+      json.page = {}
+    }
   }
-  return `http://msc/?ajax=1&${query}`;
+  //console.error('RETURN ONLY PAGE')
+  if (json.messages) {
+    //console.error(' + MESSAGES')
+    json.page.messages = json.messages;
+  }
+  return json.page;
 }
 
-function options(post, opts = {}) {
-  let options = opts
-  if (post) {
-    Object.assign(options, {
-      method: 'POST',
-      headers: {'X-Requested-With': 'XMLHttpRequest'},
-      body: queryPostData(post)
-    })
-  }
-  return options;
-}
+
+
 
 function queryPostData(data) {
   if (typeof data === 'object') {
@@ -125,6 +121,25 @@ function queryPostData(data) {
     data = new URLSearchParams(data);
   }
   return data;
+}
+
+function buildUrl(query) {
+  if (query.indexOf('=') < 0) {
+    query = `s=${query}`
+  }
+  return `http://msc/?ajax=1&${query}`;
+}
+
+function buildOptions(post, opts = {}) {
+  let options = opts
+  if (post) {
+    Object.assign(options, {
+      method: 'POST',
+      headers: {'X-Requested-With': 'XMLHttpRequest'},
+      body: queryPostData(post)
+    })
+  }
+  return options;
 }
 
 function buildQueryString(s, params = {}) {

@@ -1,0 +1,67 @@
+'use client'
+import ExportOptions from "@/app/(pages)/export/ExportOptions";
+import Link from "next/link";
+import {useParams} from "next/navigation";
+import {useDispatch} from "react-redux";
+import {setMessages} from "@/lib/features/messagesReducer";
+import {msMultiSelect} from "@/app/ui/functions";
+import {useState} from "react";
+import {exportPage} from "@/app/ui/actions";
+
+export function Form(props) {
+
+
+
+  const [content, setContent] = useState('');
+
+  const params = useParams();
+  const dispatch = useDispatch();
+
+  const executeAction = async (action, event) => {
+    event.preventDefault()
+    let formData = new FormData(event.target.closest('form'));
+    let json = await exportPage(params.db, params.table, formData);
+    if (json.content.includes('.zip')) {
+      location = `http://msc${json.content}`
+    } else {
+      setContent('')
+    }
+    dispatch(setMessages(json.messages))
+  }
+
+  return (
+    <>
+      <form onSubmit={executeAction.bind(this, props.action)} name="formExport">
+
+        <table className="tableExport">
+          <tbody><tr>
+            <td>
+              <select name={props.selectMultName} multiple className="sel" defaultValue={props.optionsSelected}>
+                {props.optionsData.map((v) =>
+                  <option key={v.toString()}>{v}</option>
+                )}
+              </select><br />
+              <a href="#" onClick={msMultiSelect.bind(this, props.selectMultName)} className="hs select">все</a>
+              <a href="#" onClick={msMultiSelect.bind(this, props.selectMultName)} className="hs unselect">очистить</a>
+              <a href="#" onClick={msMultiSelect.bind(this, props.selectMultName)} className="hs invert">инверт</a>
+            </td>
+            <td>
+              <ExportOptions {...props} />
+
+              WHERE условие<br />
+              <input name="export_where" type="text" defaultValue={props.whereCondition} style={{width:'95%', display:'block', margin:'10px 0'}} />
+
+              {params.db ? <input type="hidden" name="db" value={params.db} /> : null}
+              {params.table ? <input type="hidden" name="table" value={params.table} /> : null}
+              <input type="submit" value="Экспортировать!" />
+            </td>
+            <td> </td>
+          </tr></tbody>
+        </table>
+        {params.db ? <Link href={`/export/special/${params.db}`}>Специальный экспорт</Link> : null}
+
+        <textarea name="sql" rows="40" wrap="OFF" hidden={!content} defaultValue={content}></textarea>
+      </form>
+    </>
+  )
+}

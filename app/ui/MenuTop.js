@@ -27,6 +27,8 @@ export function MenuTop() {
       ['переменные', 'server_variables', ''],
       //['кодировки', 'server_collations', ''],
       ['инфо', 'server_info', ''],
+      ['delim'],
+      ['экспорт', 'export', ''],
     ]
   } else if (params.db !== '' && params.table === undefined) {
     type = 'db'
@@ -69,7 +71,6 @@ export function MenuTop() {
     } else {
       menu.push(<Link key={menu.length} className={className} href={curl}>{title}</Link>)
     }
-
   }
   return <span className="globalMenu">{menu}</span>
 }

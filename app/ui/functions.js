@@ -139,3 +139,17 @@ export function clearChecked() {
   });
 }
 
+// 3 способа выделения options в мульти-селектах
+export function msMultiSelect (name, event) {
+  let action = 'invert'
+  if (!event.target.classList.contains('invert')) {
+    action = event.target.classList.contains('select') ? 'select' : 'unselect'
+  }
+  document.querySelectorAll(`[name="${name}"] option`).forEach(function(element) {
+    if (action === 'invert') {
+      element.selected = !element.selected
+    } else {
+      element.selected = (action === 'select');
+    }
+  });
+}

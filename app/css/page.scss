@@ -133,7 +133,7 @@ form.tableFormEdit td.inner { padding: 0; }
 
 /* Таблица экспорт и поиск */
 table.tableExport { border-collapse:collapse; empty-cells:show; width:100%; line-height:180%;}
-table.tableExport td, .tableExport th { font-size:14px; white-space:nowrap; padding:5px}
+table.tableExport td, .tableExport th { font-size:14px; white-space:nowrap; padding:5px; vertical-align: top}
 table.tableExport .sel { font-size:14px; height:150px}
 table.tableExport .hs { font-size:12px; text-decoration:none; margin:0 5px}
 table.tableExport .l2 { margin:0 0 0 24px}
@@ -143,6 +143,7 @@ table.tableExport .ta { font-size:10px}
 [name="formExport"] TABLE.tableExport .l2 {margin-right: 5px}
 [name="formExport"] [name="fields[]"] {height:120px; width:150px;}
 #search_table select {margin-right: 10px}
+[name="formExport"] textarea {width:95%; font-size:11px; overflow:scroll; margin-top: 10px}
 
 /* Общая форма внтури FIELDSET actionsdb actions */
 fieldset.msGeneralForm {

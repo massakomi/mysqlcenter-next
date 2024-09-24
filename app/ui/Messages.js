@@ -36,7 +36,7 @@ function Message({item}) {
   }
   if (item.text) {
     let text = item.text
-    if (item.rows) {
+    if (item.rows > 0) {
       text += ` [${item.rows}]`
     }
     let sql = '';

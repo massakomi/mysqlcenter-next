@@ -2,7 +2,7 @@
 import {useRef} from "react";
 import Link from "next/link";
 
-export default function Table({data}) {
+export default function Table({data, title = ''}) {
   if (data === null || data === undefined) {
     return ;
   }
@@ -27,6 +27,7 @@ export default function Table({data}) {
   }
 
   return <>
+    {title ? <h2>{title}</h2> : null}
     <table className="contentTable">
       <thead>{header}</thead>
       <tbody>{rows}</tbody>

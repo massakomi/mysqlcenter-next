@@ -80,7 +80,11 @@ async function query(query, post, opts = {}) {
   }
   if (json.hasOwnProperty('page')) {
     if (json.page instanceof Array) {
-      throw new Exception('В json.page вернулся массив, а не объект!');
+      if (json.page.length > 0) {
+        throw new Exception('В json.page вернулся массив, а не объект!');
+      } else {
+        json.page = {}
+      }
     }
     //console.error('RETURN ONLY PAGE')
     if (json.messages) {

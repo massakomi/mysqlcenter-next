@@ -1,5 +1,4 @@
-import {dbDelete, dbHide} from "@/app/ui/actions";
-import {useState} from "react";
+import {customAction} from "@/app/ui/actions";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 import Link from "next/link";
@@ -13,13 +12,18 @@ export default function Table(props) {
     if (!confirm('Подтвердите...')) {
       return false;
     }
-    let json = await dbDelete(db)
+    let json = await customAction('dbDelete', {db})
     if (json.status === true) {
       databases.splice(i, 1)
       dispatch(setMessages(json.messages))
       props.setDatabases([...databases])
       clearChecked()
     }
+  }
+
+  const dbHide = async (db, action, event) => {
+    let json = await customAction('dbHide', `db=${db}&act=${action}`)
+    dispatch(setMessages(json.messages))
   }
 
   let mscExists = databases.includes('mysqlcenter')

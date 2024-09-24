@@ -1,7 +1,7 @@
-import {dbCreate} from "@/app/ui/actions";
+import {customAction} from "@/app/ui/actions";
 import {useDispatch} from "react-redux";
 import {setMessages} from "@/lib/features/messagesReducer";
-import {redirect, useRouter} from "next/navigation";
+import {useRouter} from "next/navigation";
 
 export function DbCreateForm() {
 
@@ -11,7 +11,7 @@ export function DbCreateForm() {
   const onDbCreate = async (e) => {
     e.preventDefault()
     let formData = new FormData(e.target);
-    let json = await dbCreate(formData)
+    let json = await customAction('dbCreate', formData)
     dispatch(setMessages(json.messages))
     if (json.status === true) {
       setTimeout(function() {

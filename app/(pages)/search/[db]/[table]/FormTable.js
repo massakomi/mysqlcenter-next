@@ -1,7 +1,7 @@
 'use client'
 
 import {useParams} from "next/navigation";
-import {customAction, dbCreate} from "@/app/ui/actions";
+import {customAction} from "@/app/ui/actions";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 import HtmlSelector from "@/app/(pages)/search/[db]/HtmlSelector";

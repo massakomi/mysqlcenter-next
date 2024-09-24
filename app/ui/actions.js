@@ -27,6 +27,9 @@ export async function configPage(mode = '', post = {}) {
   const queryString = buildQueryString('msc_configuration', {mode});
   return await query(queryString, post, { cache: 'no-store' });
 }
+export async function sqlPage(post = {}) {
+  return await query('sql', post, { cache: 'no-store' });
+}
 export async function dbList(mode = '') {
   const queryString = buildQueryString('db_list', {mode});
   return await query(queryString, false, { cache: 'no-store' });
@@ -34,33 +37,6 @@ export async function dbList(mode = '') {
 
 // Действия в ActionProcessor
 // чтобы попало в ActionProcessor, нужен $queryMode (GET['action'] или POST['action'])
-export async function dbCreate(formData) {
-  return await query('action=dbCreate', formData);
-}
-export async function dbDelete(db){
-  return await query('action=dbDelete', `db=${db}&id=db${db}`);
-}
-export async function dbAllAction(db, action){
-  return await query('action=dbAllAction', `db=${db}&act=${action}`);
-}
-export async function dbHide (db, action) {
-  alert('hide')
-  //msQuery('dbHide', `db=${db}&id=db${db}&action=${action}`)
-}
-
-export async function tblTruncate(db, table){
-  return await query('action=tableTruncate', `db=${db}&table=${table}`);
-}
-export async function tblDelete(db, table){
-  return await query('action=tableDelete', `db=${db}&table=${table}`);
-}
-export async function tblRename(db, table, newName){
-  return await query('action=tableRename', `db=${db}&table=${table}&newName=${newName}`);
-}
-
-export async function userAdd(formData){
-  return await query('action=userAdd', formData);
-}
 export async function customAction(action, formData){
   return await query(`action=${action}`, formData);
 }
@@ -88,14 +64,19 @@ export async function customAction(action, formData){
 }*/
 
 async function query(query, post, opts = {}) {
+
   let data = await fetch(url(query), options(post, opts))
-  //console.log('fetch', url(query), post)
+  console.log('fetch', url(query), post)
   let json = {};
   try {
     json = await data.json()
-    //console.log('fetch return:', json)
+    console.log('fetch return:', json)
   } catch (e) {
-    console.error('fetch error: ' + e.name + ":" + e.message + "\n" + e.stack);
+    console.error('fetch error: ' + e.name + ":" + e.message);
+    //console.error('fetch error: ' + e.name + ":" + e.message + "\n" + e.stack);
+    let data = await fetch(url(query), options(post, opts))
+    let text = await data.text();
+    console.log('fetch return text:', text)
   }
   if (json.hasOwnProperty('page')) {
     if (json.page instanceof Array) {
@@ -133,7 +114,7 @@ function options(post, opts = {}) {
 
 function queryPostData(data) {
   if (typeof data === 'object') {
-    if (!data instanceof FormData) {
+    if (!(data instanceof FormData)) {
       data = new URLSearchParams(data);
     }
   } else {

@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {userAdd} from "@/app/ui/actions";
+import {customAction} from "@/app/ui/actions";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 
@@ -28,7 +28,7 @@ export default function AddUser() {
   const onUserAdd = async (e) => {
     e.preventDefault()
     let formData = new FormData(e.target);
-    let json = await userAdd(formData)
+    let json = await customAction('userAdd', formData)
     dispatch(setMessages(json.messages))
   }
 

@@ -2,7 +2,7 @@
 
 import {chbx_action, prepareAction} from "@/app/ui/functions";
 import {useParams, useSearchParams} from "next/navigation";
-import {customAction, dbAllAction} from "@/app/ui/actions";
+import {customAction} from "@/app/ui/actions";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 import DateSelector from "@/app/(pages)/tbl_list/[db]/DateSelector";
@@ -31,7 +31,7 @@ export default function Actions() {
   }
 
   const makeInnodb = async () => {
-    let json = await dbAllAction(params.db, 'makeInnodb');
+    let json = await customAction('dbAllAction', `db=${params.db}&act=makeInnodb`)
     dispatch(setMessages(json.messages))
   }
 

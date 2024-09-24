@@ -2,7 +2,7 @@
 import {useParams, usePathname} from "next/navigation";
 import Link from "next/link";
 import {getPageFromPathname} from "@/app/ui/functions";
-import {customAction, dbDelete, tblDelete, tblTruncate} from "@/app/ui/actions";
+import {customAction} from "@/app/ui/actions";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 
@@ -83,16 +83,16 @@ async function multyAction(action, params, dispatch) {
     json = await customAction('dbTruncate', `db=${params.db}`)
   }
   if (action === 'dbDelete') {
-    json = await dbDelete(params.db)
+    json = await customAction('dbDelete', `db=${params.db}`)
   }
   if (action === 'dbTablesDelete') {
     json = await customAction('dbTablesDelete', `db=${params.db}`)
   }
   if (action === 'tableTruncate') {
-    json = await tblTruncate(params.db, params.table)
+    json = await customAction('tableTruncate', {db: params.db, table: params.table})
   }
   if (action === 'tableDelete') {
-    json = await tblDelete(params.db, params.table)
+    json = await customAction('tableDelete', {db: params.db, table: params.table})
   }
   dispatch(setMessages(json.messages))
 }

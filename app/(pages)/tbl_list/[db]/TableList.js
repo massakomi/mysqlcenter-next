@@ -1,8 +1,7 @@
 'use client'
 
-import {Component, useRef} from "react";
 import {formatSize, image} from "@/app/ui/functions";
-import {tblDelete, tblRename, tblTruncate} from "@/app/ui/actions";
+import {customAction} from "@/app/ui/actions";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 import Table from "@/app/ui/Table";
@@ -22,7 +21,7 @@ export default function TableList(props) {
     if (!confirm('Подтвердите...')) {
       return false;
     }
-    let json = await tblDelete(db, table)
+    let json = await customAction('tableDelete', {db, table})
     dispatch(setMessages(json.messages))
   }
 
@@ -30,14 +29,14 @@ export default function TableList(props) {
     if (!confirm('Подтвердите...')) {
       return false;
     }
-    let json = await tblTruncate(db, table)
+    let json = await customAction('tableTruncate', {db, table})
     dispatch(setMessages(json.messages))
   }
 
   const renameTable = async (table, id, e) => {
     let newName = prompt('Новое имя', table)
     if (newName) {
-      let json = await tblRename(props.db, table, newName)
+      let json = await customAction('tableRename', {db: props.db, table, newName})
       dispatch(setMessages(json.messages))
     }
   }

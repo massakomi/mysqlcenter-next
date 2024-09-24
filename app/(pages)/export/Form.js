@@ -10,8 +10,6 @@ import {exportPage} from "@/app/ui/actions";
 
 export function Form(props) {
 
-
-
   const [content, setContent] = useState('');
 
   const params = useParams();
@@ -22,7 +20,7 @@ export function Form(props) {
     let formData = new FormData(event.target.closest('form'));
     let json = await exportPage(params.db, params.table, formData);
     if (json.content.includes('.zip')) {
-      location = `http://msc${json.content}`
+      location = json.content
     } else {
       setContent('')
     }

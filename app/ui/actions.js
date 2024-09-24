@@ -49,29 +49,6 @@ export async function customAction(action, formData){
   return await query(`action=${action}`, formData);
 }
 
-
-
-/*async function msQuery(mode, query='') {
-  if (mode !== 'tableRename' && mode !== 'dbCreate'  && mode !== 'dbHide' && confirm('Подтвердите...') === false) {
-    return false;
-  }
-  if (arguments.length === 0) {
-    return false;
-  }
-  query = query.replace(/^\?/, '')
-  query = query+'&'+'mode='+mode
-
-  let options = {
-    method: 'POST',
-    body: new URLSearchParams('?'+query),
-    headers: {'X-Requested-With': 'XMLHttpRequest'}
-  }
-
-  let data = await fetch('http://msc/ajax.php?ajax=1', options)
-  return await data.json();
-}*/
-
-
 async function query(query, post, opts = {}) {
   let data = await fetch(buildUrl(query), buildOptions(post, opts))
   //console.log('fetch', url(query), post)
@@ -80,11 +57,11 @@ async function query(query, post, opts = {}) {
     json = await data.json()
     //console.log('fetch return:', json)
   } catch (e) {
-    //console.error('fetch error: ' + e.name + ":" + e.message);
+    console.error('fetch error: ' + e.name + ":" + e.message);
     //console.error('fetch error: ' + e.name + ":" + e.message + "\n" + e.stack);
     let data = await fetch(buildUrl(query), buildOptions(post, opts))
     let text = await data.text();
-    //console.log('fetch return text:', text)
+    console.log('fetch return text:', text)
   }
   if (json.hasOwnProperty('page')) {
     return onlyPage(json);
@@ -108,9 +85,6 @@ function onlyPage(json) {
   }
   return json.page;
 }
-
-
-
 
 function queryPostData(data) {
   if (typeof data === 'object') {

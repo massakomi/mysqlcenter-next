@@ -19,6 +19,9 @@ export function Form(props) {
   if (searchParams.get('databases')) {
     props.optionsSelected = searchParams.get('databases').split(',')
   }
+  if (searchParams.get('tables')) {
+    props.optionsSelected = searchParams.get('tables').split(',')
+  }
 
   const executeAction = async (action, event) => {
     event.preventDefault()
@@ -26,8 +29,9 @@ export function Form(props) {
     let json = await exportPage(params.db, params.table, formData);
     if (json.content.includes('.zip')) {
       location = json.content
-    } else {
       setContent('')
+    } else {
+      setContent(json.content)
     }
     dispatch(setMessages(json.messages))
   }

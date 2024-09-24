@@ -7,6 +7,9 @@ import {useDispatch} from "react-redux";
 import Table from "@/app/ui/Table";
 import {useSearchParams} from "next/navigation";
 import Link from "next/link";
+import Actions from "@/app/(pages)/tbl_list/[db]/Actions";
+import {SubMenu} from "@/app/(pages)/tbl_list/[db]/SubMenu";
+import {useState} from "react";
 
 export default function TableList(props) {
 
@@ -99,43 +102,47 @@ export default function TableList(props) {
   let sumSize = 0;
   let sumRows = 0;
 
-  let tables = Object.values(props.tables)
+  const [tables, setTables] = useState(Object.values(props.tables));
   let trs = tables.map((table, key) => renderRow(table, key))
 
   return (
-    <table className="contentTable interlaced">
-      <thead>
-      <tr>
-        <th></th>
-        <th><b>Таблица</b></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th><b>Рядов</b></th>
-        <th><b>Размер</b></th>
-        <th><b>Дата обновления</b></th>
-        <th><b>Ai</b></th>
-        <th>Engine</th>
-        <th>Cp</th>
-      </tr></thead>
-      <tbody>
-      {trs}
-      <tr>
-        <td></td>
-        <td className="tbl">{tables.length} таблиц</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td className="rig">{Number(sumRows).toFixed(0)}</td>
-        <td className="rig">{formatSize(sumSize)}</td>
-        <td></td>
-        <td className="num">&nbsp;</td>
-        <td></td>
-        <td className="rig">&nbsp;</td>
-      </tr></tbody>
-    </table>
+    <>
+      <table className="contentTable interlaced">
+        <thead>
+        <tr>
+          <th></th>
+          <th><b>Таблица</b></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th><b>Рядов</b></th>
+          <th><b>Размер</b></th>
+          <th><b>Дата обновления</b></th>
+          <th><b>Ai</b></th>
+          <th>Engine</th>
+          <th>Cp</th>
+        </tr></thead>
+        <tbody>
+        {trs}
+        <tr>
+          <td></td>
+          <td className="tbl">{tables.length} таблиц</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td className="rig">{Number(sumRows).toFixed(0)}</td>
+          <td className="rig">{formatSize(sumSize)}</td>
+          <td></td>
+          <td className="num">&nbsp;</td>
+          <td></td>
+          <td className="rig">&nbsp;</td>
+        </tr></tbody>
+      </table>
+      <Actions setTables={setTables} tables={props.tables} />
+      <SubMenu />
+    </>
   );
 
 }

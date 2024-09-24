@@ -1,13 +1,13 @@
 'use client'
 
-import {chbx_action, prepareAction} from "@/app/ui/functions";
-import {useParams, useSearchParams} from "next/navigation";
+import {chbx_action, checkedCheckboxes, prepareAction} from "@/app/ui/functions";
+import {useParams, useRouter, useSearchParams} from "next/navigation";
 import {customAction} from "@/app/ui/actions";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 import DateSelector from "@/app/(pages)/tbl_list/[db]/DateSelector";
 
-export default function Actions() {
+export default function Actions({setTables, tables}) {
 
   let searchParams = useSearchParams()
   if (searchParams.get('action')) {
@@ -16,13 +16,21 @@ export default function Actions() {
 
   const dispatch = useDispatch()
   let params = useParams()
+  const router = useRouter()
   let props = {}
 
-  const msImageAction = async (act, url, e) => {
+  const executeAction = async (act, url, e) => {
     let {action, formData} = prepareAction(act, url, e, 'table[]', params)
     formData.set('db', params.db)
     let json = await customAction(action, formData);
     dispatch(setMessages(json.messages))
+  }
+
+  const redirectAction = async (act, url, e) => {
+    const checked = checkedCheckboxes()
+    if (act === 'export_all') {
+      router.push(`/export/${params.db}/?tables=${checked.join(',')}`)
+    }
   }
 
   const chbxAction = (opt, e) => {
@@ -36,16 +44,19 @@ export default function Actions() {
   }
 
   const filterByDate= () => {
-    let year = $('[name="ds_year"]').val()
-    let month = $('[name="ds_month"]').val()
-    let day = $('[name="ds_day"]').val()
-    let date = new Date(year, month, day)
+    let year = document.querySelector('[name="ds_year"]').value
+    let month = document.querySelector('[name="ds_month"]').value
+    let day = document.querySelector('[name="ds_day"]').value
+    let h = document.querySelector('[name="ds_hour"]').value
+    let m = document.querySelector('[name="ds_minut"]').value
+    let s = document.querySelector('[name="ds_second"]').value
+    let date = new Date(year, month, day, h, m, s)
 
-    let tables = Object.values(this.props.tables).filter((table, key) => {
+    let tablesFiltered = Object.values(tables).filter((table, key) => {
       let now = new Date(table.Update_time);
       return now > date;
     })
-    this.setState({tables})
+    setTables(tablesFiltered)
   }
 
   return  (
@@ -58,14 +69,14 @@ export default function Actions() {
 
       <div className="imageAction">
         <u>Выбранные</u>
-        <img src={`/images/close.png`} alt="" onClick={msImageAction.bind(this, 'delete_all')} />
-        <img src={`/images/delete.gif`} alt="" onClick={msImageAction.bind(this, 'truncate_all')} />
-        <img src={`/images/copy.gif`} alt="" onClick={msImageAction.bind(this, 'copy_all')} />
-        <img src={`/images/b_tblexport.png`} alt="" onClick={msImageAction.bind(this, 'export_all', `/export/${props.db}/`)} />
+        <img src={`/images/close.png`} alt="" onClick={executeAction.bind(this, 'delete_all')} />
+        <img src={`/images/delete.gif`} alt="" onClick={executeAction.bind(this, 'truncate_all')} />
+        <img src={`/images/copy.gif`} alt="" onClick={executeAction.bind(this, 'copy_all')} />
+        <img src={`/images/b_tblexport.png`} alt="" onClick={redirectAction.bind(this, 'export_all')} />
 
         <span role="button" onClick={makeInnodb} style={{margin: '0 10px'}}>Конвертировать все в Innodb</span>
 
-        <select name="act" onChange={msImageAction.bind(this, 'auto')} >
+        <select name="act" onChange={executeAction.bind(this, 'auto')} >
           <option></option>
           <option value="check">проверить</option>
           <option value="analyze">анализ</option>
@@ -77,7 +88,7 @@ export default function Actions() {
 
       <form className="showtableupdated">
         Показать таблицы обновлённые с <DateSelector />
-        <input type="button" value="Показать!" data-onclick="{filterByDate.bind(this)}" />
+        <input type="button" value="Показать!" onClick={filterByDate.bind(this)} />
       </form>
     </>
   )

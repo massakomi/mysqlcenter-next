@@ -4,20 +4,20 @@ import {useEffect, useState} from "react";
 import {useParams, usePathname} from "next/navigation";
 import Link from "next/link";
 import {getPageFromPathname} from "@/app/ui/functions";
+import {tblList} from "@/app/ui/actions";
 
 export function MenuTable(props) {
 
-  const urlParams = useParams()
+  const params = useParams()
   const pathname = usePathname()
   const [tables, setTables] = useState(false);
   useEffect(() => {
-    if (!urlParams.db) {
+    if (!params.db) {
       return () => {};
     }
-    fetch(`http://msc/?ajax=1&db=${urlParams.db}`)
-      .then(response => response.json())
-      .then((json) => {
-        setTables(json.page.tables || [])
+    tblList(params.db)
+      .then((page) => {
+        setTables(page.tables || [])
       })
   }, []);
 
@@ -33,24 +33,24 @@ export function MenuTable(props) {
     page = 'tbl_data';
   }
 
-  return displayTables(tables, props, urlParams, page);
+  return displayTables(tables, props, params, page);
 }
 
-function displayTables(tables, props, urlParams, page) {
+function displayTables(tables, props, params, page) {
 
   let prefixes = prefixStat(tables)
 
   let menuTables = [];
   let selectorTables = [];
-  let currentTable = urlParams.table;
+  let currentTable = params.table;
   for (let table of tables) {
-    if (!urlParams.db) {
+    if (!params.db) {
       continue;
     }
     const tableName = table.Name;
     let className = getClassName(tableName, prefixes)
 
-    let link = `/${page}/${urlParams.db}/${tableName}`
+    let link = `/${page}/${params.db}/${tableName}`
     //console.log(table)
     let style = {};
     if (currentTable === tableName) {

@@ -1,3 +1,4 @@
+import {tblList} from "@/app/ui/actions";
 
 export const  metadata = {
   title: 'Импорт данных'
@@ -6,9 +7,7 @@ export const  metadata = {
 export default async function Page({params}) {
 
   // todo getTable вынести как-то отдельно (тут и MenuTable)
-  let data = await fetch(`http://msc/?ajax=1&db=${params.db}`)
-  let json = await data.json()
-  let props = json.page
+  let props = await tblList(params.db, 'simple')
 
   return (
     <div>
@@ -16,9 +15,9 @@ export default async function Page({params}) {
       <b>1. Выберите таблицу, в которую импортируются данные</b><br />
       <ul>
         {Object.values(props.tables).map((table) =>
-          <li key={table.Name}>{table.Name === props.table ?
-            <b style={{fontSize: '16px', color: 'red'}}>{table.Name}</b> :
-            <a href="#">{table.Name}</a> }
+          <li key={table}>{table === props.table ?
+            <b style={{fontSize: '16px', color: 'red'}}>{table}</b> :
+            <a href="#">{table}</a> }
           </li>
         )}
       </ul>

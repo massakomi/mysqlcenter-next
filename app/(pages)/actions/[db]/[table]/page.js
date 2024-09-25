@@ -10,7 +10,7 @@ export const  metadata = {
 
 export default async function Page({params}) {
 
-  let props = await actionPage(params.db, params.table);
+  let props = await actionPage(params);
   if (!props.dbs) {
     return <>Таблица не найдена</>;
   }

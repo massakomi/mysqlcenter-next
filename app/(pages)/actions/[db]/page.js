@@ -1,11 +1,6 @@
-//import {setValue} from "@/lib/features/paramsReducer";
-//import {useDispatch} from "react-redux";
-
 import CharsetSelector from "@/app/(pages)/actions/[db]/CharsetSelector";
-import {actionPage, customAction, searchPage} from "@/app/ui/actions";
+import {actionPage} from "@/app/ui/actions";
 import {Info} from "@/app/(pages)/actions/[db]/Info";
-import {prepareAction} from "@/app/ui/functions";
-import {setMessages} from "@/lib/features/messagesReducer";
 import FieldSet from "@/app/(pages)/actions/[db]/FieldSet";
 
 export const  metadata = {
@@ -14,7 +9,7 @@ export const  metadata = {
 
 export default async function Page({params}) {
 
-  let props = await actionPage(params.db);
+  let props = await actionPage(params);
   if (!props.dbInfo) {
     return <>База не найдена</>;
   }

@@ -3,62 +3,61 @@
 // Запросы на страницы
 import {Exception} from "sass";
 
-export async function tblList(db, add='') {
-  return await query(`s=tbl_list&db=${db}${add}`);
+export async function tblList(db, mode) {
+  return await query({s: 'tbl_list', db, mode});
 }
 export async function serverStatus() {
-  return await query('server_status');
+  return await query({s: 'server_status'});
 }
 export async function serverVariables() {
-  return await query('server_variables');
+  return await query({s: 'server_variables'});
 }
 export async function serverInfo() {
-  return await query('server_users');
+  return await query({s: 'server_users'});
 }
-export async function tblDataPage(db, table, order, go, post = false) {
-  const queryString = buildQueryString('tbl_data', {db, table, order, go});
-  return await query(queryString, post, { cache: 'no-store' });
+export async function tblDataPage(get, post = false) {
+  get.s = 'tbl_data'
+  return await query(get, post, { cache: 'no-store' });
 }
-export async function searchPage(db, table, post = false) {
-  const queryString = buildQueryString('search', {db, table});
-  return await query(queryString, post);
+export async function searchPage(get, post = false) {
+  get.s = 'search'
+  return await query(get, post);
 }
-export async function actionPage(db, table, post = false) {
-  const queryString = buildQueryString('actions', {db, table});
-  return await query(queryString, post, { cache: 'no-store' });
+export async function actionPage(get, post = false) {
+  get.s = 'actions'
+  return await query(get, post, { cache: 'no-store' });
 }
-export async function configPage(mode = '', post = false) {
-  const queryString = buildQueryString('msc_configuration', {mode});
-  return await query(queryString, post, { cache: 'no-store' });
+export async function configPage(mode, post = false) {
+  return await query({s: 'msc_configuration', mode}, post, { cache: 'no-store' });
 }
 export async function sqlPage(post = false) {
-  return await query('sql', post, { cache: 'no-store' });
+  return await query({s: 'sql'}, post, { cache: 'no-store' });
 }
 export async function exportPage(db, table, post = false) {
-  const queryString = buildQueryString('export', {db, table});
-  return await query(queryString, post, { cache: 'no-store' });
+  return await query({s: 'export', db, table}, post, { cache: 'no-store' });
 }
 export async function exportSpPage(db, post = false) {
-  const queryString = buildQueryString('exportSp', {db});
-  return await query(queryString, post, { cache: 'no-store' });
+  return await query({s: 'exportSp', db}, post, { cache: 'no-store' });
 }
 export async function dbList(mode = '') {
-  const queryString = buildQueryString('db_list', {mode});
-  return await query(queryString, false, { cache: 'no-store' });
+  return await query({s: 'db_list', mode}, false, { cache: 'no-store' });
 }
 export async function dbComparePage(dbs) {
-  return await query('db_compare', {dbs}, { cache: 'no-store' });
+  return await query({s: 'db_compare'}, {dbs}, { cache: 'no-store' });
+}
+export async function getInit() {
+  return await query({init: 1});
 }
 
 // Действия в ActionProcessor
 // чтобы попало в ActionProcessor, нужен $queryMode (GET['action'] или POST['action'])
 export async function customAction(action, formData){
-  return await query(`action=${action}`, formData);
+  return await query({action}, formData);
 }
 
-async function query(query, post, opts = {}) {
+async function query(query, post=false, opts = {}) {
   let data = await fetch(buildUrl(query), buildOptions(post, opts))
-  console.log('fetch', buildUrl(query), post)
+  console.log('fetch', buildUrl(query), post || '')
   let json = {};
   try {
     json = await data.json()
@@ -105,10 +104,7 @@ function queryPostData(data) {
 }
 
 function buildUrl(query) {
-  if (query.indexOf('=') < 0) {
-    query = `s=${query}`
-  }
-  return `http://msc/?ajax=1&${query}`;
+  return `http://msc/?ajax=1&${buildQueryString(query)}`;
 }
 
 function buildOptions(post, opts = {}) {
@@ -123,11 +119,10 @@ function buildOptions(post, opts = {}) {
   return options;
 }
 
-function buildQueryString(s, params = {}) {
+function buildQueryString(params = {}) {
   let url = new URLSearchParams();
-  url.set('s', s)
   for (const [key, value] of Object.entries(params)) {
-    if (typeof value !== 'undefined') {
+    if (typeof value !== 'undefined' && value !== '') {
       url.set(key, value)
     }
   }

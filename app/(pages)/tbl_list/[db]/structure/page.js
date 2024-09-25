@@ -11,7 +11,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
 
 export default async function Page({params}) {
 
-  let props = await tblList(params.db, '&mode=structure');
+  let props = await tblList(params.db, 'structure');
 
   return (
     <>

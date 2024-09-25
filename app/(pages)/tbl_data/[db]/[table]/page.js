@@ -12,7 +12,13 @@ export async function generateMetadata({ params, searchParams }, parent) {
 
 export default async function Page({params, searchParams}) {
 
-  let props = await tblDataPage(params.db, params.table, searchParams.order, searchParams.go)
+  let get = {
+    db: params.db,
+    table: params.table,
+    order: searchParams.order,
+    go: searchParams.go,
+  };
+  let props = await tblDataPage(get)
 
 
   /*componentDidMount() {

@@ -35,7 +35,7 @@ export default function Form(props) {
     }
     setDisabled(true)
     let formData = new FormData(formRef.current);
-    let json = await searchPage(params.db, params.table, formData)
+    let json = await searchPage(params, formData)
     setResults(json.results)
     setDisabled(false)
   }

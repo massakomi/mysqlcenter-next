@@ -2,6 +2,7 @@
 import Table from "@/app/ui/Table";
 import {useParams} from "next/navigation";
 import {useState} from "react";
+import {actionPage} from "@/app/ui/actions";
 
 export function Info(props) {
 
@@ -10,11 +11,10 @@ export function Info(props) {
   const [info, setInfo] = useState(props.dbInfo);
 
   const fullinfo = () => {
-    fetch(`http://msc/?ajax=1&db=${params.db}&s=actions&act=fullinfo`)
-      .then(response => response.json())
-      .then((json) => {
-        setInfo(json.page.dbInfo)
-      })
+    params.act = 'fullinfo'
+    actionPage(params).then((page) => {
+      setInfo(page.dbInfo)
+    })
   }
 
   return  (

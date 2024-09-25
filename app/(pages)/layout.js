@@ -5,21 +5,23 @@ import {MenuChain} from "@/app/ui/MenuChain";
 import {SearchInTable} from "@/app/ui/SearchInTable";
 import {Messages} from "@/app/ui/Messages";
 import {PopupSqlForm} from "@/app/ui/PopupSqlForm";
-import {MenuFooter} from "@/app/ui/MenuFooter";
 import {MenuTable} from "@/app/ui/MenuTable";
 import {PopupQueryList} from "@/app/ui/PopupQueryList";
 import {PopupDbList} from "@/app/ui/PopupDbList";
+import {getInit} from "@/app/ui/actions";
 
 export const metadata = {
   title: "MySQLCenter"
 };
 
-export default async function PagesLayout({ children }) {
+export default async function PagesLayout({ children, params }) {
+
+  // params доступен в layout, но в корневом он будет пустой, т.к. вероятно не видит иерархию ниже
+  // + layout не перерисовывается, остается статичным
 
   let props = {}
   try {
-    let data = await fetch('http://msc/?init=1&ajax=1')
-    props = await data.json()
+    props = await getInit()
   } catch (e) {
     return <pre>{'Ошибка ' + e.name + ":" + e.message + "\n" + e.stack}</pre>;
   }
@@ -54,7 +56,9 @@ export default async function PagesLayout({ children }) {
       </div>
 
       <div className="pageBlock">
-        <MenuFooter />
+        <span className="globalMenu">
+          <a href="/config">Настройки</a>
+        </span>
 
         <strong>Хост:</strong> {props.DB_HOST}&nbsp;&nbsp;
         <strong>Пользователь:</strong> {props.DB_USERNAME_CUR}&nbsp;

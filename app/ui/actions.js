@@ -22,7 +22,7 @@ export async function serverInfo() {
 }
 export async function tblDataPage(get, post = false) {
   get.s = 'tbl_data'
-  return await query(get, post, { cache: 'no-store' });
+  return await query(get, post);
 }
 export async function searchPage(get, post = false) {
   get.s = 'search'
@@ -30,22 +30,22 @@ export async function searchPage(get, post = false) {
 }
 export async function actionPage(get, post = false) {
   get.s = 'actions'
-  return await query(get, post, { cache: 'no-store' });
+  return await query(get, post);
 }
 export async function configPage(mode, post = false) {
-  return await query({s: 'msc_configuration', mode}, post, { cache: 'no-store' });
+  return await query({s: 'msc_configuration', mode}, post);
 }
 export async function sqlPage(post = false) {
-  return await query({s: 'sql'}, post, { cache: 'no-store' });
+  return await query({s: 'sql'}, post);
 }
 export async function exportPage(db, table, post = false) {
-  return await query({s: 'export', db, table}, post, { cache: 'no-store' });
+  return await query({s: 'export', db, table}, post);
 }
 export async function exportSpPage(db, post = false) {
   return await query({s: 'exportSp', db}, post, { cache: 'no-store' });
 }
 export async function dbList(mode = '') {
-  return await query({s: 'db_list', mode}, false, { cache: 'no-store' });
+  return await query({s: 'db_list', mode}, false);
 }
 export async function dbComparePage(dbs) {
   return await query({s: 'db_compare'}, {dbs}, { cache: 'no-store' });

@@ -44,7 +44,7 @@ export default function Table(props) {
         <td><Link href={href} title="Структура БД" id={idRow} style={styles}>{db}</Link></td>
         <td>
           <span role="button" onClick={() => executeAction(db, i)} title={'Удалить '+db}><img src={"/images/close.png"} alt="" border="0" /></span> &nbsp;
-          <a href={`/actions/${db}/`} title="Изменить"><img src={"/images/edit.gif"} alt="" border="0" /></a> &nbsp;
+          <Link href={`/actions/${db}/`} title="Изменить"><img src={"/images/edit.gif"} alt="" border="0" /></Link> &nbsp;
           {mscExists ?
             <span role="button" onClick={dbHide.bind(this, db, action)} title={'Спрятать/показать ' + db}><img src={"/images/open-folder.png"} alt="" border="0" width="16" /></span> : null}
         </td>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 export function Compare(props) {
   const header = (params) => {
@@ -69,7 +70,7 @@ export function Compare(props) {
           // Существует или нет - просто
           if (num === 0) {
             if (array.includes(table)) {
-              row.push(<a href={`/tbl_data/${db}/${table}`}>есть</a>)
+              row.push(<Link href={`/tbl_data/${db}/${table}`}>есть</Link>)
             } else {
               row.push('-')
               rowClass = 'diff';

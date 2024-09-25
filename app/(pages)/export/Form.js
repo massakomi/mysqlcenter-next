@@ -51,9 +51,9 @@ export function Form(props) {
                   <option key={v.toString()}>{v}</option>
                 )}
               </select><br />
-              <a href="#" onClick={msMultiSelect.bind(this, props.selectMultName)} className="hs select">все</a>
-              <a href="#" onClick={msMultiSelect.bind(this, props.selectMultName)} className="hs unselect">очистить</a>
-              <a href="#" onClick={msMultiSelect.bind(this, props.selectMultName)} className="hs invert">инверт</a>
+              <span role="button" onClick={msMultiSelect.bind(this, props.selectMultName)} className="hs select">все</span>
+              <span role="button" onClick={msMultiSelect.bind(this, props.selectMultName)} className="hs unselect">очистить</span>
+              <span role="button" onClick={msMultiSelect.bind(this, props.selectMultName)} className="hs invert">инверт</span>
             </td>
             <td>
               <ExportOptions {...props} />

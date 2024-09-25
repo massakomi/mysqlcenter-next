@@ -9,10 +9,13 @@ import {MenuTable} from "@/app/ui/MenuTable";
 import {PopupQueryList} from "@/app/ui/PopupQueryList";
 import {PopupDbList} from "@/app/ui/PopupDbList";
 import {getInit} from "@/app/ui/actions";
+import Link from "next/link";
 
 export const metadata = {
   title: "MySQLCenter"
 };
+
+
 
 export default async function PagesLayout({ children, params }) {
 
@@ -57,18 +60,10 @@ export default async function PagesLayout({ children, params }) {
 
       <div className="pageBlock">
         <span className="globalMenu">
-          <a href="/config">Настройки</a>
+          <Link href="/config">Настройки</Link>
         </span>
-
         <strong>Хост:</strong> {props.DB_HOST}&nbsp;&nbsp;
         <strong>Пользователь:</strong> {props.DB_USERNAME_CUR}&nbsp;
-
-        пиковая память {props.memory_get_peak_usage} &nbsp;
-        сейчас {props.memory_get_usage} &nbsp;
-        inc {props.includeSize}
-        limit {props.memory_limit} &nbsp;&nbsp;
-
-        <strong><a href="/logout">Выход</a></strong>
       </div>
 
     </>

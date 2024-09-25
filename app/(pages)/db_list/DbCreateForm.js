@@ -1,4 +1,4 @@
-import {customAction} from "@/app/ui/actions";
+import {customAction, invalidatePath} from "@/app/ui/actions";
 import {useDispatch} from "react-redux";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {redirect, useRouter} from "next/navigation";
@@ -7,7 +7,6 @@ import {revalidatePath} from "next/cache";
 export function DbCreateForm() {
 
   const dispatch = useDispatch()
-  const router = useRouter()
 
   const onDbCreate = async (e) => {
     e.preventDefault()
@@ -15,6 +14,7 @@ export function DbCreateForm() {
     let json = await customAction('dbCreate', formData)
     dispatch(setMessages(json.messages))
     if (json.status === true) {
+      await invalidatePath('/db_list')
       setTimeout(function() {
         location.reload()
       }, 1000);

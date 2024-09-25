@@ -7,6 +7,7 @@ import {setMessages} from "@/lib/features/messagesReducer";
 import {htmlspecialchars} from "@/app/ui/functions";
 import {useParams, useSearchParams} from "next/navigation";
 import {customAction} from "@/app/ui/actions";
+import Link from "next/link";
 
 
 export default function Table(props) {
@@ -61,7 +62,7 @@ export default function Table(props) {
     if (primaryKeys.length > 0) {
       for (let pkCurrent of primaryKeys) {
         if (!row[pkCurrent]) {
-          console.log(`Hey! Ключевого поля ${pkCurrent} не найдено в таблице!?`)
+          console.error(`Hey! Ключевого поля ${pkCurrent} не найдено в таблице!?`)
           continue;
         }
         pkValues.push(`${pkCurrent}="${row[pkCurrent]}"`);
@@ -88,7 +89,7 @@ export default function Table(props) {
     // создание ссылок на действия
     let values = [
       <input name="row[]" type="checkbox" value={idRow} className="cb" id={`c${idRow}`} />,
-      <a href={`/tbl_change/${params.db}/${params.table}/?row=${idRow}`} title="Редактировать ряд"><img src={`/images/edit.gif`} alt="" border="0" /></a>,
+      <Link href={`/tbl_change/${params.db}/${params.table}/?row=${idRow}`} title="Редактировать ряд"><img src={`/images/edit.gif`} alt="" border="0" /></Link>,
       <span onClick={deleteRow.bind(this, idRow)} title="Удалить ряд"><img src={`/images/close.png`} alt="" border="0" role="button" /></span>
     ]
 

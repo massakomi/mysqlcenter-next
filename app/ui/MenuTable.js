@@ -5,21 +5,26 @@ import {useParams, usePathname} from "next/navigation";
 import Link from "next/link";
 import {getPageFromPathname} from "@/app/ui/functions";
 import {tblList} from "@/app/ui/actions";
+import {useSelector} from "react-redux";
 
 export function MenuTable(props) {
 
   const params = useParams()
   const pathname = usePathname()
   const [tables, setTables] = useState(false);
+  const globalParams = useSelector((state) => state.params.value)
+
+  const currentDatabase = globalParams.database || params.db
+
   useEffect(() => {
-    if (!params.db) {
+    if (!currentDatabase) {
       return () => {};
     }
-    tblList(params.db)
+    tblList(currentDatabase)
       .then((page) => {
         setTables(page.tables || [])
       })
-  }, []);
+  }, [globalParams.database]);
 
   if (tables === false) {
     return <></>;
@@ -51,7 +56,6 @@ function displayTables(tables, props, params, page) {
     let className = getClassName(tableName, prefixes)
 
     let link = `/${page}/${params.db}/${tableName}`
-    //console.log(table)
     let style = {};
     if (currentTable === tableName) {
       className += ' cur';

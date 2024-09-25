@@ -1,6 +1,7 @@
 'use client'
 
 import {useParams, usePathname, useSearchParams} from "next/navigation";
+import Link from "next/link";
 
 export function SubMenu(props) {
 
@@ -22,9 +23,9 @@ export function SubMenu(props) {
 
   return  (
     <div className="links-block">
-      <a className={getClass('')} href={`/tbl_list/${params.db}/`}>Обычная таблица</a>
-      <a className={getClass('full')} href={`/tbl_list/${params.db}/?action=full`} title="Отобразить простую таблицу с полными данными всех таблиц, полученными с помощью запроса SHOW TABLE STATUS">Полная таблица</a>
-      <a className={getClass('structure')} href={`/tbl_list/${params.db}/structure`}>Исследование структуры таблиц</a>
+      <Link className={getClass('')} href={`/tbl_list/${params.db}/`}>Обычная таблица</Link>
+      <Link className={getClass('full')} href={`/tbl_list/${params.db}/?action=full`} title="Отобразить простую таблицу с полными данными всех таблиц, полученными с помощью запроса SHOW TABLE STATUS">Полная таблица</Link>
+      <Link className={getClass('structure')} href={`/tbl_list/${params.db}/structure`}>Исследование структуры таблиц</Link>
     </div>
   )
 }

@@ -20,11 +20,11 @@ export function TableActions() {
 
   return  (
     <div className="globalMenu">
-      <a onClick={executeAction.bind(this, "tableCheck")} href="#">Проверить таблицу</a> <br />
-      <a onClick={executeAction.bind(this, "tableAnalize")} href="#">Анализ таблицы</a> <br />
-      <a onClick={executeAction.bind(this, "tableRepair")} href="#">Починить таблицу</a> <br />
-      <a onClick={executeAction.bind(this, "tableOptimize")} href="#">Оптимизировать таблицу</a>  <br />
-      <a onClick={executeAction.bind(this, "tableFlush")} href="#">Сбросить кэш таблицы ("FLUSH")</a> <br />
+      <div onClick={executeAction.bind(this, "tableCheck")} role="button">Проверить таблицу</div>
+      <div onClick={executeAction.bind(this, "tableAnalize")} role="button">Анализ таблицы</div>
+      <div onClick={executeAction.bind(this, "tableRepair")} role="button">Починить таблицу</div>
+      <div onClick={executeAction.bind(this, "tableOptimize")} role="button">Оптимизировать таблицу</div>
+      <div onClick={executeAction.bind(this, "tableFlush")} role="button">Сбросить кэш таблицы ("FLUSH")</div>
     </div>
   )
 }

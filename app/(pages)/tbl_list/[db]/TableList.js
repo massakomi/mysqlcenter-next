@@ -79,10 +79,10 @@ export default function TableList(props) {
         <td><Link href={`/tbl_data/${props.db}/${table.Name}`} title="Обзор таблицы">{image("actions.gif")}</Link></td>
         <td><Link href={`/tbl_struct/${props.db}/${table.Name}`} title="Структура таблицы">{image("generate.png")}</Link></td>
         <td>
-          <a href="#" onClick={() => truncateTable(props.db, table.Name)} title="Очистить таблицу">{image("delete.gif")}</a>
+          <span role="button" onClick={() => truncateTable(props.db, table.Name)} title="Очистить таблицу">{image("delete.gif")}</span>
         </td>
         <td>
-          <a href="#" onClick={() => deleteTable(props.db, table.Name)} title="Удалить таблицу">{image("close.png")}</a>
+          <span role="button" onClick={() => deleteTable(props.db, table.Name)} title="Удалить таблицу">{image("close.png")}</span>
         </td>
         <td className="rig">{table.Rows}</td>
         <td className="rig">{formatSize(size)}</td>

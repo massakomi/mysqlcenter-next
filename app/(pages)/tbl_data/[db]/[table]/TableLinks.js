@@ -45,7 +45,6 @@ export default function TableLinks(props) {
     let links = []
     let countPages = Math.ceil(count / part)
     let currentPage = Math.ceil(getGo / part)
-    console.log(countPages, currentPage)
     let beginPage = Math.max(0, currentPage - linksRange)
     let endPage = Math.min(countPages, currentPage + linksRange)
     for (let i = beginPage; i < endPage; i ++) {

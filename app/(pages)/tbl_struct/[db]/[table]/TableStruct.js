@@ -52,7 +52,7 @@ export default function TableStruct(props) {
         <td>{key}</td>
         <td>{v.Extra}</td>
         <td><Link href={editUrl} title="Редактировать ряд"><img src="/images/edit.gif" alt="" /></Link></td>
-        <td><a href="#" onClick={deleteField.bind(this, v.Field)} title="Удалить ряд"><img src="/images/close.png" alt="" /></a></td>
+        <td><span role="button" onClick={deleteField.bind(this, v.Field)} title="Удалить ряд"><img src="/images/close.png" alt="" /></span></td>
       </tr>
     )
   });

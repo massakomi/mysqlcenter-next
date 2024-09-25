@@ -1,7 +1,6 @@
 
 import {serverStatus} from "@/app/ui/actions";
 import {KillProcess} from "@/app/(pages)/server_status/KillProcess";
-import {Buttons} from "@/app/(pages)/server_status/Buttons";
 
 export const  metadata = {
   title: 'Список процессов'
@@ -40,7 +39,7 @@ export default async function Page() {
           <table className="contentTable" id="structureTableId">
             <thead>
             <tr>
-              <th><a href="&full" title="полные или пустые запросы"><img src="/images/s_fulltext.png" width="50" height="20" border="0" alt="" /></a></th>
+              <th></th>
               <th>id</th>
               <th>user</th>
               <th>host</th>
@@ -57,7 +56,7 @@ export default async function Page() {
           </table>
         </td>
         <td valign="top">
-          <Buttons />
+
         </td>
       </tr></tbody>
     </table>

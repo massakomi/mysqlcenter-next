@@ -8,9 +8,9 @@ export function TableSelect(props) {
           <option key={table.toString()}>{table}</option>
         )}
       </select>   <br />
-      <a href="#" onClick={msMultiSelect.bind(this, 'table[]')} className="hs select">все</a> &nbsp;
-      <a href="#" onClick={msMultiSelect.bind(this, 'table[]')} className="hs unselect">очистить</a> &nbsp;
-      <a href="#" onClick={msMultiSelect.bind(this, 'table[]')} className="hs invert">инверт</a>
+      <span role="button" onClick={msMultiSelect.bind(this, 'table[]')} className="hs select">все</span>
+      <span role="button" onClick={msMultiSelect.bind(this, 'table[]')} className="hs unselect">очистить</span>
+      <span role="button" onClick={msMultiSelect.bind(this, 'table[]')} className="hs invert">инверт</span>
     </>
   )
 }

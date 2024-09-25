@@ -62,8 +62,8 @@ export default function Actions({setTables, tables}) {
     <>
       <div className="chbxAction">
         <img src={`/images/arrow_ltr.png`} alt=""  />
-        <a href="#" onClick={chbxAction.bind(this, 'check')} id="chooseAll">выбрать все</a>  &nbsp;
-        <a href="#" onClick={chbxAction.bind(this, 'uncheck')}>очистить</a>
+        <span role="button" onClick={chbxAction.bind(this, 'check')} id="chooseAll">выбрать все</span>
+        <span role="button" onClick={chbxAction.bind(this, 'uncheck')}>очистить</span>
       </div>
 
       <div className="imageAction">

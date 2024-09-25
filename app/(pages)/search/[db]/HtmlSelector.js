@@ -1,42 +1,35 @@
 'use client'
-import {Component} from "react";
+import {useRouter} from "next/navigation";
 
-export default class HtmlSelector extends Component {
+export default function HtmlSelector(props) {
 
-  constructor(props) {
-    super(props);
-  }
+  const router = useRouter()
 
-  onChange = (e) => {
-    if (this.props.auto) {
+  const onChange = (e) => {
+    if (props.auto) {
       let value = e.target.options[e.target.selectedIndex].value
       if (value) {
-        window.location = value
+        router.push(value)
       }
     }
   }
 
-  render() {
-
-    let opts = [], i = 0
-    for (let key in this.props.data) {
-      let title = this.props.data[key]
-      let value = title
-      if (this.props.keyValues) {
-        value = key;
-      }
-      opts.push(<option value={value} key={i++}>{title}</option>)
+  let opts = [], i = 0
+  for (let key in props.data) {
+    let title = props.data[key]
+    let value = title
+    if (props.keyValues) {
+      value = key;
     }
-
-    return (
-      <select onChange={this.props.onChange ? this.props.onChange : this.onChange.bind(this)}
-        name={this.props.name}
-        multiple={this.props.multiple}
-        defaultValue={this.props.value}
-        className={this.props.className}>{opts}
-      </select>
-    );
+    opts.push(<option value={value} key={i++}>{title}</option>)
   }
+
+  return (
+    <select onChange={props.onChange ? props.onChange : onChange.bind(this)}
+        name={props.name}
+        multiple={props.multiple}
+        defaultValue={props.value}
+        className={props.className}>{opts}
+    </select>
+  );
 }
-
-

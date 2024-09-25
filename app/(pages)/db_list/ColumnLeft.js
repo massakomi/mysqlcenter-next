@@ -14,7 +14,7 @@ export default function ColumnLeft(props) {
   const router = useRouter()
 
   const executeAction = async (act, url, e) => {
-    const {action, formData} = prepareAction(act, url, e, 'databases[]')
+    const {action, formData} = prepareAction(act, e, 'databases[]')
     formData.set('dbMulty', 1)
     const json = await customAction(action, formData);
     dispatch(setMessages(json.messages))

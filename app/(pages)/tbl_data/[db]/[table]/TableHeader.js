@@ -2,6 +2,7 @@
 
 import {useParams, useSearchParams} from "next/navigation";
 import {wordwrap} from "@/app/ui/functions";
+import Link from "next/link";
 
 export default function TableHeader(props) {
 
@@ -11,7 +12,7 @@ export default function TableHeader(props) {
     <table className="contentTable interlaced">
       <thead>
       <tr valign="top">
-        <th><a href="fullText=1" title="Показать полные значения всех полей и убрать переносы заголовков полей" className="hiddenSmallLink" style={{color:'white'}}>full</a></th>
+        <th><Link href="?fullText=1" title="Показать полные значения всех полей и убрать переносы заголовков полей" className="hiddenSmallLink" style={{color:'white'}}>full</Link></th>
         <th></th>
         <th></th>
         {headers.map((h, k) =>
@@ -44,8 +45,8 @@ function getTableHeaders(fields, sortEnabled=true, headWrap=false) {
   let headers = [];
   let pk = [];
   let fieldsCount = Object.keys(fields).length;
-  Object.keys(fields).forEach(function(k) {
-    let fieldData = fields[k]
+  Object.keys(fields).forEach(function(key) {
+    let fieldData = fields[key]
     let isWrapped = fieldData.Type.match(/(int|enum|float|char)/i) !== null
     if (!headWrap || fieldData.Field.length <= headWrap) {
       isWrapped = false
@@ -56,9 +57,9 @@ function getTableHeaders(fields, sortEnabled=true, headWrap=false) {
     if (searchParams.get('fullText') === '1') {
       isWrapped = false
     }
-    let u = `/tbl_data/${params.db}/${params.table}/?order=${fieldData.Field}`
+    let url = `/tbl_data/${params.db}/${params.table}/?order=${fieldData.Field}`
     if (searchParams.get('order') === fieldData.Field) {
-      u += '-'
+      url += '-'
     }
     let link = fieldData.Field;
     if (isWrapped) {
@@ -73,7 +74,7 @@ function getTableHeaders(fields, sortEnabled=true, headWrap=false) {
       fieldData.Field = f
     }
     if (sortEnabled) {
-      link = <a href={u} className='sort' title='Сортировать' key={k}>{fieldData.Field}</a>
+      link = <Link href={url} className='sort' title='Сортировать' key={key}>{fieldData.Field}</Link>
     }
     headers.push(link)
   })

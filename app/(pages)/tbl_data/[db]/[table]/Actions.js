@@ -17,7 +17,7 @@ export default function Actions() {
   }
 
   const executeAction = async (act, url, e) => {
-    let {action, formData} = prepareAction(act, url, e, 'row[]', params)
+    let {action, formData} = prepareAction(act, e, 'row[]', params)
     formData.set('db', params.db)
     formData.set('table', params.table)
     let json = await customAction(action, formData);

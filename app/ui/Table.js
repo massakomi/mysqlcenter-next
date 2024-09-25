@@ -14,11 +14,16 @@ export default function Table({data, title = ''}) {
       return ;
     }
     for (let row of data) {
+      let title;
+      if (row.hasOwnProperty('cells')) {
+        title = row.title;
+        row = row.cells;
+      }
       if (!header) {
         header = <Row key={index++} values={Object.keys(row)} tag="th" />
       }
       let values = Object.values(row)
-      rows.push(<Row key={index++} values={values} />)
+      rows.push(<Row key={index++} values={values} title={title} />)
     }
   } else {
     Object.entries(data).map(([key, value]) => {
@@ -29,13 +34,13 @@ export default function Table({data, title = ''}) {
   return <>
     {title ? <h2>{title}</h2> : null}
     <table className="contentTable">
-      <thead>{header}</thead>
+      {header ? <thead>{header}</thead> : null}
       <tbody>{rows}</tbody>
     </table>
   </>
 }
 
-function Row({values, tag='td'}) {
+function Row({values, tag='td', title = ''}) {
   let j = useRef(0);
   let i = useRef(0);
   let cells = []
@@ -43,7 +48,7 @@ function Row({values, tag='td'}) {
     cells.push(<Cell key={j.current++} tag={tag} value={value} />)
   })
   return (
-    <tr key={i.current++}>
+    <tr key={i.current++} title={title}>
       {cells}
     </tr>
   );

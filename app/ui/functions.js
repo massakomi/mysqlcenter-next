@@ -45,7 +45,7 @@ export function getPageFromPathname(pathname) {
 /**
  * Общий код для подготовки параметров множественных действий над таблицами и базами
  */
-export function prepareAction (action, url, event, name) {
+export function prepareAction (action, event, name) {
   let items = checkedCheckboxes()
   if (!items.length) {
     return [];

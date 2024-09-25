@@ -1,27 +1,69 @@
 'use client'
-import {Component} from "react";
+
 import HtmlSelector from "@/app/(pages)/search/[db]/HtmlSelector";
-import {useParams, useSearchParams} from "next/navigation";
+import { usePathname, useSearchParams} from "next/navigation";
+import Link from "next/link";
 
 
 export default function TableLinks(props) {
 
-  const params = useParams();
   let searchParams = useSearchParams()
+  let pathname = usePathname()
 
-  const pagesObj = () => {
+  const changeUrl = (params) => {
+    let queryString = new URLSearchParams(searchParams.toString())
+    for (const [key, value] of Object.entries(params)) {
+      if (typeof value !== 'undefined' && value !== '') {
+        queryString.set(key, value)
+      }
+    }
+    return pathname + '?' + queryString.toString()
+  }
+
+  const getOnPageOptions = () => {
     let pagesNums = [30, 50, 100, 200, 300, 500, 1000, 'all']
     let pages = {}
-    let u = new URL(location.href)
     for (let num of pagesNums) {
-      u.searchParams.set('part', num)
-      pages[u.href] = num
+      pages[changeUrl({part: num})] = num
     }
     return pages;
   }
 
-  let getPart = searchParams.get('part');
-  let getGo = searchParams.get('go');
+  const selectedKey = () => {
+    let selected = false;
+    if (getPart) {
+      for (let key in onPageOptions) {
+        if (onPageOptions[key] === getPart) {
+          selected = key
+        }
+      }
+    }
+    return selected;
+  }
+
+  const getPagesLinks = () => {
+    let links = []
+    let countPages = Math.ceil(count / part)
+    let currentPage = Math.ceil(getGo / part)
+    console.log(countPages, currentPage)
+    let beginPage = Math.max(0, currentPage - linksRange)
+    let endPage = Math.min(countPages, currentPage + linksRange)
+    for (let i = beginPage; i < endPage; i ++) {
+      let url = changeUrl({go: i * part})
+      if (getGo === i * part) {
+        links.push(<Link key={i} href={url} className="cur">{i + 1}</Link>)
+      } else {
+        links.push(<Link key={i} href={url}>{i + 1}</Link>)
+      }
+    }
+    if (links.length === 1) {
+      return [];
+    }
+    return links;
+  }
+
+  let getPart = parseInt(searchParams.get('part') || 100);
+  let getGo = parseInt(searchParams.get('go') || 0);
   //let getSql = new URL(location.href).searchParams.get('sql');
   //let getOrder = new URL(location.href).searchParams.get('order');
   let linksRange = props.linksRange;
@@ -32,37 +74,13 @@ export default function TableLinks(props) {
     return false;
   }
 
-  let links = []
-  let countPages = Math.ceil(count / part)
-  let currentPage = Math.ceil(getGo / part)
-  let beginPage = Math.max(0, currentPage - linksRange)
-  let endPage = Math.min(countPages, currentPage + linksRange)
-
-  for (let i = beginPage; i < endPage; i ++) {
-    let url = new URL(location.href)
-    url.searchParams.set('go', i * part)
-    if (getGo == i * part) {
-      links.push(<a key={i} href={url} className="cur">{i + 1}</a>)
-    } else {
-      links.push(<a key={i} href={url}>{i + 1}</a>)
-    }
-  }
-
-  let data = pagesObj();
-
-  let selected = false;
-  if (getPart) {
-    for (let key in data) {
-      if (data[key] == getPart) {
-        selected = key
-      }
-    }
-  }
+  let onPageOptions = getOnPageOptions();
+  let pagesLinks = getPagesLinks()
 
   return (
     <div className="contentPageLinks">
-      {links}
-      <HtmlSelector data={data} auto="true" className="miniSelector" value={selected} keyValues="true" />
+      {pagesLinks}
+      {pagesLinks.length ? <HtmlSelector data={onPageOptions} auto="true" className="miniSelector" value={selectedKey()} keyValues="true"/> : null}
     </div>
   );
 }

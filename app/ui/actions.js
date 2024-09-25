@@ -2,9 +2,14 @@
 
 // Запросы на страницы
 import {Exception} from "sass";
+import {revalidatePath} from "next/cache";
 
 export async function tblList(db, mode) {
   return await query({s: 'tbl_list', db, mode});
+}
+export async function tblStruct(get) {
+  get.s = 'tbl_struct'
+  return await query(get);
 }
 export async function serverStatus() {
   return await query({s: 'server_status'});
@@ -53,6 +58,9 @@ export async function getInit() {
 // чтобы попало в ActionProcessor, нужен $queryMode (GET['action'] или POST['action'])
 export async function customAction(action, formData){
   return await query({action}, formData);
+}
+export async function invalidatePath(path){
+  revalidatePath(path)
 }
 
 async function query(query, post=false, opts = {}) {

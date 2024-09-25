@@ -13,6 +13,7 @@ export default function Table(props) {
 
   const params = useParams();
   const dispatch = useDispatch();
+  let searchParams = useSearchParams()
   useEffect(() => {
     dispatch(setMessages(props.messages))
   }, []);
@@ -98,7 +99,7 @@ export default function Table(props) {
       if (fields[i]) {
         type = fields[i].Type
       }
-      let val = processRowValue(row[key], type, props.textCut)
+      let val = processRowValue(row[key], type, props.textCut, searchParams.get('fullText'))
       values.push(val)
       i ++
     }
@@ -132,8 +133,9 @@ export default function Table(props) {
  * @param value
  * @param type
  * @param textCut
+ * @param fullText
  */
-function processRowValue(value, type, textCut) {
+function processRowValue(value, type, textCut, fullText) {
   if (value === null) {
     value = <i>NULL</i>
   } else {
@@ -142,8 +144,7 @@ function processRowValue(value, type, textCut) {
       value = htmlspecialchars(value)
     }
     if (value.length > textCut) {
-      let fullText = new URL(location.href).searchParams.get('fullText');
-      if (fullText == '') {
+      if (!fullText) {
         value = value.substring(0, textCut)
       }
     }

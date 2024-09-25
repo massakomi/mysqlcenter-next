@@ -5,11 +5,17 @@ import {getPageFromPathname} from "@/app/ui/functions";
 import {customAction} from "@/app/ui/actions";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
+import {useEffect} from "react";
 
 export function MenuTop() {
   const pathname = usePathname();
   const params = useParams();
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setMessages([]))
+  }, []);
+
   let dbMenuGlobal = [
     ['delim'],
     ['поиск', 'search', ''],

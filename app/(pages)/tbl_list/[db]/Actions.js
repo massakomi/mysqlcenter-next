@@ -19,7 +19,7 @@ export default function Actions({setTables, tables}) {
   const router = useRouter()
 
   const executeAction = async (act, url, e) => {
-    let {action, formData} = prepareAction(act, url, e, 'table[]', params)
+    let {action, formData} = prepareAction(act, e, 'table[]', params)
     formData.set('db', params.db)
     let json = await customAction(action, formData);
     dispatch(setMessages(json.messages))

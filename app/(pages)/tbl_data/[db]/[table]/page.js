@@ -17,42 +17,14 @@ export default async function Page({params, searchParams}) {
     table: params.table,
     order: searchParams.order,
     go: searchParams.go,
+    part: searchParams.part,
+    query: searchParams.query,
   };
   let props = await tblDataPage(get)
 
-
-  /*componentDidMount() {
-    jQuery('.contentTable TD').click(function(){
-      var tr = jQuery(this).parent();
-      var ch = tr.find('input').prop('checked');
-      if (jQuery(this).index() == 0) {
-        tr.toggleClass('selectedRow', ch);
-        return true;
-      }
-      tr.toggleClass('selectedRow', !ch);
-      jQuery(this).parent().find('input').attr('checked', !ch)
-    });
-
-    jQuery('.contentTable TR').dblclick(function(){
-      location.href = jQuery(this).find('a').attr('href');
-    });
-
-    jQuery('.contentTable TD').click(function(){
-      if (jQuery(this).index() <= 2) {
-        return true;
-      }
-      if (globalCtrlKeyMode) {
-        jQuery(this).html('<input type="text" value="'+jQuery(this).html()+'" id="editable">');
-        jQuery('#editable').focus();
-        jQuery('#editable').focusout(function() {
-          var html = jQuery(this).val();
-          jQuery(this).parent().html(html);
-        });
-      }
-      return true;
-    });
-  }*/
-
+  if (!props.count) {
+    return ;
+  }
 
   return (
     <div>

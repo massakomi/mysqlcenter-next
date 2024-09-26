@@ -4,7 +4,7 @@ import FormCompare from "@/app/(pages)/tbl_data/[db]/[table]/FormCompare";
 import Actions from "./Actions";
 import {tblDataPage} from "@/app/ui/actions";
 
-export async function generateMetadata({ params, searchParams }, parent) {
+export async function generateMetadata({ params }) {
   return {
     title: `${params.table} < ${params.db}`
   }

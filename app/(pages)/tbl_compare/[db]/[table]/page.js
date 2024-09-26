@@ -1,7 +1,7 @@
 import TablesCompare from './TablesCompare';
 import {tblCompare} from '@/app/ui/actions';
 
-export async function generateMetadata({ params, searchParams }, parent) {
+export async function generateMetadata({ params }) {
   return {
     title: `${params.table} < ${params.db}`
   }

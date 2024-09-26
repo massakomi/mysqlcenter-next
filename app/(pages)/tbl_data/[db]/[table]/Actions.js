@@ -27,7 +27,7 @@ export default function Actions() {
   const redirectAction = async (act, url, e) => {
     const checked = checkedCheckboxes()
     if (act === 'editRows') {
-      router.push(`/tbl_change/${params.db}/${params.table}/?rows=${checked.join(',')}`)
+      router.push(`/tbl_change/${params.db}/${params.table}/?row=${checked.join(',')}`)
     }
     if (act === 'exportRows') {
       router.push(`/export/${params.db}/${params.table}/?where=${checked.join(' OR ')}`)

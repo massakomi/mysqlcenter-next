@@ -3,7 +3,7 @@ import {tblList} from "@/app/ui/actions";
 import {SubMenu} from "@/app/(pages)/tbl_list/[db]/SubMenu";
 import {TableStructure} from "@/app/(pages)/tbl_list/[db]/structure/TableStructure";
 
-export async function generateMetadata({ params, searchParams }, parent) {
+export async function generateMetadata({ params }) {
   return {
     title: `${params.db} исследование структуры`
   }

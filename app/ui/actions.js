@@ -16,6 +16,10 @@ export async function tblAdd(get, post) {
   get.s = 'tbl_add'
   return await query(get, post);
 }
+export async function tblChange(get, post) {
+  get.s = 'tbl_change'
+  return await query(get, post);
+}
 export async function serverStatus() {
   return await query({s: 'server_status'});
 }
@@ -71,16 +75,18 @@ export async function invalidatePath(path){
 async function query(query, post=false, opts = {}) {
   let data = await fetch(buildUrl(query), buildOptions(post, opts))
   console.log('fetch', buildUrl(query), post || '')
-  let json = {};
-  try {
-    json = await data.json()
-    //console.log('fetch return:', json)
-  } catch (e) {
-    //throw Error('fetch error: ' + e.name + ":" + e.message)
-    console.error('fetch error: ' + e.name + ":" + e.message);
-    //console.error('fetch error: ' + e.name + ":" + e.message + "\n" + e.stack);
-    let data = await fetch(buildUrl(query), buildOptions(post, opts))
-    let text = await data.text();
+  let json = {}, text = '';
+  if (data.headers.get('content-type') === 'application/json') {
+    try {
+      json = await data.json()
+      //console.log('fetch return:', json)
+    } catch (e) {
+      let msg = 'fetch json error: ' + e.name + ":" + e.message; //  + "\n" + e.stack
+      console.error(msg);
+      throw Error(msg)
+    }
+  } else {
+    text = await data.text();
     throw Error(text)
   }
   if (json.hasOwnProperty('page')) {

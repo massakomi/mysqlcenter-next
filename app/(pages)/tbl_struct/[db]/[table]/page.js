@@ -6,7 +6,7 @@ import {Actions} from "./Actions";
 import {FormField} from "./FormField";
 import FieldsInfo from "@/app/(pages)/tbl_struct/[db]/[table]/FieldsInfo";
 
-export async function generateMetadata({ params, searchParams }, parent) {
+export async function generateMetadata({ params }) {
   return {
     title: `${params.table} < ${params.db}`
   }

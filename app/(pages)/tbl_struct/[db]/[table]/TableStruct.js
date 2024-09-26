@@ -41,7 +41,7 @@ export default function TableStruct(props) {
         }
       }
     }
-    let editUrl = `/tbl_add/${props.db}/${props.table}/${encodeURIComponent(v.Field)}/`
+    let editUrl = `/tbl_add/${props.db}/${props.table}/?fields=${encodeURIComponent(v.Field)}`
     return (
       <tr id={"f-"+v.Field} key={v.Field}>
         <td><input name="field[]" id={"field"+k} type="checkbox" value={v.Field} className="cb" /></td>

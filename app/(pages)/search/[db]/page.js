@@ -3,7 +3,7 @@ import Form from "./Form";
 import {searchPage} from "@/app/ui/actions";
 
 
-export async function generateMetadata({ params, searchParams }, parent) {
+export async function generateMetadata({ params }) {
   return {
     title: `Поиск по базе данных ${params.db}`
   }

@@ -12,6 +12,10 @@ export async function tblStruct(get) {
   get.s = 'tbl_struct'
   return await query(get);
 }
+export async function tblAdd(get, post) {
+  get.s = 'tbl_add'
+  return await query(get, post);
+}
 export async function serverStatus() {
   return await query({s: 'server_status'});
 }
@@ -72,11 +76,12 @@ async function query(query, post=false, opts = {}) {
     json = await data.json()
     //console.log('fetch return:', json)
   } catch (e) {
+    //throw Error('fetch error: ' + e.name + ":" + e.message)
     console.error('fetch error: ' + e.name + ":" + e.message);
     //console.error('fetch error: ' + e.name + ":" + e.message + "\n" + e.stack);
     let data = await fetch(buildUrl(query), buildOptions(post, opts))
     let text = await data.text();
-    console.log('fetch return text:', text)
+    throw Error(text)
   }
   if (json.hasOwnProperty('page')) {
     return onlyPageReturn(json);

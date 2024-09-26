@@ -36,7 +36,7 @@ export function Actions() {
     <>
       <div className="chbxAction">
         <img src="/images/arrow_ltr.png" alt="" border="0" align="absmiddle" />
-        <span role="button" onClick={chbxAction.bind(this, "check")}>выбрать все</span>
+        <span role="button" className="me-2" onClick={chbxAction.bind(this, "check")}>выбрать все</span>
         <span role="button" onClick={chbxAction.bind(this, "uncheck")}>очистить</span>
       </div>
 

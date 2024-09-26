@@ -1,20 +1,28 @@
 'use client'
+import {useParams, useRouter} from "next/navigation";
+
 export function FormField(props) {
 
-  const checkEmpty = (e) => {
-    e.preventDefault()
-    checkEmpty(e.target, 'fieldsNum')
+  const params = useParams()
+  const router = useRouter()
+
+  const goToTblAdd = (event) => {
+    event.preventDefault()
+    const formData = new FormData(event.target)
+    const queryString = new URLSearchParams(formData).toString()
+    let path = `/tbl_add/${params.db}/${params.table}/?${queryString}`
+    router.push(path)
   }
 
   const selectOnFocus = (e) => {
-    //get('f3').checked = true
+    document.getElementById('f3').checked = true
   }
 
   return (
     <>
-      <form action={props.addTableUrl} method="post" onSubmit={checkEmpty}>
+      <form onSubmit={goToTblAdd}>
         <input type="hidden" name="action" value="fieldsAdd" />
-        Добавить полей &nbsp; <input name="fieldsNum" type="text" defaultValue="1" size="5" /> &nbsp;
+        Добавить полей &nbsp; <input name="fieldsNum" type="number" required defaultValue="1" min="1" size="5" style={{width: '40px'}} /> &nbsp;
         <input name="afterOption" type="radio" value="end" defaultChecked id="f1" /> <label htmlFor="f1">в конец </label>
         <input name="afterOption" type="radio" value="start" id="f2" /> <label htmlFor="f2">в начало</label>
         <input name="afterOption" type="radio" value="field" id="f3" />  <label htmlFor="f3">после </label>

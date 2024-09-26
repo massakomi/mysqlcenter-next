@@ -212,4 +212,87 @@ export function processRowValue(value, type, textCut, fullText) {
 }
 
 
+/**
+ * Специальная функция для изменения параметров скопированного ряда. Сначала копируется ряд.
+ * Далее меняются индексы у аттрибутов name, если требуется. Ид и прочие аттрибуты не трогаются пока.
+ */
+export function addRowWithInputs(id) {
+  let newTR = addRow(id);
+  let inputs = newTR.getElementsByTagName('INPUT')
+  for (let i = 0; i < inputs.length; i++) {
+    let res = /([a-z]+)\[(\d+)\]/i.exec(inputs[i].name)
+    if (res != null) {
+      let nextName = res[1] + '['+ (Number(res[2]) + 1) +']';
+      inputs[i].name = nextName;
+    }
+  }
+}
 
+/**
+ * Копирует последний ряд таблицы вниз
+ * @param  tableId string   id таблицы
+ * @param from
+ * @param after
+ * @return object Вставленная строка
+ */
+export function addRow(tableId, from='last', after=true) {
+  const table = document.getElementById(tableId);
+  // сколько всего рядов
+  const i = table.rows.length;
+  // берём последний/первый ряд
+  let tr    = table.rows[from == 'last' ? i - 1 : (from > i?i-1:from)];
+  // назначаем ему ид
+  tr.id = 'trAfterId' + i;
+  // вставляем после/до него еще 1 строку
+  if (!after) {
+    insertBefore('trAfterId' + i, 'TR', 'trNewId' + i);
+  } else {
+    insertAfter('trAfterId' + i, 'TR', 'trNewId' + i);
+  }
+  // вот она!
+  var tr2 = document.getElementById('trNewId' + i);
+  // копируем ячейки из одной строки в другую
+  for (var j = 0; j < tr.cells.length; j ++) {
+    let td = document.createElement('TD')
+    tr2.appendChild(td)
+    td.innerHTML = tr.cells[j].innerHTML
+  }
+  return tr2;
+}
+
+
+/**
+ * Вставляет элемент после другого элемента
+ */
+function insertAfter (sAfterId, sTag, sId){
+  let objSibling = document.getElementById(sAfterId);
+  let objElement = document.createElement(sTag);
+  objElement.setAttribute('id',sId);
+  objSibling.parentNode.insertBefore(objElement, objSibling.nextSibling);
+}
+function insertBefore (sAfterId, sTag, sId){
+  let objSibling = document.getElementById(sAfterId);
+  let objElement = document.createElement(sTag);
+  objElement.setAttribute('id',sId);
+  objSibling.parentNode.insertBefore(objElement, objSibling);
+}
+
+/**
+ * Удаляет ряд таблицы с конца
+ */
+export function removeRow(tableId) {
+  let r = document.getElementById(tableId).rows;
+  if (r.length === 1) {
+    return false;
+  }
+  remove(r[r.length - 1]);
+}
+
+/**
+ * Удаляет элемент
+ */
+function remove(objElement)	{
+  if (objElement && objElement.parentNode && objElement.parentNode.removeChild)	{
+    objElement.parentNode.removeChild(objElement);
+  }
+}

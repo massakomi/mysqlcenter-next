@@ -1,5 +1,3 @@
-import {Exception} from 'sass';
-
 export function buildQueryString(params = {}) {
   let url = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
@@ -29,7 +27,7 @@ export function buildOptions(post, opts = {}) {
 export function onlyPageReturn(json) {
   if (json.page instanceof Array) {
     if (json.page.length > 0) {
-      throw new Exception('В json.page вернулся массив, а не объект!');
+      throw new Error('В json.page вернулся массив, а не объект!');
     } else {
       json.page = {}
     }

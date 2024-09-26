@@ -1,18 +1,17 @@
 'use client'
-import {customAction} from "@/app/ui/actions";
-import {setMessages} from "@/lib/features/messagesReducer";
-import {useDispatch} from "react-redux";
-import {useParams, useRouter} from "next/navigation";
+import {customAction} from '@/app/ui/actions'
+import {setMessages} from '@/lib/features/messagesReducer'
+import {useDispatch} from 'react-redux'
+import {useParams, useRouter} from 'next/navigation'
 
 export default function FieldSet(props) {
-
-  const dispatch = useDispatch();
-  const params = useParams();
+  const dispatch = useDispatch()
+  const params = useParams()
 
   const executeAction = async (action, event) => {
     event.preventDefault()
-    let formData = new FormData(event.target);
-    let json = await customAction(action, formData);
+    let formData = new FormData(event.target)
+    let json = await customAction(action, formData)
     dispatch(setMessages(json.messages))
     redirect(action, formData, params)
   }
@@ -31,16 +30,16 @@ export default function FieldSet(props) {
 }
 
 function redirect(action, formData, params) {
-  let redirect;
+  let redirect
   if (action === 'tableRename') {
     redirect = `/actions/${params.db}/${formData.get('newName')}`
   }
   if (action === 'tableMove' || action === 'tableCopyTo') {
     redirect = `/actions/${formData.get('newDB')}/${formData.get('newName')}`
   }
-  setTimeout(function() {
+  setTimeout(function () {
     if (redirect) {
-      location.href = redirect;
+      location.href = redirect
     }
-  }, 1000);
+  }, 1000)
 }

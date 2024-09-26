@@ -1,17 +1,16 @@
-import {configPage} from "@/app/ui/actions";
-import {Buttons} from "@/app/(pages)/config/Buttons";
+import {configPage} from '@/app/ui/actions'
+import {Buttons} from '@/app/(pages)/config/Buttons'
 
-export const  metadata = {
-  title: 'Настройки'
+export const metadata = {
+  title: 'Настройки',
 }
 
 export default async function Page() {
-
   const props = await configPage()
 
   const trs = props.data.map((item) => {
     if (!item.includes('|')) {
-      return;
+      return
     }
     let [name, title, value, type] = item.split('|')
     let input = ''
@@ -26,23 +25,21 @@ export default async function Page() {
         <td>{input}</td>
       </tr>
     )
-
-  });
+  })
 
   return (
     <form>
       <h1>{metadata.title}</h1>
       <table>
         <thead>
-        <tr>
-          <th>Параметр</th>
-          <th>Значение</th>
-        </tr>
+          <tr>
+            <th>Параметр</th>
+            <th>Значение</th>
+          </tr>
         </thead>
         <tbody>{trs}</tbody>
       </table>
       <Buttons />
     </form>
-  );
-
+  )
 }

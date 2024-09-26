@@ -58,7 +58,7 @@ function getTableHeaders(searchParams, params, props) {
     if (searchParams.get('fullText') === '1') {
       isWrapped = false
     }
-    let url = `/tbl_data/${params.db}/${params.table}/?order=${fieldData.Field}`
+    let url = `/tbl_data/${params.db}/${params.table}/?order=${key}`
     if (searchParams.get('order') === fieldData.Field) {
       url += '-'
     }

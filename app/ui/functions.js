@@ -174,5 +174,42 @@ export function querySwr(get = {}) {
 }
 
 
+/**
+ * (для tbl_data и tbl_compare) Обрабатывает значения полей базы данных перед выводом их в виде таблицы.
+ * Обработка заключается в: для текстовых - htmlspecialchars+обрезка, для даты - отображение в поле id=tblDataInfoId
+ * для нулевых значений - значение возвращается оформленным курсивом.
+ *
+ * @package data view
+ * @return string Обработанное значение
+ * @param value
+ * @param type
+ * @param textCut
+ * @param fullText
+ */
+export function processRowValue(value, type, textCut, fullText) {
+  if (value === null) {
+    value = <i>NULL</i>
+  } else {
+    // Тексты
+    if (type.match(/(blob|text|char)/i)) {
+      value = htmlspecialchars(value)
+    }
+    if (value.length > textCut) {
+      if (!fullText) {
+        value = value.substring(0, textCut)
+      }
+    }
+    // дата
+    if (type.match(/(int)/i) && value.length === 10 && $.isNumeric(value)) {
+      //$e = ' onmouseover="get(\'tblDataInfoId\').innerHTML=\''.date(MS_DATE_FORMAT, $v).'\'" onmouseout="get(\'tblDataInfoId\').innerHTML=\'\'"';
+      //$v = '<span className="dateString"'.$e.'>'.$v.'</span>';
+    }
+    if (value === '') {
+      value = <i>empty</i>
+    }
+  }
+  return value
+}
+
 
 

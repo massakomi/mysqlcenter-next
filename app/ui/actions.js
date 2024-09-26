@@ -44,6 +44,10 @@ export async function exportSpPage(db, post = false) {
 export async function dbList(mode = '') {
   return await query({s: 'db_list', mode}, false);
 }
+export async function tblCompare(get) {
+  get.s = 'tbl_compare'
+  return await query(get, false, { cache: 'no-store' });
+}
 export async function dbComparePage(dbs) {
   return await query({s: 'db_compare'}, {dbs}, { cache: 'no-store' });
 }

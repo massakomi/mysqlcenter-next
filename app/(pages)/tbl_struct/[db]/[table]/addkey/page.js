@@ -5,7 +5,7 @@ export const metadata = {
   title: 'Добавить ключ'
 };
 
-export default async function ({params}) {
+export default async function Page({params}) {
 
   let get = params;
   get.mode = 'add_key';

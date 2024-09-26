@@ -9,14 +9,13 @@ import DateSelector from "@/app/(pages)/tbl_list/[db]/DateSelector";
 
 export default function Actions({setTables, tables}) {
 
-  let searchParams = useSearchParams()
+  const dispatch = useDispatch()
+  const params = useParams()
+  const router = useRouter()
+  const searchParams = useSearchParams()
   if (searchParams.get('action')) {
     return <></>;
   }
-
-  const dispatch = useDispatch()
-  let params = useParams()
-  const router = useRouter()
 
   const executeAction = async (act, url, e) => {
     let {action, formData} = prepareAction(act, e, 'table[]', params)

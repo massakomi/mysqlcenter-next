@@ -7,6 +7,7 @@ import {revalidatePath} from "next/cache";
 export function DbCreateForm() {
 
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const onDbCreate = async (e) => {
     e.preventDefault()
@@ -15,9 +16,7 @@ export function DbCreateForm() {
     dispatch(setMessages(json.messages))
     if (json.status === true) {
       await invalidatePath('/db_list')
-      setTimeout(function() {
-        location.reload()
-      }, 1000);
+      router.refresh()
     }
   }
 

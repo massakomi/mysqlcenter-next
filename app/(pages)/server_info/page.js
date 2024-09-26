@@ -23,7 +23,7 @@ export default async function Page() {
       <Table data={props.privileges} />
 
       <h2>SHOW ENGINES</h2>
-      <p>Displays status information about the server's storage engines. This is particularly useful for checking whether a storage engine is supported, or to see what the default engine is.</p>
+      <p>Displays status information about the server storage engines. This is particularly useful for checking whether a storage engine is supported, or to see what the default engine is.</p>
       <Table data={props.engines} />
     </>
   );

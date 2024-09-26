@@ -24,7 +24,7 @@ export function TableActions() {
       <div onClick={executeAction.bind(this, "tableAnalize")} role="button">Анализ таблицы</div>
       <div onClick={executeAction.bind(this, "tableRepair")} role="button">Починить таблицу</div>
       <div onClick={executeAction.bind(this, "tableOptimize")} role="button">Оптимизировать таблицу</div>
-      <div onClick={executeAction.bind(this, "tableFlush")} role="button">Сбросить кэш таблицы ("FLUSH")</div>
+      <div onClick={executeAction.bind(this, "tableFlush")} role="button">Сбросить кэш таблицы (FLUSH)</div>
     </div>
   )
 }

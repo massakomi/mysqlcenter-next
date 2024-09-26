@@ -10,7 +10,7 @@ export default function ColumnRight(props) {
 
   let tableLink;
   if (pathname !== '/db_list/full') {
-    tableLink = <Link href="/db_list/full" title="Сканирует все таблицы всех баз данных и выводит количество таблиц, размер, дату обновления и количество рядов">Показать полную таблицу</Link>
+    tableLink = <a href="/db_list/full" title="Сканирует все таблицы всех баз данных и выводит количество таблиц, размер, дату обновления и количество рядов">Показать полную таблицу</a>
   } else {
     tableLink = <Link href="/db_list">Показать краткую таблицу</Link>
   }

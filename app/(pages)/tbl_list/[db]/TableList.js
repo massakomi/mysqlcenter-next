@@ -95,6 +95,7 @@ export default function TableList(props) {
   }
 
   let searchParams = useSearchParams()
+  const [tables, setTables] = useState(Object.values(props.tables));
   if (searchParams.get('action') === 'full') {
     return <Table data={props.tables} />;
   }
@@ -102,7 +103,6 @@ export default function TableList(props) {
   let sumSize = 0;
   let sumRows = 0;
 
-  const [tables, setTables] = useState(Object.values(props.tables));
   let trs = tables.map((table, key) => renderRow(table, key))
 
   return (

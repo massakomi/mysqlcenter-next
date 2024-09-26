@@ -6,7 +6,9 @@ import Link from "next/link";
 
 export default function TableHeader(props) {
 
-  let headers = getTableHeaders(props.fieldsEx, !props.directSQL, props.headWrap, props.order);
+  const searchParams = useSearchParams()
+  const params = useParams();
+  let headers = getTableHeaders(searchParams, params, props);
 
   return (
     <table className="contentTable interlaced">
@@ -32,16 +34,15 @@ export default function TableHeader(props) {
  * формируются особым образом, с переносом.
  *
  * @package data view
+ * @param searchParams
+ * @param params
+ * @param props
  * @return array  Массив заголовков
- * @param fields
- * @param sortEnabled
- * @param headWrap
  */
-function getTableHeaders(fields, sortEnabled=true, headWrap=false) {
-
-  const searchParams = useSearchParams()
-  const params = useParams();
-
+function getTableHeaders(searchParams, params, props) {
+  let fields = props.fieldsEx
+  let sortEnabled = !props.directSQL
+  let headWrap = props.headWrap
   let headers = [];
   let pk = [];
   let fieldsCount = Object.keys(fields).length;

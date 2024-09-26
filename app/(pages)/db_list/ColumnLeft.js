@@ -1,7 +1,7 @@
 'use client'
 import Table from "./Table";
 import {checkedCheckboxes, prepareAction} from "@/app/ui/functions";
-import {customAction} from "@/app/ui/actions";
+import {customAction, invalidatePath} from "@/app/ui/actions";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 import {useState} from "react";
@@ -18,6 +18,7 @@ export default function ColumnLeft(props) {
     formData.set('dbMulty', 1)
     const json = await customAction(action, formData);
     dispatch(setMessages(json.messages))
+    await invalidatePath('/db_list')
     setTimeout(function() {
       location.reload()
     }, 1000);

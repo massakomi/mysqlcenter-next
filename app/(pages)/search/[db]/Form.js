@@ -21,14 +21,6 @@ export default function Form(props) {
     setDisabled(!inputRef.current.value && !inputFieldRef.current.value)
   }
 
-  useEffect(() => {
-    if (searchParams.get('query') && !formRef.current.submitted) {
-      inputRef.current.value = searchParams.get('query')
-      formRef.current.submitted = true;
-      startSearch()
-    }
-  }, []);
-
   const startSearch = async (e) => {
     if (e) {
       e.preventDefault()
@@ -39,6 +31,14 @@ export default function Form(props) {
     setResults(json.results)
     setDisabled(false)
   }
+
+  useEffect(() => {
+    if (searchParams.get('query') && !formRef.current.submitted) {
+      inputRef.current.value = searchParams.get('query')
+      formRef.current.submitted = true;
+      startSearch()
+    }
+  });
 
   return (
     <>

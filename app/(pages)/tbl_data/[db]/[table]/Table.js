@@ -17,7 +17,7 @@ export default function Table(props) {
   let searchParams = useSearchParams()
   useEffect(() => {
     dispatch(setMessages(props.messages))
-  }, []);
+  }, [dispatch, props.messages]);
 
 
   if (!props.fields) {
@@ -88,9 +88,9 @@ export default function Table(props) {
 
     // создание ссылок на действия
     let values = [
-      <input name="row[]" type="checkbox" value={idRow} className="cb" id={`c${idRow}`} />,
-      <Link href={`/tbl_change/${params.db}/${params.table}/?row=${idRow}`} title="Редактировать ряд"><img src={`/images/edit.gif`} alt="" border="0" /></Link>,
-      <span onClick={deleteRow.bind(this, idRow)} title="Удалить ряд"><img src={`/images/close.png`} alt="" border="0" role="button" /></span>
+      <input key="key1" name="row[]" type="checkbox" value={idRow} className="cb" id={`c${idRow}`} />,
+      <Link key="key2" href={`/tbl_change/${params.db}/${params.table}/?row=${idRow}`} title="Редактировать ряд"><img src={`/images/edit.gif`} alt="" border="0" /></Link>,
+      <span key="key3" onClick={deleteRow.bind(this, idRow)} title="Удалить ряд"><img src={`/images/close.png`} alt="" border="0" role="button" /></span>
     ]
 
     // загрузка данных

@@ -1,7 +1,7 @@
 'use client'
 import Table from "@/app/ui/Table";
 
-export default function ({info}) {
+export default function FieldsInfo({info}) {
 
   const comments = {
     Engine: 'Тип хранилища',

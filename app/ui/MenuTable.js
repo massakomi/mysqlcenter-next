@@ -24,7 +24,7 @@ export function MenuTable(props) {
       .then((page) => {
         setTables(page.tables || [])
       })
-  }, [globalParams.database]);
+  }, [currentDatabase, globalParams.database]);
 
   if (tables === false) {
     return <></>;

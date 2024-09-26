@@ -3,6 +3,7 @@
 // Запросы на страницы
 import {Exception} from "sass";
 import {revalidatePath} from "next/cache";
+import {buildOptions, buildQueryString, buildUrl, onlyPageReturn} from '@/app/ui/utils';
 
 export async function tblList(db, mode) {
   return await query({s: 'tbl_list', db, mode});
@@ -26,10 +27,6 @@ export async function tblDataPage(get, post = false) {
 }
 export async function searchPage(get, post = false) {
   get.s = 'search'
-  return await query(get, post);
-}
-export async function actionPage(get, post = false) {
-  get.s = 'actions'
   return await query(get, post);
 }
 export async function configPage(mode, post = false) {
@@ -78,61 +75,8 @@ async function query(query, post=false, opts = {}) {
     console.log('fetch return text:', text)
   }
   if (json.hasOwnProperty('page')) {
-    return onlyPage(json);
+    return onlyPageReturn(json);
   }
   //console.error('RETURN ALL')
   return json;
-}
-
-function onlyPage(json) {
-  if (json.page instanceof Array) {
-    if (json.page.length > 0) {
-      throw new Exception('В json.page вернулся массив, а не объект!');
-    } else {
-      json.page = {}
-    }
-  }
-  //console.error('RETURN ONLY PAGE')
-  if (json.messages) {
-    //console.error(' + MESSAGES')
-    json.page.messages = json.messages;
-  }
-  return json.page;
-}
-
-function queryPostData(data) {
-  if (typeof data === 'object') {
-    if (!(data instanceof FormData)) {
-      data = new URLSearchParams(data);
-    }
-  } else {
-    data = new URLSearchParams(data);
-  }
-  return data;
-}
-
-function buildUrl(query) {
-  return `http://msc/?ajax=1&${buildQueryString(query)}`;
-}
-
-function buildOptions(post, opts = {}) {
-  let options = opts
-  if (post) {
-    Object.assign(options, {
-      method: 'POST',
-      headers: {'X-Requested-With': 'XMLHttpRequest'},
-      body: queryPostData(post)
-    })
-  }
-  return options;
-}
-
-function buildQueryString(params = {}) {
-  let url = new URLSearchParams();
-  for (const [key, value] of Object.entries(params)) {
-    if (typeof value !== 'undefined' && value !== '') {
-      url.set(key, value)
-    }
-  }
-  return url.toString();
 }

@@ -2,26 +2,20 @@
 import Table from '@/app/ui/Table'
 import {useParams} from 'next/navigation'
 import {useState} from 'react'
-import {actionPage} from '@/app/ui/actions'
+import {querySwr} from '@/app/ui/functions';
 
-export function Info(props) {
+export function Info() {
   const params = useParams()
 
-  const [info, setInfo] = useState(props.dbInfo)
-
-  const fullinfo = () => {
-    params.act = 'fullinfo'
-    actionPage(params).then((page) => {
-      setInfo(page.dbInfo)
-    })
-  }
+  const [act, setAct] = useState('')
+  let { props, error, isLoading } = querySwr({s: 'actions', db: params.db, act})
 
   return (
     <fieldset className="msGeneralForm">
       <legend>Информация о базе данных</legend>
-      <Table data={info} />
+      {isLoading ? <>Загрузка...</> : <Table data={props.dbInfo} />}
       <br />
-      <span onClick={fullinfo} className="grey" role="button">
+      <span onClick={() => setAct('fullinfo')} className="grey" role="button">
         Показать полную информацию
       </span>
     </fieldset>

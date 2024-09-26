@@ -1,5 +1,8 @@
 'use client'
 
+import useSWR from 'swr';
+import {buildQueryString, buildUrl, onlyPageReturn} from '@/app/ui/utils';
+
 /**
  * Групповые действия с чекбоксами
  */
@@ -152,3 +155,24 @@ export function wordwrap (str, intWidth, strBreak, cut) {
   }
   return lines.join('\n')
 }
+
+const fetcher = (...args) => fetch(...args).then((res) => res.json())
+
+export function querySwr(get = {}) {
+
+  const url = buildUrl(get)
+
+  let { data, error, isLoading } = useSWR(url, fetcher)
+
+  if (typeof data === 'undefined') {
+    data = {}
+  }
+  if (data.hasOwnProperty('page')) {
+    data = onlyPageReturn(data);
+  }
+  return {props: data, error, isLoading}
+}
+
+
+
+

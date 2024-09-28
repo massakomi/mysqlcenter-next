@@ -162,6 +162,7 @@ export function querySwr(get = {}) {
 
   const url = buildUrl(get)
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   let { data, error, isLoading } = useSWR(url, fetcher)
 
   if (typeof data === 'undefined') {

@@ -4,14 +4,19 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev-h-ssh": "next dev -H msc-next -p 443 --experimental-https",
     "build": "next build",
     "start": "next start",
+    "start-h": "next start -H msc-next",
+    "info": "next info",
+    "telemetry": "next telemetry",
     "lint": "next lint"
   },
   "dependencies": {
     "@next/eslint-plugin-next": "^14.2.13",
     "@reduxjs/toolkit": "^2.2.7",
     "next": "14.2.11",
+    "nss": "^0.0.1",
     "react": "^18",
     "react-dom": "^18",
     "react-redux": "^9.1.2",

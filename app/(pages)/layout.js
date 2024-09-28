@@ -1,4 +1,4 @@
-import '../css/page.scss'
+import '../css/globals.scss'
 import '../css/color.white.css'
 import {MenuTop} from '@/app/ui/MenuTop'
 import {MenuChain} from '@/app/ui/MenuChain'
@@ -43,7 +43,7 @@ export default async function PagesLayout({children, params}) {
           <MenuTable />
         </div>
         <div>
-          <div style={{whiteSpace: 'nowrap', float: 'right'}}>
+          <div className='whitespace-nowrap float-end'>
             <PopupQueryList queries={props.queries} />
             <SearchInTable />
           </div>

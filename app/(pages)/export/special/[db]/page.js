@@ -40,7 +40,7 @@ export default async function Page({params}) {
     // Создание ряда
     valueTable = item.Name
     if (!checkedData && !checkedStruct) {
-      valueTable = <span style={{color: '#aaa'}}>{valueTable}</span>
+      valueTable = <span className='text-slate-500'>{valueTable}</span>
     } else {
       valueTable = <b>{valueTable}</b>
     }

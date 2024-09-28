@@ -25,8 +25,8 @@ export default function Form(props) {
       {props.afterSql && <input type="hidden" name="afterSql" value={props.afterSql} /> }
       <input type="hidden" name="action" value={props.action} />
 
-      <img src={`/images/nolines_plus.gif`} alt="" border="0" onClick={addRowWithInputs.bind(this, 'tableFormEdit')} title="Добавить поле" style={{cursor: 'pointer'}} />
-      <img src={`/images/nolines_minus.gif`} alt="" border="0" onClick={removeRow.bind(this, 'tableFormEdit')}  title="Удалить поле" style={{cursor: 'pointer'}} /><br />
+      <img src={`/images/nolines_plus.gif`} alt="" border="0" onClick={addRowWithInputs.bind(this, 'tableFormEdit')} title="Добавить поле" role='button' />
+      <img src={`/images/nolines_minus.gif`} alt="" border="0" onClick={removeRow.bind(this, 'tableFormEdit')}  title="Удалить поле" role='button' /><br />
       <DrawFields {...props} />
 
       <input tabIndex="100" type="submit" value="Выполнить!" className="submit" />

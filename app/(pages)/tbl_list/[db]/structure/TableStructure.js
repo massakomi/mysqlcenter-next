@@ -1,5 +1,7 @@
 'use client'
 
+import {wordwrap} from '@/app/ui/functions';
+
 export function TableStructure(props) {
 
 
@@ -57,15 +59,12 @@ function TableData(props) {
     return item ? item.replace(/<\/[^>]+(>|$)/g, "") : '';
   }
 
-  // TODO wordwrap( mb_substr(strip_tags($v), 0, 100), 50, '<br />', true)
-  const wrap = (s) => s
-
   return Object.values(props.data).map((items, key) => {
     return (
       <tr key={key + "index"} className="info grey">
         {Object.values(items).map((item, key) => {
 
-          item = wrap(strip_tags(item))
+          item = wordwrap(strip_tags(item).substring(0, 50))
 
           return <td key={key + "tds"}>{item}</td>
         })}
@@ -76,32 +75,30 @@ function TableData(props) {
 
 function TableField(props) {
   let field = props.field
-  let style = [];
+  let classes = [];
   let title = '';
 
   if (field.Key === 'PRI') {
     if (field.Extra !== '') {
-      style.push({backgroundColor: '#FF6600'})
+      classes.push('text-red-500')
       title += 'priAI';
     } else {
-      style.push({backgroundColor: '#FFCC00'})
+      classes.push('text-slate-500')
       title += 'pri';
     }
   }
   if (field.Key === 'MUL') {
-    style.push({backgroundColor: '#66CC99'})
+    classes.push('text-blue-500')
     title += 'index';
   }
   if (field.Null !== 'NO') {
-    style.push({color: '#aaa'})
+    classes.push('text-green-500')
     title += ' null';
   } else {
     title += ' not null';
   }
-
-  style = Object.fromEntries(style)
   return (
-    <th style={style} title={title}>
+    <th className={classes.join(' ')} title={title}>
       {field.Field}
     </th>
   );

@@ -72,7 +72,7 @@ export default function Actions({setTables, tables}) {
         <img src={`/images/copy.gif`} alt="" onClick={executeAction.bind(this, 'copy_all')} />
         <img src={`/images/b_tblexport.png`} alt="" onClick={redirectAction.bind(this, 'export_all')} />
 
-        <span role="button" onClick={makeInnodb} style={{margin: '0 10px'}}>Конвертировать все в Innodb</span>
+        <span role="button" className='mx-2' onClick={makeInnodb}>Конвертировать все в Innodb</span>
 
         <select name="act" onChange={executeAction.bind(this, 'auto')} >
           <option></option>

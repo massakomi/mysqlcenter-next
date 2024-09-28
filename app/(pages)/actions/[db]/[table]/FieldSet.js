@@ -17,13 +17,13 @@ export default function FieldSet(props) {
   }
 
   return (
-    <fieldset className="msGeneralForm">
+    <fieldset className="p-2 mb-2">
       <legend>{props.title}</legend>
       <form onSubmit={executeAction.bind(this, props.action)}>
         <input type="hidden" name="db" value={params.db} />
         <input type="hidden" name="table" value={params.table} />
         {props.children}
-        <input type="submit" value="Выполнить!" style={{marginLeft: '5px'}} />
+        <input type="submit" value="Выполнить!" className='ml-2' />
       </form>
     </fieldset>
   )

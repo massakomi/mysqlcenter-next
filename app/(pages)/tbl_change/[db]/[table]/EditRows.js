@@ -61,7 +61,7 @@ export default function EditRows(props) {
 
     let tableInner = (
       <Fragment key={"row-"+j}>{hiddenInput}
-        <table style={{marginBottom: '10px'}}>
+        <table className='mb-3'>
           <tbody>
           <tr className="editHeader">
             <td>Поле</td>

@@ -6,10 +6,7 @@ export const  metadata = {
 }
 
 export default async function Page() {
-
   const props = await sqlPage()
-
-  //const [wait, setWait] = useState(false);
   return (
     <>
       <h1>{metadata.title}</h1>

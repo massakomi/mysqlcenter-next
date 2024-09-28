@@ -50,8 +50,8 @@ export default function KeyForm(props) {
 
         <br /><br />
 
-        <img src="/images/nolines_plus.gif" alt="" border="0" onClick={addRow.bind(this, 'tableFormEdit', 'last')} title="Добавить поле" style={{cursor: 'pointer'}}  />
-        <img src="/images/nolines_minus.gif" alt="" border="0" onClick={removeRow.bind(this, 'tableFormEdit')}  title="Удалить поле" style={{cursor: 'pointer'}} /><br />
+        <img src="/images/nolines_plus.gif" alt="" border="0" onClick={addRow.bind(this, 'tableFormEdit', 'last')} title="Добавить поле" role='button' />
+        <img src="/images/nolines_minus.gif" alt="" border="0" onClick={removeRow.bind(this, 'tableFormEdit')}  title="Удалить поле" role='button' /><br />
 
         <table id="tableFormEdit">
           <tbody>

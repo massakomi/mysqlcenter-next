@@ -1,9 +1,8 @@
 'use server'
 
 // Запросы на страницы
-import {Exception} from "sass";
 import {revalidatePath} from "next/cache";
-import {buildOptions, buildQueryString, buildUrl, onlyPageReturn} from '@/app/ui/utils';
+import {buildOptions, buildUrl, onlyPageReturn} from '@/app/ui/utils';
 
 export async function tblList(db, mode) {
   return await query({s: 'tbl_list', db, mode});

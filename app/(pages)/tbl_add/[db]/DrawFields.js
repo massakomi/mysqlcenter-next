@@ -118,7 +118,7 @@ export default function DrawFields(props) {
         <td><a href="#" onClick={clearKeys.bind(this, index)}>clear</a></td>
         <td><input name={`fulltext[${index}]`} tabIndex="11" id={`fulltext${index}`} type="checkbox" value="1" /></td>
         <td>
-          <select name="attr[]" tabIndex="12" id={`attr${index}`} style={{width:'70px'}} defaultValue={attr}>
+          <select name="attr[]" tabIndex="12" id={`attr${index}`} className='w-16' defaultValue={attr}>
             <option value="">-</option>
             <option>UNSIGNED</option>
             <option>UNSIGNED ZEROFILL</option>

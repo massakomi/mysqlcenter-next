@@ -1,6 +1,8 @@
 'use client'
 import {useState} from "react";
 
+// todo Сейчас блок не нужен, но может быть туда вывести все запросы, которые приходят с messsages
+
 export function PopupQueryList(props) {
   const [opened, setOpened] = useState(false);
   if (!props.queries) {

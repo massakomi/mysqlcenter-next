@@ -30,7 +30,7 @@ export default async function Page() {
   return (
     <form>
       <h1>{metadata.title}</h1>
-      <table>
+      <table className='contentTable'>
         <thead>
           <tr>
             <th>Параметр</th>
@@ -38,7 +38,7 @@ export default async function Page() {
           </tr>
         </thead>
         <tbody>{trs}</tbody>
-      </table>
+      </table> <br />
       <Buttons />
     </form>
   )

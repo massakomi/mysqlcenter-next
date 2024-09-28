@@ -19,26 +19,21 @@ export default async function Page({params}) {
   return (
     <div>
       <h1>Структура таблицы {params.table}</h1>
-      <table>
-        <tbody><tr>
-          <td valign="top">
-            <TableStruct {...props} />
-            <Actions />
 
-            <fieldset className="msGeneralForm">
-              <legend>Изменить структуру</legend>
-              <FormField {...props} />
-            </fieldset>
-
-          </td>
-
-          <td valign="top" style={{padding: '20px 0 0 10px'}}>
-            <strong> Подробности таблицы </strong>
-            <br />
-            <FieldsInfo info={props.dataDetails} />
-          </td>
-        </tr></tbody>
-      </table>
+      <div className='grid gap-4 grid-flow-col auto-cols-max'>
+        <div>
+          <TableStruct {...props} />
+          <Actions />
+          <fieldset className="msGeneralForm">
+            <legend>Изменить структуру</legend>
+            <FormField {...props} />
+          </fieldset>
+        </div>
+        <div>
+          <div className='font-bold mb-2 text-lg'> Подробности таблицы </div>
+          <FieldsInfo info={props.dataDetails} />
+        </div>
+      </div>
 
       <KeysInfo {...props} />
     </div>

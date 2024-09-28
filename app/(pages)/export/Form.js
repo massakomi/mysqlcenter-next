@@ -58,8 +58,7 @@ export function Form(props) {
             <td>
               <ExportOptions {...props} />
 
-              WHERE условие<br />
-              <input name="export_where" type="text" defaultValue={props.whereCondition} style={{width:'95%', display:'block', margin:'10px 0'}} />
+              <input name="export_where" type="text" defaultValue={props.whereCondition} className='w-11/12 block mb-2' placeholder='WHERE условие' />
 
               {params.db ? <input type="hidden" name="db" value={params.db} /> : null}
               {params.table ? <input type="hidden" name="table" value={params.table} /> : null}

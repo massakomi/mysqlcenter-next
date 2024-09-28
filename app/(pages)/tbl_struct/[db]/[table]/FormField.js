@@ -1,8 +1,7 @@
 'use client'
-import {useParams, useRouter} from "next/navigation";
+import {useParams, useRouter} from 'next/navigation'
 
 export function FormField(props) {
-
   const params = useParams()
   const router = useRouter()
 
@@ -22,15 +21,22 @@ export function FormField(props) {
     <>
       <form onSubmit={goToTblAdd}>
         <input type="hidden" name="action" value="fieldsAdd" />
-        Добавить полей &nbsp; <input name="fieldsNum" type="number" required defaultValue="1" min="1" size="5" style={{width: '40px'}} /> &nbsp;
-        <input name="afterOption" type="radio" value="end" defaultChecked id="f1" /> <label htmlFor="f1">в конец </label>
-        <input name="afterOption" type="radio" value="start" id="f2" /> <label htmlFor="f2">в начало</label>
-        <input name="afterOption" type="radio" value="field" id="f3" />  <label htmlFor="f3">после </label>
+        Добавить полей &nbsp; <input name="fieldsNum" type="number" required defaultValue="1" min="1" size="5" className="w-12" /> &nbsp;
+        <label className='me-1'>
+          <input name="afterOption" type="radio" value="end" defaultChecked /> в конец{' '}
+        </label>
+        <label>
+          <input name="afterOption" type="radio" value="start" /> в начало
+        </label>
+        <label>
+          <input name="afterOption" type="radio" value="field" /> после{' '}
+        </label>
         <select name="afterField" onFocus={selectOnFocus}>
-          {Object.values(props.data).map((table) =>
+          {Object.values(props.data).map((table) => (
             <option key={table.Field}>{table.Field}</option>
-          )}
-        </select>&nbsp;
+          ))}
+        </select>
+        &nbsp;
         <input type="submit" value="Добавить!" />
       </form>
     </>

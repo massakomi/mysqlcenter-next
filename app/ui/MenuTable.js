@@ -53,18 +53,11 @@ function displayTables(tables, props, params, page) {
       continue;
     }
     const tableName = table.Name;
-    let className = getClassName(tableName, prefixes)
+    let className = getClassName(table, prefixes, currentTable)
 
     let link = `/${page}/${params.db}/${tableName}`
-    let style = {};
-    if (currentTable === tableName) {
-      className += ' cur';
-    } else {
-      if (parseInt(table.Rows) === 0) {
-        style.color = '#ccc'
-      }
-    }
-    menuTables.push(<Link className={className} style={style} href={link} key={tableName}>{tableName}</Link>)
+
+    menuTables.push(<Link className={className} href={link} key={tableName}>{tableName}</Link>)
     selectorTables.push(<option selected={currentTable === tableName} value={link}>{tableName}</option>)
   }
 
@@ -84,17 +77,36 @@ function displayTables(tables, props, params, page) {
   </>;
 }
 
-function getClassName(tableName, prefixes) {
-  let end = tableName.indexOf('_', 3)
+/*
+
+  .t1 {color:#000000; margin-left:5px; }
+  .t2 {color:green}
+  */
+function getClassName(table, prefixes, currentTable) {
+  let end = table.Name.indexOf('_', 3)
   if (end < 0) {
     end = 50
   }
-  let prefix = tableName.substring(0, end)
+  let prefix = table.Name.substring(0, end)
+  let classFixed = ''
+  let classes = [];
   if (typeof prefixes[prefix] !== 'undefined' && prefixes[prefix] > 1) {
-    return 't1'
+    classes.push('text-black')
+    classFixed = 'ml-1'
   } else {
-    return 't2'
+    classes.push('text-green-700')
   }
+  if (currentTable === table.Name) {
+    classes = ['text-red-600']
+  } else {
+    if (parseInt(table.Rows) === 0) {
+      classes = ['text-slate-400']
+    }
+  }
+  if (classFixed) {
+    classes.push(classFixed)
+  }
+  return classes.join(' ');
 }
 
 // статистика префиксов

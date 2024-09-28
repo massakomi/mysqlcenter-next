@@ -26,7 +26,7 @@ export default function FieldSet(props) {
       <form onSubmit={executeAction.bind(this, props.action)}>
         <input type="hidden" name="db" value={params.db} />
         {props.children}
-        <input type="submit" value="Выполнить!" style={{marginLeft: '5px'}} />
+        <input type="submit" value="Выполнить!" />
       </form>
     </fieldset>
   )

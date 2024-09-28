@@ -26,7 +26,7 @@ function compareData(data, fields, databases) {
 
   for (let row of Object.values(data)) {
     let values = ['+', '+']
-    let style = {};
+    let classes = [];
     let rowValues = []
     if (typeof row[db1] !== 'undefined') {
       if (row[db1] === '-') {
@@ -36,7 +36,7 @@ function compareData(data, fields, databases) {
         values = ['+', '-']
         rowValues = processValues(row[db1], fields)
       } else {
-        style = {backgroundColor: '#6f6'}
+        classes.push('text-green-500')
         let value1p, value2p
         for (let [field, value1] of Object.entries(row[db1])) {
           let type = fields[field].Type;
@@ -45,23 +45,23 @@ function compareData(data, fields, databases) {
           if (value1 === row[db2][field]) {
             rowValues.push({
               'text': value1p,
-              'class': 'e'
+              'class': 'bg-green-300'
             })
           } else {
             rowValues.push({
               'text': [value1p, value2p],
-              'class': 'n'
+              'class': 'bg-red-300'
             })
           }
         }
       }
     } else {
-      style = {backgroundColor: '#f66'}
+      classes.push('text-red-500')
       rowValues = processValues(row[db2], fields)
     }
     output.push({
       'cells': [...values, ...rowValues],
-      'style': style
+      'class': classes.join(' ')
     })
   }
   return output;
@@ -126,7 +126,6 @@ function TableBody(props) {
 function buildRows(data) {
   let outputRows = []
   data.forEach(function (cells, rowKey) {
-    let style = cells.style
     cells = cells.cells
     let outputCells = []
     cells.forEach(function (values, key) {
@@ -146,7 +145,7 @@ function buildRows(data) {
         </td>
       )
     });
-    outputRows.push(<tr style={style} key={rowKey}>{outputCells}</tr>)
+    outputRows.push(<tr className={cells.class} key={rowKey}>{outputCells}</tr>)
   });
   return outputRows;
 }

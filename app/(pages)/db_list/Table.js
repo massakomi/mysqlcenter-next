@@ -30,10 +30,10 @@ export default function Table(props) {
   let rows = []
   for (let i = 0; i < databases.length; i++) {
     let db = databases[i];
-    let styles = {}
+    let classes = []
     let action = '';
     if (mscExists && props.hiddens.includes(db)) {
-      styles = {color: '#ccc'}
+      classes.push('grey')
       action = 'show'
     }
     let href = `/tbl_list/${db}/`
@@ -41,7 +41,7 @@ export default function Table(props) {
     rows.push(
       <tr key={i}>
         <td><input name="databases[]" type="checkbox" value={db} className="cb" /></td>
-        <td><Link href={href} title="Структура БД" id={idRow} style={styles}>{db}</Link></td>
+        <td><Link href={href} title="Структура БД" id={idRow} className={classes.join(' ')}>{db}</Link></td>
         <td>
           <span role="button" onClick={() => executeAction(db, i)} title={'Удалить '+db}><img src={"/images/close.png"} alt="" border="0" /></span> &nbsp;
           <Link href={`/actions/${db}/`} title="Изменить"><img src={"/images/edit.gif"} alt="" border="0" /></Link> &nbsp;

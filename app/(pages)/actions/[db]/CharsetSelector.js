@@ -35,7 +35,7 @@ export default function CharsetSelector() {
   }
 
   return (
-    <select name="charset" defaultValue={value}>
+    <select name="charset" defaultValue={value} className='mr-2'>
       {buildOpts()}
     </select>
   )

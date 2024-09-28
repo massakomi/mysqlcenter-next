@@ -37,7 +37,7 @@ export function FormTable(props) {
         <legend>Добавить к условию WHERE</legend>
         <form action={`/tbl_data/${params.db}/${params.table}`} method="get">
           <input name="where" type="text" id="where" className="w95 me-2" />
-          <input type="submit" value="Выполнить!" className="submit mr10 me-2" style={{display: 'inline'}} />
+          <input type="submit" value="Выполнить!" className="submit mr10 me-2 inline" />
           <span className="mr10 me-2">вставить</span>
 
           <HtmlSelector data={fields} onChange={onFunctionChange} className="me-2" />

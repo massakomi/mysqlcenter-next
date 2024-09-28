@@ -33,14 +33,14 @@ export default function AddUser() {
   }
 
   return  (
-    <fieldset className="mt-10">
+    <fieldset className="msGeneralForm mt-2">
       <legend>Добавить пользователя</legend>
       <form onSubmit={onUserAdd} method="post">
-        <div className="mb-5"><input name="database" type="text" required={true} id="databaseField" onKeyUp={updateLoginName} /> Имя базы данных</div>
-        <div className="mb-5"><input name="databaseuser" id="unameField" type="text" required={true} defaultValue={database}  /> Логин пользователя</div>
-        <div className="mb-5"><input name="userpass" type="password" id="passwordField" required={true} onChange={setPasswordField} /> Пароль</div>
-        <div className="mb-5"><input name="userpass2" type="password" id="password2Field" required={true} onChange={setPasswordField2} /> Пароль еще раз</div>
-        <div className="mb-5"><input type="submit" value="Добавить" disabled={formDisabled} id="submitBtnId" /></div>
+        <div className="mb-2"><input name="database" type="text" required={true} id="databaseField" onKeyUp={updateLoginName} /> Имя базы данных</div>
+        <div className="mb-2"><input name="databaseuser" id="unameField" type="text" required={true} defaultValue={database}  /> Логин пользователя</div>
+        <div className="mb-2"><input name="userpass" type="password" id="passwordField" required={true} onChange={setPasswordField} /> Пароль</div>
+        <div className="mb-2"><input name="userpass2" type="password" id="password2Field" required={true} onChange={setPasswordField2} /> Пароль еще раз</div>
+        <div className="mb-2"><input type="submit" value="Добавить" disabled={formDisabled} id="submitBtnId" /></div>
       </form>
     </fieldset>
   )

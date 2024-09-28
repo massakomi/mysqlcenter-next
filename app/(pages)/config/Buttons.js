@@ -21,7 +21,7 @@ export function Buttons() {
   return (
     <>
       <input type="button" onClick={update.bind(this)} value="Изменить" className="submit" />
-      <p style={{textAlign: 'center'}}>
+      <p className='text-center float-end'>
         <input type="button" onClick={restore} value="Восстановить значения по умолчанию" />
       </p>
     </>

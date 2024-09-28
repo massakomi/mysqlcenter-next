@@ -33,7 +33,7 @@ export default function Table({data, title = ''}) {
 
   return <>
     {title ? <h2>{title}</h2> : null}
-    <table className="contentTable">
+    <table className='border-collapse'>
       {header ? <thead>{header}</thead> : null}
       <tbody>{rows}</tbody>
     </table>
@@ -61,8 +61,8 @@ function Cell({tag, value}) {
     }
   }
   if (tag === 'th') {
-    return <th>{value}</th>
+    return <th className='border border-gray-200 p-1 align-top text-left'>{value}</th>
   } else {
-    return <td>{value}</td>
+    return <td className='border border-gray-200 p-1'>{value}</td>
   }
 }

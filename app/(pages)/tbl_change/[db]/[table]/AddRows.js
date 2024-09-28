@@ -43,7 +43,7 @@ export default function AddRows(props) {
       <AddRow key={field.Field} name={field.Field} i={i} j={j} fields={props.fields} />
     );
     let tableInner = (
-      <table style={{marginBottom: '10px'}}>
+      <table className='mb-3'>
         <tbody>
         <tr className="editHeader">
           <td>Поле</td>
@@ -60,8 +60,8 @@ export default function AddRows(props) {
   return (
     <form onSubmit={executeAction} className="tableFormEdit">
       <input type="hidden" name="action" value="rowsAdd" />
-      <img src="/images/nolines_plus.gif" alt="" border="0" onClick={addDataRow.bind(this, 1)} title="Добавить поле" style={{cursor: 'pointer'}} />
-      <img src="/images/nolines_minus.gif" alt="" border="0" onClick={addDataRow.bind(this, -1)} title="Удалить поле" style={{cursor: 'pointer'}} /><br />
+      <img src="/images/nolines_plus.gif" alt="" border="0" onClick={addDataRow.bind(this, 1)} title="Добавить поле" role='button' />
+      <img src="/images/nolines_minus.gif" alt="" border="0" onClick={addDataRow.bind(this, -1)} title="Удалить поле" role='button' /><br />
       <table id="tableDataAdd">
         <tbody>
         {outerRows}

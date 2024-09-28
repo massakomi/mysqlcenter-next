@@ -4,6 +4,7 @@ import Link from "next/link";
 import {customAction, invalidatePath} from "@/app/ui/actions";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
+import Help from '@/app/(pages)/export/Help';
 
 export default function KeysInfo(props) {
 
@@ -30,8 +31,8 @@ export default function KeysInfo(props) {
   return (
     <>
 
-      <strong style={{marginRight: '10px'}}>Информация о ключах</strong>
-      <img src="/images/i-help2.gif" title="Индексы - это сбалансированные деревья значений указанных в индексе полей и ссылки на физические записи в таблице. Индексы позволяют ускорить работу выполнения запросов в сотни раз и сразу находить нужные данные, вместо того, чтобы последовательно читать всю таблицу." alt="" border="0" align="absmiddle" className="helpimg" /><br />
+      <strong className='text-lg me-2'>Информация о ключах</strong>
+      <Help title="Индексы - это сбалансированные деревья значений указанных в индексе полей и ссылки на физические записи в таблице. Индексы позволяют ускорить работу выполнения запросов в сотни раз и сразу находить нужные данные, вместо того, чтобы последовательно читать всю таблицу." /><br />
 
       <table className="contentTable">
         <thead>
@@ -67,7 +68,7 @@ export default function KeysInfo(props) {
         </tbody>
       </table>
 
-      <p><Link href={`${pathname}/addkey`}>Добавить ключ</Link></p>
+      <Link href={`${pathname}/addkey`} className='block mt-2'>Добавить ключ</Link>
     </>
   )
 }

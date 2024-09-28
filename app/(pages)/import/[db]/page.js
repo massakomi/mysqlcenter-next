@@ -6,7 +6,6 @@ export const  metadata = {
 
 export default async function Page({params}) {
 
-  // todo getTable вынести как-то отдельно (тут и MenuTable)
   let props = await tblList(params.db, 'simple')
 
   return (
@@ -16,7 +15,7 @@ export default async function Page({params}) {
       <ul>
         {Object.values(props.tables).map((table) =>
           <li key={table}>{table === props.table ?
-            <b style={{fontSize: '16px', color: 'red'}}>{table}</b> :
+            <b className='text-base text-red-600'>{table}</b> :
             <a href="#">{table}</a> }
           </li>
         )}

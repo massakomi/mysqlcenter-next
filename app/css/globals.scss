@@ -1,7 +1,16 @@
 @use "sass:map";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-body {font-size:12px; font-family: Arial, serif; color:#000000}
+body {font-size:12px; font-family: Arial, serif; color:#000000; padding: 3px 8px}
 h1 { margin:0; font-size:18px; padding:0; line-height:100%}
+img {display: inline; max-width: unset;}
+input:not([type=image]), fieldset, button, select, textarea {border: 1px solid #aaa; padding: 2px}
+button, input[type=submit], input[type=button] {
+  border-radius: 5px; padding: 2px 12px;
+  &:hover {cursor: pointer}
+}
 
 .cols {
   display: flex;
@@ -38,8 +47,6 @@ div.menuTables {
     &:hover {text-decoration:underline}
     &.cur {color:#CC0000}
   }
-  .t1 {color:#000000; margin-left:5px; }
-  .t2 {color:green}
 }
 
 /* Меню баз данных */
@@ -114,8 +121,6 @@ table.optionstable th, table.optionstable td {border:1px solid #ccc; padding: 2p
 .contentTable .b { font-size:14px;}
 .contentTable .diff TD{ background-color:#FF3333; color:#FFFFFF}
 .contentTable.anone A { text-decoration:none}
-.contentTable .e { background-color: #afa}
-.contentTable .n { background-color: #faa}
 
 /* Таблица с формой */
 form.tableFormEdit { margin:10px 0}
@@ -123,9 +128,6 @@ form.tableFormEdit table { border-collapse:collapse; empty-cells:show}
 form.tableFormEdit td { padding: 2px 2px; font-size:12px; white-space:nowrap; vertical-align:middle}
 form.tableFormEdit th { font-size:12px; white-space:nowrap}
 form.tableFormEdit .editHeader TD { font-size:14px; font-weight:bold; white-space:nowrap; padding:5px}
-form.tableFormEdit .si,
-    form.tableFormEdit input,
-    form.tableFormEdit SELECT { padding:5px}
 form.tableFormEdit .field { font-size:14px}
 form.tableFormEdit .submit { display:block; margin:5px 0}
 form.tableFormEdit textarea#sqlContent { font-size:12px; width:99%; padding:5px }
@@ -138,9 +140,7 @@ table.tableExport .sel { font-size:14px; height:150px}
 table.tableExport .hs { font-size:12px; text-decoration:none; margin:0 5px}
 table.tableExport .l2 { margin:0 0 0 24px}
 table.tableExport .ta { font-size:10px}
-[name="formExport"] label { display:block}
-[name="formExport"] label .l2 { margin-left:24px}
-[name="formExport"] TABLE.tableExport .l2 {margin-right: 5px}
+
 [name="formExport"] [name="fields[]"] {height:120px; width:150px;}
 #search_table select {margin-right: 10px}
 [name="formExport"] textarea {width:95%; font-size:11px; overflow:scroll; margin-top: 10px}
@@ -189,37 +189,11 @@ SELECT.miniSelector OPTION { font-size:12px;}
 .dateSelector span {margin-right: 5px}
 h4 {font-size:16px; margin:10px 0 10px; background-color:#eee; padding:10px; width:800px}
 
-/* tbl_struct */
-.print_r {
-  color: #666;
-  border: 1px solid #ccc;
-  padding: 10px;
-}
-
 /* Bootstrap style */
-
-$spacer: 1rem;
-$spacers: (
-    0: 0,
-    1: $spacer * .25,
-    2: $spacer * .5,
-    3: $spacer,
-    4: $spacer * 1.5,
-    5: $spacer * 3,
-);
-
-.me-1 {margin-right: map.get($spacers, 1)}
-.me-2 {margin-right: map.get($spacers, 2)}
-.me-3 {margin-right: map.get($spacers, 3)}
-.mb-5 {margin-bottom: 5px;}
-.mt-10 {margin-top: 10px}
-.mt-20 {margin-top: 20px}
-
 .hidden {display: none!important;}
-.d-inline {display: inline}
 [role="button"] {cursor: pointer}
 
 /* colors */
-.grey {color: #aaa;}
+.grey {color: #aaa!important;}
 .truncate { color:#000000!important}
 .delete { color:red!important}

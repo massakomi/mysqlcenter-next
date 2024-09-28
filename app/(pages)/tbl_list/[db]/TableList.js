@@ -50,7 +50,7 @@ export default function TableList(props) {
     // Форматирование даты
     let updateTime = null;
     if (table.Update_time) {
-      updateTime = (new Date(table.Update_time)).toLocaleString() // TODO сделать date2rusString
+      updateTime = (new Date(table.Update_time)).toLocaleString()
     }
     /*if ($o->Update_time > 0) {
       $updateTime = strtotime($o->Update_time);
@@ -62,7 +62,7 @@ export default function TableList(props) {
     // Форматирование названия таблицы
     let valueName = table.Name
     if (table.Rows === '0') {
-      valueName = <span style={{color: '#aaa'}}> {valueName}</span>
+      valueName = <span className='text-neutral-400'> {valueName}</span>
     }
     // Определение размера таблицы
     let size = Math.round((parseInt(table.Data_length) + parseInt(table.Index_length)) / 1024);
@@ -70,7 +70,7 @@ export default function TableList(props) {
     sumRows += parseInt(table.Rows);
     // Сборка значения рядов
     let idChbx = 'table_' + table.Name
-    let engine = table.Engine === 'MyISAM' ? <span style={{color: '#ccc'}}>MyISAM</span> : table.Engine;
+    let engine = table.Engine === 'MyISAM' ? <span className='text-red-300'>MyISAM</span> : table.Engine;
 
     return (
       <tr key={table.Name}>
@@ -89,7 +89,7 @@ export default function TableList(props) {
         <td>{updateTime}</td>
         <td className="num">{table.Auto_increment}</td>
         <td><span>{engine}</span></td>
-        <td className="rig"><span title={table.Collation} style={{color: '#aaa'}}>{table.Collation.substring(0, table.Collation.indexOf("_"))}</span></td>
+        <td className="rig"><span title={table.Collation} className='text-neutral-400'>{table.Collation.substring(0, table.Collation.indexOf("_"))}</span></td>
       </tr>
     )
   }

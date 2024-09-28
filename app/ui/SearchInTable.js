@@ -14,13 +14,13 @@ export function SearchInTable() {
   let forms = []
   if (params.table !== undefined) {
     forms.push(
-      <form key="f1" action={`/tbl_data/${params.db}/${params.table}/`} method="get" className="d-inline me-1">
+      <form key="f1" action={`/tbl_data/${params.db}/${params.table}/`} method="get" className="inline me-1">
         <input type="text" name="query" defaultValue={`Поиск по таблице`} onFocus={clearVal.bind(this)} />
       </form>
     )
   }
   forms.push(
-    <form key="f2" action={`/search/${params.db}/`} method="get" className="d-inline me-1">
+    <form key="f2" action={`/search/${params.db}/`} method="get" className="inline me-1">
       <input type="text" name="query" defaultValue="Поиск по базе" onFocus={clearVal.bind(this)} />
     </form>
   )

@@ -2,25 +2,25 @@
 
 /* Текст */
 
-DIV.pageBlock B A,
-SPAN.menuChain A:hover,
+DIV.pageBlock B a,
+span.menuChain a:hover,
 DIV#dbHiddenMenu       { color:#000000 }
 
-SPAN.hiddenText,
-A.hiddenSmallLink      { color:#CCCCCC }
+span.hiddenText,
+a.hiddenSmallLink      { color:#CCCCCC }
 
 
-TABLE.contentTable TH,
+table.contentTable TH,
 FORM.tableFormEdit TH,
 .dateString  { color:#CC0000 }
 
-TABLE.tableExport .hs,
-DIV.chbxAction,
-SPAN.menuChain A       { color:#999999 }
+table.tableExport .hs,
+DIV.chbxaction,
+span.menuChain a       { color:#999999 }
 
-A,
-TABLE.contentTable A,
-DIV#dbHiddenMenu A     { color:#0000FF }
+a,
+table.contentTable a,
+DIV#dbHiddenMenu a     { color:#0000FF }
 DIV.formSet H2         { color:#FFFFFF }
 
 
@@ -32,7 +32,7 @@ FORM.popupGeneralForm  { background-color:#FFFFFF }
 
 DIV#dbHiddenMenu { background-color:#eee }
 
-TABLE.contentTable TH,
+table.contentTable TH,
 FORM.tableFormEdit .editHeader TD,
 FORM.tableFormEdit TH  {  background-color:#CCCCCC }
 
@@ -42,11 +42,11 @@ FORM.tableFormEdit TH  {  background-color:#CCCCCC }
 /* Рамка */
 
 FORM.popupGeneralForm,
-TABLE.contentTable TH,
+table.contentTable TH,
 FORM.tableFormEdit TH  { border: 1px solid #000  }
 
 FORM.formSearch INPUT,
-TABLE.contentTable TD  { border: 1px solid #ccc  }
+table.contentTable TD  { border: 1px solid #ccc  }
 
 DIV.pageBlock,
 FORM.tableFormEdit TD  { border: 1px solid #eee  }

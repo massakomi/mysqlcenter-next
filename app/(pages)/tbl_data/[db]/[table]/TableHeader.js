@@ -14,7 +14,7 @@ export default function TableHeader(props) {
     <table className="contentTable interlaced">
       <thead>
       <tr valign="top">
-        <th><Link href="?fullText=1" title="Показать полные значения всех полей и убрать переносы заголовков полей" className="hiddenSmallLink" style={{color:'white'}}>full</Link></th>
+        <th><Link href="?fullText=1" title="Показать полные значения всех полей и убрать переносы заголовков полей" className="text-white text-xs">full</Link></th>
         <th></th>
         <th></th>
         {headers.map((h, k) =>

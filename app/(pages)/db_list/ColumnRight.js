@@ -22,13 +22,13 @@ export default function ColumnRight(props) {
     <>
       <DbCreateForm />
 
-      <div className="mt-10">{tableLink}</div>
+      <div className="mt-2">{tableLink}</div>
 
-      <div className="mt-10">{props.appName}</div>
+      <div className="mt-2">{props.appName}</div>
       <div>Версия {props.appVersion}</div>
       <div>Хост: {props.dbHost}</div>
 
-      <div className="mt-10">Версия сервера: {props.mysqlVersion}</div>
+      <div className="mt-2">Версия сервера: {props.mysqlVersion}</div>
       <div>Версия PHP: {props.phpversion}</div>
 
       <AddUser />

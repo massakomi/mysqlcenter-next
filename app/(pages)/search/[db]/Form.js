@@ -17,6 +17,9 @@ export default function Form(props) {
   const formRef = useRef(null);
   const inputFieldRef = useRef(null);
 
+  const dispatch = useDispatch();
+  dispatch(setMessages(props.messages))
+
   const updateState = (event) => {
     setDisabled(!inputRef.current.value && !inputFieldRef.current.value)
   }

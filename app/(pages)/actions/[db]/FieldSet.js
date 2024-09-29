@@ -3,6 +3,7 @@ import {customAction} from '@/app/ui/actions'
 import {setMessages} from '@/lib/features/messagesReducer'
 import {useDispatch} from 'react-redux'
 import {useParams, useRouter} from 'next/navigation'
+import {setValue} from '@/lib/features/paramsReducer';
 
 export default function FieldSet(props) {
   const dispatch = useDispatch()
@@ -13,7 +14,9 @@ export default function FieldSet(props) {
   const executeAction = async (action, event) => {
     event.preventDefault()
     let formData = new FormData(event.target)
+    dispatch(setValue({loading: true}))
     let json = await customAction(action, formData)
+    dispatch(setValue({loading: false}))
     dispatch(setMessages(json.messages))
     if (action === 'dbRename' || action === 'dbCopy') {
       setTimeout(function () {

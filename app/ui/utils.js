@@ -43,10 +43,24 @@ export function onlyPageReturn(json) {
 function queryPostData(data) {
   if (typeof data === 'object') {
     if (!(data instanceof FormData)) {
-      data = new URLSearchParams(data);
+      data = URLSearchParamsFromObject(data);
     }
   } else {
     data = new URLSearchParams(data);
   }
   return data;
+}
+
+function URLSearchParamsFromObject(object) {
+  let sp = new URLSearchParams();
+  for (const [key, value] of Object.entries(object)) {
+    if (Array.isArray(value)) {
+      for (let item of value) {
+        sp.append(`${key}[]`, item.toString())
+      }
+    } else {
+      sp.set(key, value)
+    }
+  }
+  return sp;
 }

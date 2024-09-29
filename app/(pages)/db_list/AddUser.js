@@ -32,9 +32,6 @@ export default function AddUser() {
     dispatch(setMessages(json.messages))
     if (json.status === true) {
       await invalidatePath('/db_list')
-      setTimeout(function() {
-        location.reload()
-      }, 2000);
     }
   }
 

@@ -78,7 +78,7 @@ function compareData(data, fields, databases) {
 function processValues(data, fields) {
   let outputValues = []
   for (let [field, value] of Object.entries(data)) {
-    let type = fields[field].Type;
+    let type = fields[field]?.Type || '';
     let valueProcessed = processRowValue(value, type, 50);
     outputValues.push(valueProcessed)
   }
@@ -100,6 +100,9 @@ function groupData({databases, data1, data2, fields, pk}) {
   }
   for (const item of data2) {
     const value = item[primaryKey]
+    if (typeof data [value] === 'undefined') {
+      data [value] = {}
+    }
     if (typeof data [value][db1] !== 'undefined') {
       if (data [value][db1] === value) {
         data [value] = item

@@ -2,6 +2,7 @@ import {customAction, invalidatePath} from '@/app/ui/actions';
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 import Link from "next/link";
+import {setValue} from '@/lib/features/paramsReducer';
 
 export default function Table(props) {
 
@@ -11,12 +12,12 @@ export default function Table(props) {
     if (!confirm('Подтвердите...')) {
       return false;
     }
+    dispatch(setValue({loading: true}))
     let json = await customAction('dbDelete', {db})
+    dispatch(setValue({loading: false}))
     dispatch(setMessages(json.messages))
     if (json.status === true) {
       await invalidatePath('/db_list')
-      databases.splice(i, 1)
-      props.setDatabases([...databases])
     }
   }
 
@@ -25,9 +26,6 @@ export default function Table(props) {
     dispatch(setMessages(json.messages))
     if (json.status === true) {
       await invalidatePath('/db_list')
-      setTimeout(function() {
-        location.reload()
-      }, 2000);
     }
   }
 

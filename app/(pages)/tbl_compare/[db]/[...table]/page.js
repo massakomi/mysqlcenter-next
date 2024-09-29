@@ -12,7 +12,7 @@ export default async function Page({params, searchParams}) {
   let db = params.db
   let db2 = searchParams.database
 
-  let props = await tblCompare({db, db2, table: params.table})
+  let props = await tblCompare({db}, {databases: [db, db2], table: params.table})
 
   return (
     <>

@@ -10,6 +10,7 @@ export function Form(props) {
 
   const dispatch = useDispatch();
   const params = useParams();
+  dispatch(setMessages(props.messages))
 
   const [data, setData] = useState([]);
   const [title, setTitle] = useState('');

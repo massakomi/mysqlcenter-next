@@ -10,12 +10,13 @@ import {PopupQueryList} from '@/app/ui/PopupQueryList'
 import {PopupDbList} from '@/app/ui/PopupDbList'
 import {getInit} from '@/app/ui/actions'
 import Link from 'next/link'
+import BackDrop from '@/app/ui/BackDrop';
 
 export const metadata = {
   title: 'MySQLCenter',
 }
 
-export default async function PagesLayout({children, params}) {
+export default async function PagesLayout({children}) {
   // params доступен в layout, но в корневом он будет пустой, т.к. вероятно не видит иерархию ниже
   // + layout не перерисовывается, остается статичным
 
@@ -60,8 +61,10 @@ export default async function PagesLayout({children, params}) {
           <Link href="/config">Настройки</Link>
         </span>
         <strong>Хост:</strong> {props.DB_HOST}&nbsp;&nbsp;
-        <strong>Пользователь:</strong> {props.DB_USERNAME_CUR}&nbsp;
+        <strong>Пользователь:</strong> {props.DB_USERNAME}&nbsp;
       </div>
+
+      <BackDrop />
     </>
   )
 }

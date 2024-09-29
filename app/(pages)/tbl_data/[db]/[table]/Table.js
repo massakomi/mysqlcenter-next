@@ -6,7 +6,7 @@ import {useDispatch} from "react-redux";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {htmlspecialchars, processRowValue} from '@/app/ui/functions';
 import {useParams, useSearchParams} from "next/navigation";
-import {customAction} from "@/app/ui/actions";
+import {customAction, invalidatePath} from '@/app/ui/actions';
 import Link from "next/link";
 
 
@@ -15,10 +15,9 @@ export default function Table(props) {
   const params = useParams();
   const dispatch = useDispatch();
   let searchParams = useSearchParams()
-  useEffect(() => {
-    dispatch(setMessages(props.messages))
-  }, [dispatch, props.messages]);
-
+  /*useEffect(() => {
+    dispatch(setMessages(props.messages)) если это включить, то при удалении ряда сообщения сразу исчезают
+  }, [dispatch, props.messages]);*/
 
   if (!props.fields) {
     return ''
@@ -53,7 +52,10 @@ export default function Table(props) {
     }
     let json = await customAction('deleteRow', {db: params.db, table: params.table, row: idRow})
     dispatch(setMessages(json.messages))
-    event.target.closest('tr').remove()
+    if (json.status === true) {
+      event.target.closest('tr').remove()
+      await invalidatePath(`/tbl_data/${params.db}/${params.table}`)
+    }
   }
 
   // определение уникального ид ряда

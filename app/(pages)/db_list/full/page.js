@@ -1,5 +1,6 @@
 import {dbList} from "@/app/ui/actions";
-import TableFull from "@/app/(pages)/db_list/full/TableFull";
+import ColumnLeft from '@/app/(pages)/db_list/ColumnLeft';
+import ColumnRight from '@/app/(pages)/db_list/ColumnRight';
 
 export const  metadata = {
   title: 'Список баз данных'
@@ -12,7 +13,10 @@ export default async function Page({params}) {
   return  (
     <>
       <h1>{metadata.title}</h1>
-      <TableFull databases={props.databases} />
+      <div className="cols">
+        <div className="me-3"><ColumnLeft {...props} /></div>
+        <div><ColumnRight {...props} /></div>
+      </div>
     </>
   )
 }

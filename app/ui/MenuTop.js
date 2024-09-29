@@ -2,7 +2,7 @@
 import {useParams, usePathname} from "next/navigation";
 import Link from "next/link";
 import {getPageFromPathname} from "@/app/ui/functions";
-import {customAction} from "@/app/ui/actions";
+import {customAction, invalidatePath} from '@/app/ui/actions';
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 import {useEffect} from "react";
@@ -29,10 +29,10 @@ export function MenuTop() {
     type = 'server';
     dbMenuGlobal = [
       ['базы данных', 'db_list', ''],
-      ['статус', 'server_status', ''],
-      ['переменные', 'server_variables', ''],
+      ['статус', 'server/status', ''],
+      ['переменные', 'server/variables', ''],
       //['кодировки', 'server_collations', ''],
-      ['инфо', 'server_info', ''],
+      ['инфо', 'server/info', ''],
       ['delim'],
       ['экспорт', 'export', ''],
     ]
@@ -61,20 +61,17 @@ export function MenuTop() {
   }
 
   let menu = []
-  for (let item of dbMenuGlobal) {
-    let title = item[0]
+  for (let [title, page, action] of dbMenuGlobal) {
     if (title === 'delim') {
       menu.push(<b key={menu.length} className="delim">|</b>);
       continue;
     }
-    let page = item[1]
-    let action = item[2]
-    let curl = getUrl(params, page, action, type)
     let className = getClassName(pathname, page, action)
 
     if (action) {
       menu.push(<span role="button" onClick={multyAction.bind(this, action, params, dispatch)} key={menu.length} className={className}>{title}</span>)
     } else {
+      let curl = getUrl(params, page, type)
       menu.push(<Link key={menu.length} className={className} href={curl}>{title}</Link>)
     }
   }
@@ -88,20 +85,31 @@ async function multyAction(action, params, dispatch) {
   let json;
   if (action === 'dbTruncate') {
     json = await customAction('dbTruncate', `db=${params.db}`)
+    await invalidatePath(`/tbl_list/${params.db}`)
   }
   if (action === 'dbDelete') {
     json = await customAction('dbDelete', `db=${params.db}`)
+    await invalidatePath(`/db_list`)
+    await invalidatePath(`/tbl_list/${params.db}`)
   }
   if (action === 'dbTablesDelete') {
     json = await customAction('dbTablesDelete', `db=${params.db}`)
+    await invalidatePath(`/db_list`)
+    await invalidatePath(`/tbl_list/${params.db}`)
   }
   if (action === 'tableTruncate') {
     json = await customAction('tableTruncate', {db: params.db, table: params.table})
+    await invalidatePath(`/tbl_data/${params.db}/${params.table}`)
   }
   if (action === 'tableDelete') {
     json = await customAction('tableDelete', {db: params.db, table: params.table})
+    await invalidatePath(`/tbl_list/${params.db}`)
+    await invalidatePath(`/tbl_data/${params.db}/${params.table}`)
   }
   dispatch(setMessages(json.messages))
+  setTimeout(function() {
+    location.reload()
+  }, 2000);
 }
 
 function getClassName(pathname, page, action) {
@@ -119,7 +127,7 @@ function getClassName(pathname, page, action) {
 }
 
 
-function getUrl(params, page, action, type) {
+function getUrl(params, page, type) {
   let curl = `/${page}`;
   if (type === 'db') {
     curl += `/${params.db}`
@@ -129,9 +137,6 @@ function getUrl(params, page, action, type) {
     if (page !== 'tbl_add') {
       curl += `/${params.table}`
     }
-  }
-  if (action) {
-    curl += '?action='+action;
   }
   return curl;
 }

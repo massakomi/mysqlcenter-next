@@ -29,7 +29,7 @@ export function Form(props) {
     <>
       <form encType="multipart/form-data" onSubmit={sql.bind(this)} className="tableFormEdit">
         <textarea name="sql" rows="20" id="sqlContent" wrap="off"></textarea>
-        <input type="submit" value="Отправить запрос!" className="submit" />
+        <input type="submit" value="Отправить запрос!" className="submit" id='sqlSubmit' />
         <input type="hidden" name="db" value={params.db} />
         <FromFile {...props} />
       </form>

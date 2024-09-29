@@ -1,7 +1,7 @@
 'use client'
 
 import {formatSize, image} from "@/app/ui/functions";
-import {customAction} from "@/app/ui/actions";
+import {customAction, invalidatePath} from '@/app/ui/actions';
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 import Table from "@/app/ui/Table";
@@ -14,33 +14,29 @@ import {useState} from "react";
 export default function TableList(props) {
 
   const dispatch = useDispatch()
-  // Возникает ошибка
-  // Cannot update a component (`Messages`) while rendering a different component (`TableList`).
-  /*if (props.messages) {
-    dispatch(setMessages(props.messages))
-  }*/
 
-  const deleteTable = async (db, table)  => {
-    if (!confirm('Подтвердите...')) {
-      return false;
+  const executeAction = async (action, table, event) => {
+    let formData = {db: props.db, table};
+    if (action === 'tableRename') {
+      let newName = prompt('Новое имя', table)
+      if (!newName) {
+        return;
+      }
+      formData.newName = newName;
+    } else {
+      if (!confirm('Подтвердите...')) {
+        return;
+      }
     }
-    let json = await customAction('tableDelete', {db, table})
+    let json = await customAction(action, formData)
     dispatch(setMessages(json.messages))
-  }
-
-  const truncateTable = async(db, table) => {
-    if (!confirm('Подтвердите...')) {
-      return false;
-    }
-    let json = await customAction('tableTruncate', {db, table})
-    dispatch(setMessages(json.messages))
-  }
-
-  const renameTable = async (table, id, e) => {
-    let newName = prompt('Новое имя', table)
-    if (newName) {
-      let json = await customAction('tableRename', {db: props.db, table, newName})
-      dispatch(setMessages(json.messages))
+    if (json.status === true) {
+      await invalidatePath(`/tbl_list/${props.db}`)
+      if (action !== 'tableRename') {
+        setTimeout(function() {
+          location.reload()
+        }, 2000);
+      }
     }
   }
 
@@ -75,14 +71,14 @@ export default function TableList(props) {
     return (
       <tr key={table.Name}>
         <td><input name="table[]" type="checkbox" value={table.Name} id={idChbx} className="cb" /></td>
-        <td className="tbl"><label htmlFor={idChbx} onDoubleClick={renameTable.bind(this, table.Name)}>{valueName}</label></td>
+        <td className="tbl"><label htmlFor={idChbx} onDoubleClick={executeAction.bind(this, 'tableRename', table.Name)}>{valueName}</label></td>
         <td><Link href={`/tbl_data/${props.db}/${table.Name}`} title="Обзор таблицы">{image("actions.gif")}</Link></td>
         <td><Link href={`/tbl_struct/${props.db}/${table.Name}`} title="Структура таблицы">{image("generate.png")}</Link></td>
         <td>
-          <span role="button" onClick={() => truncateTable(props.db, table.Name)} title="Очистить таблицу">{image("delete.gif")}</span>
+          <span role="button" onClick={() => executeAction('tableTruncate', table.Name)} title="Очистить таблицу">{image("delete.gif")}</span>
         </td>
         <td>
-          <span role="button" onClick={() => deleteTable(props.db, table.Name)} title="Удалить таблицу">{image("close.png")}</span>
+          <span role="button" onClick={() => executeAction('tableDelete', table.Name)} title="Удалить таблицу">{image("close.png")}</span>
         </td>
         <td className="rig">{table.Rows}</td>
         <td className="rig">{formatSize(size)}</td>

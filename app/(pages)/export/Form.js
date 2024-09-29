@@ -10,10 +10,12 @@ import {exportPage} from "@/app/ui/actions";
 
 export function Form(props) {
 
+
   const [content, setContent] = useState('');
 
   const params = useParams();
   const dispatch = useDispatch();
+  dispatch(setMessages(props.messages))
 
   const searchParams = useSearchParams()
   if (searchParams.get('databases')) {

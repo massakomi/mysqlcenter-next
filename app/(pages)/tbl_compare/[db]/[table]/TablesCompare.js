@@ -1,7 +1,15 @@
 'use client';
 import {htmlspecialchars, processRowValue} from '@/app/ui/functions';
+import {useDispatch} from 'react-redux';
+import {setMessages} from '@/lib/features/messagesReducer';
+import {useEffect} from 'react';
 
 export default function TablesCompare(props) {
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setMessages(props.messages))
+  }, [])
 
   if (!props) {
     return ;

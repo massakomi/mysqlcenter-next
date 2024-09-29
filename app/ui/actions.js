@@ -9,18 +9,18 @@ export async function tblList(db, mode) {
 }
 export async function tblStruct(get) {
   get.s = 'tbl_struct'
-  return await query(get);
+  return await query(get,  false,{ cache: 'no-store' });
 }
 export async function tblAdd(get, post) {
   get.s = 'tbl_add'
-  return await query(get, post);
+  return await query(get, post, { cache: 'no-store' });
 }
 export async function tblChange(get, post) {
   get.s = 'tbl_change'
-  return await query(get, post);
+  return await query(get, post, { cache: 'no-store' });
 }
 export async function serverStatus() {
-  return await query({s: 'server_status'});
+  return await query({s: 'server_status'}, false, { cache: 'no-store' });
 }
 export async function serverVariables() {
   return await query({s: 'server_variables'});
@@ -49,7 +49,7 @@ export async function exportSpPage(db, post = false) {
   return await query({s: 'exportSp', db}, post, { cache: 'no-store' });
 }
 export async function dbList(mode = '') {
-  return await query({s: 'db_list', mode}, false);
+  return await query({s: 'db_list', mode});
 }
 export async function tblCompare(get) {
   get.s = 'tbl_compare'

@@ -1,8 +1,7 @@
-import {customAction} from "@/app/ui/actions";
+import {customAction, invalidatePath} from '@/app/ui/actions';
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 import Link from "next/link";
-import {clearChecked} from "@/app/ui/functions";
 
 export default function Table(props) {
 
@@ -13,17 +12,23 @@ export default function Table(props) {
       return false;
     }
     let json = await customAction('dbDelete', {db})
+    dispatch(setMessages(json.messages))
     if (json.status === true) {
+      await invalidatePath('/db_list')
       databases.splice(i, 1)
-      dispatch(setMessages(json.messages))
       props.setDatabases([...databases])
-      clearChecked()
     }
   }
 
   const dbHide = async (db, action, event) => {
     let json = await customAction('dbHide', `db=${db}&act=${action}`)
     dispatch(setMessages(json.messages))
+    if (json.status === true) {
+      await invalidatePath('/db_list')
+      setTimeout(function() {
+        location.reload()
+      }, 2000);
+    }
   }
 
   let mscExists = databases.includes('mysqlcenter')

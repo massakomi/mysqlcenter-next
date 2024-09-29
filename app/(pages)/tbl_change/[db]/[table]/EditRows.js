@@ -2,7 +2,7 @@
 
 import AddRow from '@/app/(pages)/tbl_change/[db]/[table]/AddRow';
 import {Fragment} from 'react';
-import {tblChange} from '@/app/ui/actions';
+import {invalidatePath, tblChange} from '@/app/ui/actions';
 import {setMessages} from '@/lib/features/messagesReducer';
 import {useParams, useRouter} from 'next/navigation';
 import {useDispatch} from 'react-redux';
@@ -18,6 +18,9 @@ export default function EditRows(props) {
     let formData = new FormData(event.target);
     const json = await tblChange(params, formData)
     dispatch(setMessages(json.messages))
+    if (json.status === true) {
+      await invalidatePath(`/tbl_data/${params.db}/${params.table}`)
+    }
     setTimeout(function() {
       if (formData.get('afterInsert') === 'tbl_data') {
         router.push(`/tbl_data/${params.db}/${params.table}`);

@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {customAction} from "@/app/ui/actions";
+import {customAction, invalidatePath} from '@/app/ui/actions';
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 
@@ -30,11 +30,17 @@ export default function AddUser() {
     let formData = new FormData(e.target);
     let json = await customAction('userAdd', formData)
     dispatch(setMessages(json.messages))
+    if (json.status === true) {
+      await invalidatePath('/db_list')
+      setTimeout(function() {
+        location.reload()
+      }, 2000);
+    }
   }
 
   return  (
     <fieldset className="msGeneralForm mt-2">
-      <legend>Добавить пользователя</legend>
+      <legend>Добавить пользователя вместе с базой</legend>
       <form onSubmit={onUserAdd} method="post">
         <div className="mb-2"><input name="database" type="text" required={true} id="databaseField" onKeyUp={updateLoginName} /> Имя базы данных</div>
         <div className="mb-2"><input name="databaseuser" id="unameField" type="text" required={true} defaultValue={database}  /> Логин пользователя</div>

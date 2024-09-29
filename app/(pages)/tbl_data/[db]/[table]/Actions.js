@@ -1,6 +1,6 @@
 'use client'
 import {chbx_action, checkedCheckboxes, prepareAction} from "@/app/ui/functions";
-import {customAction} from "@/app/ui/actions";
+import {customAction, invalidatePath} from '@/app/ui/actions';
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 import {useParams, useRouter} from "next/navigation";
@@ -22,6 +22,9 @@ export default function Actions() {
     formData.set('table', params.table)
     let json = await customAction(action, formData);
     dispatch(setMessages(json.messages))
+    if (json.status === true) {
+      await invalidatePath(`/tbl_data/${params.db}/${params.table}`)
+    }
   }
 
   const redirectAction = async (act, url, e) => {

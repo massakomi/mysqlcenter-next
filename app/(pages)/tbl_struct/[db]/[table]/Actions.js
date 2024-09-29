@@ -22,8 +22,9 @@ export function Actions() {
     formData.set('table', params.table)
     const json = await customAction(action, formData);
     dispatch(setMessages(json.messages))
-    await invalidatePath(pathname)
-    router.refresh()
+    if (json.status === true) {
+      await invalidatePath(pathname)
+    }
   }
 
   const fieldsEdit = () => {

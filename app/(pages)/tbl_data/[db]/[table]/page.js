@@ -23,11 +23,11 @@ export default async function Page({params, searchParams}) {
   let props = await tblDataPage(get)
 
   if (!props.count) {
-    return ;
+   // return <>Таблица не найдена</>;
   }
 
   return (
-    <div>
+    <div hidden={!props.count}>
 
       <h1>Таблица: {params.table} ({props.part > props.count ? props.count : props.part} строк из {props.count} всего)</h1>
 

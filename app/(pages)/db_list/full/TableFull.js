@@ -43,6 +43,7 @@ export default function TableFull(props) {
 
     trs.push(
       <tr key={i}>
+        <td><input name="databases[]" type="checkbox" value={db} className="cb" /></td>
         <td><Link href={href} title="Структура БД" id={idRow}>{db}</Link></td>
         <td>{countTables}</td>
         <td>{updateTime}</td>
@@ -56,6 +57,7 @@ export default function TableFull(props) {
     <table className="contentTable" id="structureTableId">
       <thead>
       <tr>
+        <th>#</th>
         <th>Название</th>
         <th>Таблиц</th>
         <th>Обновлено</th>
@@ -68,6 +70,7 @@ export default function TableFull(props) {
       </tbody>
       <tfoot>
       <tr>
+        <td></td>
         <td></td>
         <td>{countTotalTables}</td>
         <td></td>

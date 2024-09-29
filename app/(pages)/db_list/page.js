@@ -6,7 +6,7 @@ export const  metadata = {
   title: 'Список баз данных'
 }
 
-export default async function Page({params}) {
+export default async function Page() {
 
   let props = await dbList();
 

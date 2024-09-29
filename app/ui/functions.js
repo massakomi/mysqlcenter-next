@@ -47,6 +47,8 @@ export function getPageFromPathname(pathname) {
 
 /**
  * Общий код для подготовки параметров множественных действий над таблицами и базами
+ * - добавляет и проверяет checkeds
+ * - выводит confirm
  */
 export function prepareAction (action, event, name) {
   let items = checkedCheckboxes()
@@ -59,7 +61,11 @@ export function prepareAction (action, event, name) {
     }
   }
   if (action === 'auto') {
-    action = event.target.options[e.target.selectedIndex].value
+    if (typeof event === 'undefined') {
+      alert('event undefined')
+      return;
+    }
+    action = event.currentTarget.value
   }
   let formData = new FormData();
   for (let item of items) {
@@ -74,12 +80,6 @@ export function checkedCheckboxes() {
     items.push(element.value)
   });
   return items;
-}
-
-export function clearChecked() {
-  document.querySelectorAll(':checked').forEach(function(element) {
-    element.setAttribute('checked', false)
-  });
 }
 
 // 3 способа выделения options в мульти-селектах

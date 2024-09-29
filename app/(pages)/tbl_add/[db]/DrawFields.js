@@ -19,7 +19,8 @@ export default function DrawFields(props) {
 
   // получение массива из post
   if (array.length === 0) {
-    getArrayFromPost();
+    return <>Поле не существует</>
+    //getArrayFromPost(); ??? что это
   }
 
   // получение массива "предыдущих полей" полей

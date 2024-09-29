@@ -1,6 +1,6 @@
 
 import {serverStatus} from "@/app/ui/actions";
-import {KillProcess} from "@/app/(pages)/server_status/KillProcess";
+import {KillProcess} from "./KillProcess";
 
 export const  metadata = {
   title: 'Список процессов'

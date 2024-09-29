@@ -53,12 +53,13 @@ export default function Form(props) {
               <input name="query" id="queryAll" ref={inputRef} type="text" size="50" onChange={updateState} defaultValue="" /><br />
               искать имя поля    <br />
               <input name="queryField" ref={inputFieldRef} type="text" size="50" onChange={updateState} defaultValue="" /><br /> <br />
-              <input type="submit" value="Искать!" className="submit" disabled={disabled} />
+              <input type="submit" value="Искать!" className="submit disabled:opacity-50" disabled={disabled} />
             </td>
           </tr></tbody>
         </table>
       </form>
 
+      {disabled ? <p className='text-sm'>Loading results... <progress className='text-xs' value={0.5} /></p> : null}
       <Table data={results} />
     </>
   );

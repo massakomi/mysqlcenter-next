@@ -24,7 +24,9 @@ export default function TableStruct(props) {
     const json = await customAction('deleteField', formData);
     dispatch(setMessages(json.messages))
     await invalidatePath(pathname)
-    router.refresh()
+    setTimeout(function() {
+      location.reload()
+    }, 2000);
   }
 
 

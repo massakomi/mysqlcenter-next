@@ -2,8 +2,8 @@
 
 import TableName from "./TableName";import DrawFields from "./DrawFields";
 import {addRowWithInputs, removeRow} from "@/app/ui/functions";
-import {tblAdd} from "@/app/ui/actions";
-import {useParams} from "next/navigation";
+import {invalidatePath, tblAdd} from '@/app/ui/actions';
+import {useParams, useRouter} from 'next/navigation';
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useDispatch} from "react-redux";
 
@@ -11,12 +11,31 @@ export default function Form(props) {
 
   const params = useParams()
   const dispatch = useDispatch();
+  const router = useRouter();
+
 
   const executeAction = async (event) => {
     event.preventDefault()
     let formData = new FormData(event.target);
     const json = await tblAdd(params, formData)
     dispatch(setMessages(json.messages))
+    if (json.status === true) {
+      let path;
+      if (!params.table) {
+        await invalidatePath(`/tbl_list/${params.db}`)
+        path = `/tbl_list/${params.db}`
+      } else {
+        path = `/tbl_struct/${params.db}/${formData.get('table_name')}`
+      }
+      setTimeout(function() {
+        router.push(path);
+      }, 2000);
+    }
+  }
+
+  if (props.array.length === 0) {
+    return <>Поле не существует</>
+    //getArrayFromPost(); ??? что это
   }
 
   return (

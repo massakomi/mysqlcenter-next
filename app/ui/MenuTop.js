@@ -12,10 +12,6 @@ export function MenuTop() {
   const params = useParams();
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(setMessages([]))
-  }, [dispatch]);
-
   let dbMenuGlobal = [
     ['delim'],
     ['поиск', 'search', ''],

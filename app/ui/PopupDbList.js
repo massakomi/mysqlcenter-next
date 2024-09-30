@@ -3,8 +3,9 @@ import {useEffect, useRef, useState} from "react";
 import Link from "next/link";
 import {setValue} from "@/lib/features/paramsReducer";
 import {useDispatch} from "react-redux";
+import {setMessages} from "@/lib/features/messagesReducer";
 
-export function PopupDbList(props) {
+export function PopupDbList({databases}) {
   const [opened, setOpened] = useState(false);
 
   const open = () => {
@@ -14,19 +15,24 @@ export function PopupDbList(props) {
     }, 3000);
   }
 
-  let data = props.data || []
-
   return (
     <>
       <b id="appNameId" className="appName"><Link href="/db_list" onMouseOver={open}>MySQL React</Link></b>
-      <DbHiddenMenu {...{data, opened, setOpened}} />
+      <DbHiddenMenu {...{databases, opened, setOpened}} />
     </>
   )
 }
 
-function DbHiddenMenu({data, opened, setOpened}) {
+function DbHiddenMenu({databases, opened, setOpened}) {
 
   const dispatch = useDispatch();
+  if (!databases) {
+    databases = []
+  }
+
+  useEffect(() => {
+    dispatch(setValue({databases}))
+  }, [dispatch, databases])
 
   const selectDb = (database) => {
     dispatch(setValue({database: database}))
@@ -34,7 +40,7 @@ function DbHiddenMenu({data, opened, setOpened}) {
   }
 
   return <div id="dbHiddenMenu" className={opened ? '' : 'hidden'}>
-          {data.map((item, key) =>
+          {databases.map((item, key) =>
             <Link key={key} onClick={selectDb.bind(this, item)} href={`/tbl_list/${item}`}>{item}</Link>
           )}
         </div>;

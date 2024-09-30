@@ -6,6 +6,7 @@ import {useParams, useSearchParams} from "next/navigation";
 import {useDispatch} from "react-redux";
 import {searchPage} from "@/app/ui/actions";
 import Table from "@/app/ui/Table";
+import {setValue} from "@/lib/features/paramsReducer";
 export default function Form(props) {
 
   const params = useParams();
@@ -18,7 +19,10 @@ export default function Form(props) {
   const inputFieldRef = useRef(null);
 
   const dispatch = useDispatch();
-  dispatch(setMessages(props.messages))
+
+  useEffect(() => {
+    dispatch(setMessages(props.messages))
+  }, [])
 
   const updateState = (event) => {
     setDisabled(!inputRef.current.value && !inputFieldRef.current.value)

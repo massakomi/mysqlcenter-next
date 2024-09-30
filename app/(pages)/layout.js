@@ -33,7 +33,7 @@ export default async function PagesLayout({children}) {
   return (
     <>
       <div className="pageBlock">
-        <PopupDbList data={props.databases} />
+        <PopupDbList databases={props.databases} />
         <MenuTop />
         <PopupSqlForm />
         <MenuChain />

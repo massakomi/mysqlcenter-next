@@ -3,14 +3,16 @@ import {sqlPage} from "@/app/ui/actions";
 import {useDispatch} from "react-redux";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {useParams} from "next/navigation";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Table from "@/app/ui/Table";
 
 export function Form(props) {
 
   const dispatch = useDispatch();
   const params = useParams();
-  dispatch(setMessages(props.messages))
+  useEffect(() => {
+    dispatch(setMessages(props.messages))
+  }, [])
 
   const [data, setData] = useState([]);
   const [title, setTitle] = useState('');

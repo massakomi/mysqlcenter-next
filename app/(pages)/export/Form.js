@@ -2,20 +2,27 @@
 import ExportOptions from "@/app/(pages)/export/ExportOptions";
 import Link from "next/link";
 import {useParams, useSearchParams} from "next/navigation";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setMessages} from "@/lib/features/messagesReducer";
 import {msMultiSelect} from "@/app/ui/functions";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {exportPage} from "@/app/ui/actions";
 
 export function Form(props) {
-
 
   const [content, setContent] = useState('');
 
   const params = useParams();
   const dispatch = useDispatch();
-  dispatch(setMessages(props.messages))
+
+  useEffect(() => {
+    dispatch(setMessages(props.messages))
+  }, [])
+
+  const globalParams = useSelector((state) => state.params.value)
+  if (!globalParams.databases.includes(params.db)) {
+    // todo проверка что база существует
+  }
 
   const searchParams = useSearchParams()
   if (searchParams.get('databases')) {
